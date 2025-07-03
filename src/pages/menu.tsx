@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Head from "next/head";
 import React, { useState } from "react";
 
@@ -14,7 +14,10 @@ interface MenuItem {
 
 const MenuPage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState("tümü");
-  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{
+    src: string;
+    alt: string;
+  } | null>(null);
 
   const handleImageClick = (image: string, name: string) => {
     setSelectedImage({ src: image, alt: name });
@@ -25,7 +28,7 @@ const MenuPage: React.FC = () => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       closeImageModal();
     }
   };
@@ -98,80 +101,90 @@ const MenuPage: React.FC = () => {
     {
       id: 1,
       name: "Kahvaltı Tabağı",
-      description: "Omlet, 3 çeşit peynir, salam, patates kızartması, bal, tereyağ, reçel, domates, salatalık, simit ve 1 bardak çay ile zengin kahvaltı deneyimi",
-      price: "--₺",
+      description:
+        "Omlet, 3 çeşit peynir, salam, bal, tereyağ, reçel, domates, salatalık, simit ve 1 bardak çay ile zengin kahvaltı deneyimi",
+      price: "300₺",
       category: "kahvaltilar",
       image: "/images/kahvaltılar/kahvalti-tabagi-3-83e4.jpg",
     },
     {
       id: 2,
       name: "Alaçatı Kahvaltı",
-      description: "Omlet, 3 çeşit peynir, salam, pastırma, patates kızartması, zeytin, bal, tereyağ, reçel, domates, salatalık, simit ve çay ile özel kahvaltı",
-      price: "--₺",
+      description:
+        "Omlet, 3 çeşit peynir, salam, pastırma, patates kızartması, zeytin, bal, tereyağ, reçel, domates, salatalık, simit ve çay ile özel kahvaltı",
+      price: "350₺",
       category: "kahvaltilar",
       image: "/images/kahvaltılar/alacati.jpg",
     },
     {
       id: 3,
       name: "Simit Kahvaltı Tabağı",
-      description: "1 adet simit, peynir, zeytin, reçel, söğüş ve yeşillik tabağı, 1 adet çay ile hafif ve lezzetli kahvaltı",
-      price: "--₺",
+      description:
+        "1 adet simit, peynir, zeytin, reçel, söğüş ve yeşillik tabağı, 1 adet çay ile hafif ve lezzetli kahvaltı",
+      price: "180₺",
       category: "kahvaltilar",
       image: "/images/kahvaltılar/simitTabagi.jpg",
     },
     {
       id: 4,
       name: "Kruvasan Kahvaltı Tabağı",
-      description: "Taze kruvasan, peynir çeşitleri, reçel, bal, tereyağ ve çay ile Fransız tarzı kahvaltı keyfi",
-      price: "--₺",
+      description:
+        "Taze kruvasan, peynir çeşitleri, reçel, bal, tereyağ ve çay ile Fransız tarzı kahvaltı keyfi",
+      price: "300₺",
       category: "kahvaltilar",
       image: "/images/kahvaltılar/kruvasan-kahvalti.jpg",
     },
     {
       id: 5,
       name: "Menemen",
-      description: "Domates, biber ve yumurta ile hazırlanmış geleneksel Türk menemeni, taze ekmek ile servis edilir",
-      price: "--₺",
+      description:
+        "Domates, biber ve yumurta ile hazırlanmış geleneksel Türk menemeni, taze ekmek ile servis edilir",
+      price: "190₺",
       category: "kahvaltilar",
       image: "/images/kahvaltılar/menemen.jpg",
     },
     {
       id: 6,
       name: "Sahanda Yumurta",
-      description: "Tereyağında pişirilmiş taze yumurta, tuz ve karabiber ile klasik kahvaltı lezzeti",
-      price: "--₺",
+      description:
+        "Tereyağında pişirilmiş taze yumurta, tuz ve karabiber ile klasik kahvaltı lezzeti",
+      price: "120₺",
       category: "kahvaltilar",
       image: "/images/kahvaltılar/sahanda-yumurta.webp",
     },
     {
       id: 7,
       name: "Sucuklu Yumurta",
-      description: "Sucuk ile pişirilmiş yumurta, baharatlı ve lezzetli kahvaltı seçeneği",
-      price: "--₺",
+      description:
+        "Sucuk ile pişirilmiş yumurta, baharatlı ve lezzetli kahvaltı seçeneği",
+      price: "150₺",
       category: "kahvaltilar",
       image: "/images/kahvaltılar/sucukluyumurta2.webp",
     },
     {
       id: 8,
       name: "Omlet",
-      description: "Peynir ve sebzelerle hazırlanmış yumuşacık omlet, kahvaltıların vazgeçilmezi",
-      price: "--₺",
+      description:
+        "Peynir ve sebzelerle hazırlanmış yumuşacık omlet, kahvaltıların vazgeçilmezi",
+      price: "150₺",
       category: "kahvaltilar",
       image: "/images/kahvaltılar/omlet2.webp",
     },
     {
       id: 9,
       name: "Peynirli Gözleme",
-      description: "El açması gözleme, peynir dolgusu, patates kızartması, domates, salatalık, yeşillik, zeytin ve çay ile servis",
-      price: "--₺",
+      description:
+        "El açması gözleme, peynir dolgusu, patates kızartması, domates, salatalık, yeşillik, zeytin ve çay ile servis",
+      price: "100₺",
       category: "kahvaltilar",
       image: "/images/kahvaltılar/peynirigozleme.webp",
     },
     {
       id: 10,
       name: "Patatesli Gözleme",
-      description: "Patates dolgulu gözleme, patates kızartması, domates, salatalık, yeşillik, zeytin ve çay ile servis",
-      price: "--₺",
+      description:
+        "Patates dolgulu gözleme, patates kızartması, domates, salatalık, yeşillik, zeytin ve çay ile servis",
+      price: "100₺",
       category: "kahvaltilar",
       image: "/images/kahvaltılar/patatesligozleme.webp",
     },
@@ -180,8 +193,9 @@ const MenuPage: React.FC = () => {
     {
       id: 11,
       name: "Kaşarlı Tost",
-      description: "Kaşar peyniri ile hazırlanmış sıcacık ve çıtır tost, klasik lezzet",
-      price: "--₺",
+      description:
+        "Kaşar peyniri ile hazırlanmış sıcacık ve çıtır tost, klasik lezzet",
+      price: "165₺",
       category: "tostlar",
       image: "/images/tostlar/kasarli-tost-dcb9.webp",
     },
@@ -189,15 +203,16 @@ const MenuPage: React.FC = () => {
       id: 12,
       name: "Sucuklu Tost",
       description: "Sucuk ile hazırlanmış baharatlı ve lezzetli tost seçeneği",
-      price: "--₺",
+      price: "165₺",
       category: "tostlar",
       image: "/images/tostlar/sucuklutost.jpg",
     },
     {
       id: 13,
       name: "Kaşarlı Sucuklu Tost",
-      description: "Kaşar peyniri ve sucuk ile hazırlanmış zengin lezzetli tost",
-      price: "--₺",
+      description:
+        "Kaşar peyniri ve sucuk ile hazırlanmış zengin lezzetli tost",
+      price: "180₺",
       category: "tostlar",
       image: "/images/tostlar/kasarlisucuklutost.jpg",
     },
@@ -227,7 +242,7 @@ const MenuPage: React.FC = () => {
       name: "Sütlü Simit",
       description:
         "Sütle yoğrulan yumuşacık dokusuyla hafif ve lezzetli bir simit seçeneği",
-      price: "18₺",
+      price: "27₺",
       category: "simitler",
       image: "/images/simitler/sade-simit.png",
       popular: true,
@@ -237,7 +252,7 @@ const MenuPage: React.FC = () => {
       name: "Çikolatalı Simit",
       description:
         "Sütün yumuşaklığı ve çikolatanın tatlılığıyla buluşan özel simit lezzeti",
-      price: "22₺",
+      price: "30₺",
       category: "simitler",
       image: "/images/simitler/cikolatali-simit.png",
       popular: true,
@@ -247,7 +262,7 @@ const MenuPage: React.FC = () => {
       name: "Atom Simit",
       description:
         "Dışı çıtır simit, içi nefis pizza harcıyla dolu enfes bir lezzet bombası",
-      price: "25₺",
+      price: "70₺",
       category: "simitler",
       image: "/images/simitler/atom.jpg",
       popular: true,
@@ -259,7 +274,7 @@ const MenuPage: React.FC = () => {
       name: "Sade Poğaça",
       description:
         "Yumuşacık hamuru ve sade lezzetiyle her lokmada ev yapımı hissi veren klasik poğaça",
-      price: "25₺",
+      price: "20₺",
       category: "pogacalar",
       image: "/images/pogacalar/sade-pogaca2.jpg",
       popular: true,
@@ -269,7 +284,7 @@ const MenuPage: React.FC = () => {
       name: "Peynirli Poğaça",
       description:
         "İçindeki bol beyaz peynirle her ısırıkta lezzet dolu, yumuşacık poğaça keyfi",
-      price: "25₺",
+      price: "22.5₺",
       category: "pogacalar",
       image: "/images/pogacalar/peynirli-pogoca.png",
       popular: true,
@@ -279,7 +294,7 @@ const MenuPage: React.FC = () => {
       name: "Zeytinli Poğaça",
       description:
         "Zeytinin enfes aromasıyla harmanlanmış, çay saatlerinin vazgeçilmez lezzeti",
-      price: "25₺",
+      price: "22.5₺",
       category: "pogacalar",
       image: "/images/pogacalar/zeytinli-pogoca.png",
       popular: true,
@@ -289,7 +304,7 @@ const MenuPage: React.FC = () => {
       name: "Kaşarlı Poğaça",
       description:
         "Kaşar peynirinin erimiş lezzetiyle dolu, sıcacık ve çıtır poğaça",
-      price: "28₺",
+      price: "25₺",
       category: "pogacalar",
       image: "/images/pogacalar/kasarli-pogoca.png",
       popular: true,
@@ -299,7 +314,7 @@ const MenuPage: React.FC = () => {
       name: "Patatesli Poğaça",
       description:
         "Patates püresi ve baharatlarla hazırlanmış, doyurucu ve lezzetli poğaça",
-      price: "26₺",
+      price: "22.5₺",
       category: "pogacalar",
       image: "/images/pogacalar/patatesli-pogoca.png",
     },
@@ -308,19 +323,19 @@ const MenuPage: React.FC = () => {
       name: "Kars Poğaçası",
       description:
         "Kars yöresinin özel peyniriyle hazırlanmış, geleneksel lezzet poğaçası",
-      price: "30₺",
+      price: "25₺",
       category: "pogacalar",
       image: "/images/pogacalar/kars-pogocasi.png",
       popular: true,
     },
     {
       id: 25,
-      name: "Ev Poğaçası",
+      name: "Dereotlu Poğaça",
       description:
         "Ev yapımı tarifle hazırlanmış, annelerimizin elinden çıkmış gibi lezzetli poğaça",
-      price: "24₺",
+      price: "25₺",
       category: "pogacalar",
-      image: "/images/pogacalar/evpogacasi.jpg",
+      image: "/images/pogacalar/dereotlupogaca.jpg",
     },
 
     // Açmalar
@@ -328,7 +343,7 @@ const MenuPage: React.FC = () => {
       id: 26,
       name: "Sade Açma",
       description: "Yumuşacık hamuru ve sade lezzetiyle klasik açma deneyimi",
-      price: "--₺",
+      price: "22₺",
       category: "acmalar",
       image: "/images/acmalar/sade-acma.png",
     },
@@ -336,7 +351,7 @@ const MenuPage: React.FC = () => {
       id: 27,
       name: "Zeytinli Açma",
       description: "Zeytin dolgusu ile hazırlanmış lezzetli ve aromatik açma",
-      price: "--₺",
+      price: "25₺",
       category: "acmalar",
       image: "/images/acmalar/zeytinli-acma.png",
     },
@@ -344,7 +359,7 @@ const MenuPage: React.FC = () => {
       id: 28,
       name: "Kaşarlı Açma",
       description: "Kaşar peyniri ile hazırlanmış sıcacık ve lezzetli açma",
-      price: "--₺",
+      price: "25₺",
       category: "acmalar",
       image: "/images/acmalar/sade-acma.png",
     },
@@ -352,7 +367,7 @@ const MenuPage: React.FC = () => {
       id: 29,
       name: "Patatesli Açma",
       description: "Patates püresi dolgusu ile hazırlanmış doyurucu açma",
-      price: "--₺",
+      price: "25₺",
       category: "acmalar",
       image: "/images/acmalar/patatesli-acma.png",
     },
@@ -360,7 +375,7 @@ const MenuPage: React.FC = () => {
       id: 30,
       name: "Sucuklu Kaşarlı",
       description: "Sucuk ve kaşar peyniri ile hazırlanmış baharatlı açma",
-      price: "--₺",
+      price: "30₺",
       category: "acmalar",
       image: "/images/acmalar/sade-acma.png",
     },
@@ -368,20 +383,12 @@ const MenuPage: React.FC = () => {
       id: 31,
       name: "Çikolatalı Açma",
       description: "Çikolata dolgusu ile hazırlanmış tatlı açma seçeneği",
-      price: "--₺",
+      price: "25₺",
       category: "acmalar",
       image: "/images/acmalar/cikolatali-acma.png",
     },
     {
       id: 32,
-      name: "Haşhaşlı Açma",
-      description: "Haşhaş dolgusu ile hazırlanmış geleneksel lezzet açması",
-      price: "--₺",
-      category: "acmalar",
-      image: "/images/acmalar/hashasli-acma.png",
-    },
-    {
-      id: 33,
       name: "Mini Tahinli",
       description: "Tahin dolgusu ile hazırlanmış küçük boy lezzetli açma",
       price: "--₺",
@@ -391,71 +398,85 @@ const MenuPage: React.FC = () => {
 
     // Sandviçler
     {
-      id: 34,
+      id: 33,
       name: "Sandviç",
-      description: "Peynir, domates, salatalık ve yeşillik ile hazırlanmış klasik sandviç",
-      price: "--₺",
+      description:
+        "Peynir, domates, salatalık ve yeşillik ile hazırlanmış klasik sandviç",
+      price: "80₺",
       category: "sandvic",
       image: "/images/sandvic/sandvic.webp",
     },
     {
-      id: 35,
+      id: 34,
       name: "7 Tahıllı Sandviç",
-      description: "7 farklı tahıl ile hazırlanmış sağlıklı ve besleyici sandviç",
-      price: "--₺",
+      description:
+        "7 farklı tahıl ile hazırlanmış sağlıklı ve besleyici sandviç",
+      price: "80₺",
       category: "sandvic",
       image: "/images/sandvic/tambugday.jpeg",
     },
     {
-      id: 36,
+      id: 35,
       name: "Tam Buğday Sandviç",
-      description: "Tam buğday ekmeği ile hazırlanmış sağlıklı sandviç seçeneği",
-      price: "--₺",
+      description:
+        "Tam buğday ekmeği ile hazırlanmış sağlıklı sandviç seçeneği",
+      price: "80₺",
       category: "sandvic",
       image: "/images/sandvic/tambugdaysandvic.jpeg",
     },
     {
-      id: 37,
+      id: 36,
       name: "Burger Sandviç",
-      description: "Et köftesi, peynir, domates, salatalık ve özel sos ile burger sandviç",
-      price: "--₺",
+      description:
+        "Et köftesi, peynir, domates, salatalık ve özel sos ile burger sandviç",
+      price: "60₺",
       category: "sandvic",
       image: "/images/sandvic/burgersandvic.jpg",
     },
 
     // Börekler
     {
-      id: 38,
-      name: "Kol Böreği",
+      id: 37,
+      name: "Kol Böreği Peynirli",
       description: "El açması yufka ile hazırlanmış geleneksel kol böreği",
-      price: "--₺",
+      price: "440₺",
+      category: "borekler",
+      image: "/images/borekler/kolboregi.jpg",
+    },
+    {
+      id: 38,
+      name: "Kıymalı Kol Böreği",
+      description: "Kıyma dolgusu ile hazırlanmış lezzetli kol böreği",
+      price: "440₺",
       category: "borekler",
       image: "/images/borekler/kolboregi.jpg",
     },
     {
       id: 39,
-      name: "Kıymalı Kol Böreği",
-      description: "Kıyma dolgusu ile hazırlanmış lezzetli kol böreği",
-      price: "--₺",
-      category: "borekler",
-      image: "/images/borekler/kolboregi.jpg",
-    },
-    {
-      id: 40,
-      name: "Gül Böreği",
+      name: "Patatesli Gül Böreği",
       description: "Gül şeklinde sarılmış özel börek çeşidi",
-      price: "--₺",
+      price: "60₺",
       category: "borekler",
       image: "/images/borekler/gulboregi.jpg",
     },
     {
-      id: 41,
-      name: "Avcı Böreği",
+      id: 40,
+      name: "Sosis Kaşarlı Avcı Böreği",
       description: "Avcı tarzında hazırlanmış özel börek çeşidi",
-      price: "--₺",
+      price: "50₺",
       category: "borekler",
       image: "/images/borekler/avci.jpg",
     },
+
+    {
+      id: 41,
+      name: "Patatesli Avcı Böreği",
+      description: "Kalem şeklinde sarılmış özel börek çeşidi",
+      price: "50₺",
+      category: "borekler",
+      image: "/images/borekler/avci.jpg",
+    },
+
     {
       id: 42,
       name: "1 Porsiyon Su Böreği",
@@ -464,84 +485,76 @@ const MenuPage: React.FC = () => {
       category: "borekler",
       image: "/images/borekler/suboregi.jpg",
     },
-    {
-      id: 43,
-      name: "Kalem Böreği",
-      description: "Kalem şeklinde sarılmış özel börek çeşidi",
-      price: "--₺",
-      category: "borekler",
-      image: "/images/borekler/kalem-boregi.png",
-    },
 
     // Tatlılar
     {
-      id: 44,
+      id: 43,
       name: "Portakallı Kurabiye",
       description: "Portakal aroması ile hazırlanmış yumuşacık kurabiye",
-      price: "--₺",
+      price: "50₺",
       category: "tatlilar",
       image: "/images/tatlılar/portakalli-kurabiye.png",
     },
     {
-      id: 45,
+      id: 44,
       name: "Ay Çöreği",
       description: "Ay şeklinde hazırlanmış geleneksel çörek çeşidi",
-      price: "--₺",
+      price: "60₺",
       category: "tatlilar",
       image: "/images/tatlılar/aycorek.jpg",
     },
     {
-      id: 46,
+      id: 45,
       name: "Elmalı Tart",
       description: "Elma dolgusu ile hazırlanmış lezzetli tart",
-      price: "--₺",
+      price: "50₺",
       category: "tatlilar",
       image: "/images/tatlılar/elmali-turta.png",
     },
     {
-      id: 47,
+      id: 46,
       name: "Mini Ekler",
       description: "Küçük boy ekler pasta, krema dolgusu ile",
-      price: "--₺",
+      price: "35₺",
       category: "tatlilar",
       image: "/images/tatlılar/ekler.jpg",
     },
     {
-      id: 48,
+      id: 47,
       name: "Kruvasan",
       description: "Fransız tarzı katmanlı kruvasan, sade veya çikolatalı",
-      price: "--₺",
+      price: "80₺",
       category: "tatlilar",
       image: "/images/tatlılar/kruvasan.webp",
     },
     {
-      id: 49,
+      id: 48,
       name: "Alman Pastası",
       description: "Alman tarzında hazırlanmış özel pasta çeşidi",
-      price: "--₺",
+      price: "80₺",
       category: "tatlilar",
       image: "/images/tatlılar/alman-pastasi.jpg",
     },
     {
-      id: 50,
+      id: 49,
       name: "Dilim Pasta",
       description: "Çeşitli tatlar seçeneği ile dilim pasta",
-      price: "--₺",
+      price: "140₺",
       category: "tatlilar",
       image: "/images/tatlılar/dilimpastaa.png",
     },
     {
-      id: 51,
+      id: 50,
       name: "İzmir Bombası",
       description: "İzmir yöresine özgü özel tatlı çeşidi",
-      price: "--₺",
+      price: "50₺",
       category: "tatlilar",
       image: "/images/tatlılar/izmirbomba.jpg",
     },
 
     // Mutfaktan
     {
-      id: 52,
+      id: 51,
       name: "Patates Cips",
       description: "Taze patates ile hazırlanmış çıtır çıtır cips",
       price: "--₺",
@@ -549,7 +562,7 @@ const MenuPage: React.FC = () => {
       image: "/images/mutfaktan/cipes.webp",
     },
     {
-      id: 53,
+      id: 52,
       name: "Karışık Cips Tabağı",
       description: "Patates, nugget, soğan halkası ile karışık cips tabağı",
       price: "--₺",
@@ -559,31 +572,31 @@ const MenuPage: React.FC = () => {
 
     // Sıcak İçecekler
     {
-      id: 54,
+      id: 53,
       name: "Çay",
       description: "Rize yöresinden özenle seçilmiş çay yaprakları",
-      price: "--₺",
+      price: "20₺",
       category: "sicak-icecekler",
       image: "/images/sicak-icecekler/cay.jpeg",
     },
     {
-      id: 55,
+      id: 54,
       name: "Fincan Çay",
       description: "Fincan içinde servis edilen özel çay",
-      price: "--₺",
+      price: "30₺",
       category: "sicak-icecekler",
       image: "/images/sicak-icecekler/fincancay.webp",
     },
     {
-      id: 56,
+      id: 55,
       name: "Türk Kahvesi",
       description: "Geleneksel yöntemle pişirilmiş Türk kahvesi",
-      price: "--₺",
+      price: "80₺",
       category: "sicak-icecekler",
       image: "/images/sicak-icecekler/turkkahvesi.webp",
     },
     {
-      id: 57,
+      id: 56,
       name: "Americano",
       description: "Sıcak su ile inceltilmiş espresso kahve",
       price: "--₺",
@@ -591,7 +604,7 @@ const MenuPage: React.FC = () => {
       image: "/images/sicak-icecekler/americano.jpeg",
     },
     {
-      id: 58,
+      id: 57,
       name: "Latte",
       description: "Espresso ve buharlanmış süt ile hazırlanmış latte",
       price: "--₺",
@@ -599,7 +612,7 @@ const MenuPage: React.FC = () => {
       image: "/images/sicak-icecekler/latte.jpeg",
     },
     {
-      id: 59,
+      id: 58,
       name: "Cappuccino",
       description: "Espresso, buharlanmış süt ve süt köpüğü ile cappuccino",
       price: "--₺",
@@ -609,7 +622,7 @@ const MenuPage: React.FC = () => {
 
     // Soğuk İçecekler
     {
-      id: 60,
+      id: 59,
       name: "Su 500ml",
       description: "500ml doğal kaynak suyu",
       price: "--₺",
@@ -617,7 +630,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/su.webp",
     },
     {
-      id: 61,
+      id: 60,
       name: "Meyve Suyu 200ml",
       description: "200ml taze meyve suyu, çeşitli tatlar mevcut",
       price: "--₺",
@@ -625,7 +638,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/meyvesuyu200.jpg",
     },
     {
-      id: 62,
+      id: 61,
       name: "Meyve Suyu 330ml",
       description: "330ml taze meyve suyu, çeşitli tatlar mevcut",
       price: "--₺",
@@ -633,7 +646,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/meyvesuyu.jpg",
     },
     {
-      id: 63,
+      id: 62,
       name: "Cola 330ml",
       description: "330ml soğuk cola içeceği",
       price: "--₺",
@@ -641,7 +654,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/kola.jpg",
     },
     {
-      id: 64,
+      id: 63,
       name: "Fanta 330ml",
       description: "330ml soğuk fanta içeceği",
       price: "--₺",
@@ -649,7 +662,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/fanta.webp",
     },
     {
-      id: 65,
+      id: 64,
       name: "Sprite 330ml",
       description: "330ml soğuk sprite içeceği",
       price: "--₺",
@@ -657,7 +670,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/sprite.png",
     },
     {
-      id: 66,
+      id: 65,
       name: "Ayran 200ml",
       description: "200ml geleneksel Türk ayranı",
       price: "--₺",
@@ -665,7 +678,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/ayran.jpg",
     },
     {
-      id: 67,
+      id: 66,
       name: "Sade Soda",
       description: "Sade maden suyu",
       price: "--₺",
@@ -673,7 +686,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/sadesoda.webp",
     },
     {
-      id: 68,
+      id: 67,
       name: "Meyveli Soda",
       description: "Meyve aromalı maden suyu",
       price: "--₺",
@@ -681,7 +694,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/meyvelisoda.jpg",
     },
     {
-      id: 69,
+      id: 68,
       name: "Red Bull",
       description: "Enerji içeceği",
       price: "--₺",
@@ -689,10 +702,10 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/redbull.jpeg",
     },
     {
-      id: 70,
+      id: 69,
       name: "Limonata",
       description: "Taze sıkılmış limon ile hazırlanmış limonata",
-      price: "--₺",
+      price: "80₺",
       category: "soguk-icecekler",
       image: "/images/soguk-icecekler/limonata.jpeg",
     },
@@ -807,7 +820,7 @@ const MenuPage: React.FC = () => {
         <section className="py-12 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <AnimatePresence mode="wait">
-              <motion.div 
+              <motion.div
                 key={activeCategory}
                 className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8"
                 layout
@@ -816,7 +829,7 @@ const MenuPage: React.FC = () => {
                 exit={{ opacity: 0 }}
                 transition={{
                   duration: 0.2,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
               >
                 {filteredItems.map((item, index) => (
@@ -852,13 +865,21 @@ const MenuPage: React.FC = () => {
                         }}
                         onClick={() => handleImageClick(item.image, item.name)}
                       />
-                      <div 
+                      <div
                         className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center cursor-pointer"
                         onClick={() => handleImageClick(item.image, item.name)}
                       >
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                          <svg
+                            className="w-8 h-8 text-white"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                              clipRule="evenodd"
+                            />
                           </svg>
                         </div>
                       </div>
@@ -905,7 +926,7 @@ const MenuPage: React.FC = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="relative max-w-4xl max-h-full"
+              className="relative max-w-4xl max-h-full flex flex-col items-center"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
@@ -914,8 +935,18 @@ const MenuPage: React.FC = () => {
                 className="absolute -top-4 -right-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 z-10"
                 aria-label="Close modal"
               >
-                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-6 h-6 text-gray-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
 
@@ -923,7 +954,7 @@ const MenuPage: React.FC = () => {
               <motion.img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                className="w-full h-auto max-h-[80vh] object-contain rounded-lg shadow-2xl"
+                className="w-full h-auto max-h-[70vh] object-contain rounded-lg shadow-2xl"
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
@@ -934,9 +965,11 @@ const MenuPage: React.FC = () => {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
-                className="absolute bottom-4 left-4 right-4 bg-black bg-opacity-70 text-white p-4 rounded-lg backdrop-blur-sm"
+                className="mt-4 bg-black bg-opacity-80 text-white px-6 py-3 rounded-lg backdrop-blur-sm shadow-lg"
               >
-                <h3 className="text-lg font-semibold">{selectedImage.alt}</h3>
+                <h3 className="text-lg font-semibold text-center">
+                  {selectedImage.alt}
+                </h3>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -946,4 +979,4 @@ const MenuPage: React.FC = () => {
   );
 };
 
-export default MenuPage; 
+export default MenuPage;

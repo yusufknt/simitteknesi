@@ -11,6 +11,7 @@
     "vercel-build": "next build"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@heroicons/react": "^2.0.18",
     "critters": "^0.0.23",
     "framer-motion": "^10.16.16",

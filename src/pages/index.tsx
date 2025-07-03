@@ -30,20 +30,20 @@ const HomePage: React.FC = () => {
 
   const popularItems = [
     {
-      name: "Sade Simit",
-      price: "8₺",
-      image: "/images/simitler/sade-simit.png",
-      description: "Geleneksel susam simidi, günlük taze üretim",
+      name: "Atom Simit",
+      price: "70₺",
+      image: "/images/simitler/atom.jpg",
+      description: "Dışı çıtır simit, içi nefis pizza harcıyla dolu enfes bir lezzet bombası",
     },
     {
-      name: "Kaşarlı Poğaça",
-      price: "10₺",
-      image: "/images/pogacalar/kasarli-pogoca.png",
-      description: "Taze kaşar peynirli pöğaça, yumuşacık hamur",
+      name: "Limonata",
+      price: "70₺",
+      image: "/images/soguk-icecekler/limonata.jpeg",
+      description: "Taze sıkılmış limon ile hazırlanmış limonata",
     },
     {
       name: "Türk Kahvesi",
-      price: "15₺",
+      price: "80₺",
       image: "/images/sicak-icecekler/turkkahvesi.webp",
       description: "Geleneksel Türk kahvesi, cezve ile hazırlanmış",
     },
