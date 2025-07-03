@@ -1,4 +1,5 @@
 import React from "react";
+import { handleImageError } from "../utils/imageUtils";
 
 interface LogoProps {
   size?: "sm" | "md" | "lg" | "xl";
@@ -28,6 +29,7 @@ const Logo: React.FC<LogoProps> = ({
         src="/images/logo.png"
         alt="Simit Teknesi Nazilli Logo"
         className={`w-full h-full object-contain ${backgroundClasses}`}
+        onError={handleImageError}
       />
     </div>
   );

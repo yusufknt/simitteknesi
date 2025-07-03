@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Head from "next/head";
 import React, { useState } from "react";
+import { handleImageError } from "../utils/imageUtils";
 
 interface MenuItem {
   id: number;
@@ -859,6 +860,7 @@ const MenuPage: React.FC = () => {
                         src={item.image}
                         alt={item.name}
                         className="w-full h-48 object-cover cursor-pointer"
+                        onError={handleImageError}
                         whileHover={{
                           scale: 1.03,
                           transition: { duration: 0.3, ease: "easeOut" },
@@ -955,6 +957,7 @@ const MenuPage: React.FC = () => {
                 src={selectedImage.src}
                 alt={selectedImage.alt}
                 className="w-full h-auto max-h-[70vh] object-contain rounded-lg shadow-2xl"
+                onError={handleImageError}
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.3, delay: 0.1 }}

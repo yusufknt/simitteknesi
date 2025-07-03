@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 import FeatureCard from "../components/FeatureCard";
 import Hero from "../components/Hero";
+import { handleImageError } from "../utils/imageUtils";
 
 const HomePage: React.FC = () => {
   const features = [
@@ -33,7 +34,8 @@ const HomePage: React.FC = () => {
       name: "Atom Simit",
       price: "70₺",
       image: "/images/simitler/atom.jpg",
-      description: "Dışı çıtır simit, içi nefis pizza harcıyla dolu enfes bir lezzet bombası",
+      description:
+        "Dışı çıtır simit, içi nefis pizza harcıyla dolu enfes bir lezzet bombası",
     },
     {
       name: "Limonata",
@@ -126,6 +128,7 @@ const HomePage: React.FC = () => {
                     src={item.image}
                     alt={item.name}
                     className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
+                    onError={handleImageError}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
