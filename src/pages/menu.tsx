@@ -336,7 +336,7 @@ const MenuPage: React.FC = () => {
         "Ev yapımı tarifle hazırlanmış, annelerimizin elinden çıkmış gibi lezzetli poğaça",
       price: "25₺",
       category: "pogacalar",
-      image: "/images/pogacalar/dereotlupogaca.jpg",
+      image: "/images/pogacalar/dereotlu-pogaca.jpg",
     },
 
     // Açmalar
@@ -458,7 +458,7 @@ const MenuPage: React.FC = () => {
       description: "Gül şeklinde sarılmış özel börek çeşidi",
       price: "60₺",
       category: "borekler",
-      image: "/images/borekler/gulboregi.jpg",
+      image: "/images/borekler/gul-boregi.jpg",
     },
     {
       id: 40,
