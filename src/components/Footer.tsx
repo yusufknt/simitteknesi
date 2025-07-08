@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
               </a>
 
               <a
-                href="https://wa.me/+902563124567"
+                href="https://wa.me/+905313300965"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
@@ -113,7 +113,7 @@ const Footer: React.FC = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <PhoneIcon className="h-5 w-5 text-primary-400 flex-shrink-0" />
-                <p className="text-gray-400 text-sm">+90 (256) 312-4567</p>
+                <p className="text-gray-400 text-sm">+90 531 330 09 65</p>
               </div>
               <div className="flex items-start space-x-3">
                 <ClockIcon className="h-5 w-5 text-primary-400 mt-0.5 flex-shrink-0" />
@@ -127,7 +127,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400 text-sm">
-            © 2024 Simit Teknesi Nazilli. Tüm hakları saklıdır.
+            © 2025 Simit Teknesi Nazilli. Tüm hakları saklıdır.
           </p>
         </div>
       </div>

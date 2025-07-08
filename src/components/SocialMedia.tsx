@@ -46,7 +46,7 @@ const SocialMedia: React.FC<SocialMediaProps> = ({
 
       {/* WhatsApp */}
       <a
-        href="https://wa.me/+902563124567"
+        href="https://wa.me/+905313300965"
         target="_blank"
         rel="noopener noreferrer"
         className={`${sizeClasses[size]} bg-green-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform duration-300 hover:shadow-lg`}

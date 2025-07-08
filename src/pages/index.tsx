@@ -40,7 +40,7 @@ const HomePage: React.FC = () => {
     {
       name: "Limonata",
       price: "70₺",
-      image: "/images/soguk-icecekler/limonata.jpeg",
+      image: "/images/soguk-icecekler/limonata.jpg",
       description: "Taze sıkılmış limon ile hazırlanmış limonata",
     },
     {

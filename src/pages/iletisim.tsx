@@ -70,7 +70,7 @@ const ContactPage: React.FC = () => {
     {
       icon: <PhoneIcon className="h-6 w-6" />,
       title: "Telefon",
-      content: "+90 (256) 312-4567",
+      content: "+90 531 330 09 65",
     },
     {
       icon: <EnvelopeIcon className="h-6 w-6" />,
@@ -326,7 +326,6 @@ const ContactPage: React.FC = () => {
                     Ulaşım Bilgileri
                   </h3>
                   <ul className="space-y-2 text-gray-600 text-sm">
-                    <li>• Nazilli Merkez'den yürüyerek 3 dakika</li>
                     <li>• Otobüs: Şehir içi 1, 2, 3 numaralı hatlar</li>
                     <li>• Dolmuş: Merkez-Cumhuriyet hattı</li>
                     <li>• Ücretsiz otopark imkanı mevcut</li>
@@ -382,8 +381,8 @@ const ContactPage: React.FC = () => {
                 ürünlerimizi deneyimlemeye davetlisiniz.
               </p>
               <div className="text-lg font-medium">
-                📍 Nazilli, Aydın &nbsp;&nbsp;•&nbsp;&nbsp; 📞 +90 (256)
-                312-4567 &nbsp;&nbsp;•&nbsp;&nbsp; 🕒 Her Gün Açık
+                📍 Nazilli, Aydın &nbsp;&nbsp;•&nbsp;&nbsp; 📞 +90 (531)
+                330 09 65 &nbsp;&nbsp;•&nbsp;&nbsp; 🕒 Her Gün Açık  10:00 - 22:00
               </div>
             </motion.div>
           </div>
