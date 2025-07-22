@@ -64,7 +64,7 @@ const HomePage: React.FC = () => {
       <Hero />
 
       {/* Hamburger Menü Video Reklam Alanı */}
-      <section className="relative w-full h-[520px] flex items-center justify-center overflow-hidden">
+      <section className="relative w-full min-h-[400px] md:h-[520px] flex items-center justify-center overflow-hidden">
         <img
           src="/images/mutfaktan/hamburger-menu.jpeg"
           alt="Hamburger Menü Arka Plan"
@@ -72,9 +72,9 @@ const HomePage: React.FC = () => {
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-black/50 pointer-events-none" />
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-center w-full h-full">
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-center w-full h-full py-6">
           <video
-            className="object-contain max-h-[420px] md:max-h-[500px] max-w-[90vw] md:max-w-[400px] rounded-2xl shadow-2xl border-4 border-white/10"
+            className="object-contain max-h-full max-w-[90vw] md:max-h-[500px] md:max-w-[400px] rounded-2xl shadow-2xl border-4 border-white/10 bg-black"
             src="/images/mutfaktan/hamaburger-menu.mp4"
             autoPlay
             loop
@@ -82,7 +82,6 @@ const HomePage: React.FC = () => {
             playsInline
             aria-label="Hamburger Menü Reklam Videosu"
             tabIndex={0}
-            style={{ background: 'black' }}
           />
           <div className="mt-6 md:mt-0 md:ml-12 flex flex-col items-center justify-center text-center px-4">
             <div className="bg-black/60 rounded-xl px-6 py-6 md:px-12 md:py-8 shadow-lg backdrop-blur-sm inline-block">
