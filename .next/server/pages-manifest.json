@@ -3,5 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/menu": "pages/menu.js"
+  "/menu": "pages/menu.js",
+  "/api/fallback-image": "pages/api/fallback-image.js"
 }

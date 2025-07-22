@@ -633,6 +633,14 @@ const MenuPage: React.FC = () => {
 
     // Mutfaktan
     {
+      id: 68,
+      name: "Hamburger Menü",
+      description: "Hamburger, patates ve istediğiniz içecek ile servis edilir.",
+      price: "250₺",
+      category: "mutfaktan",
+      image: "/images/mutfaktan/hamburger-menu.jpeg",
+    },
+    {
       id: 61,
       name: "Patates Cips",
       description: "Taze patates ile hazırlanmış çıtır çıtır cips",
@@ -687,14 +695,6 @@ const MenuPage: React.FC = () => {
       price: "100₺",
       category: "mutfaktan",
       image: "/images/mutfaktan/sogus-tabagi.webp",
-    },
-    {
-      id: 68,
-      name: "Hamburger Menü",
-      description: "Hamburger, patates ve istediğiniz içecek ile servis edilir.",
-      price: "250₺",
-      category: "mutfaktan",
-      image: "/images/mutfaktan/hamburger-menu.jpeg",
     },
 
     // Aperatifler
