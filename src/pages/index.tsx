@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
     {
       name: "Atom Simit",
       price: "70₺",
-      image: "/images/simitler/atom.jpg",
+      image: "/images/simitler/atom-simit.jpeg",
       description:
         "Dışı çıtır simit, içi nefis pizza harcıyla dolu enfes bir lezzet bombası",
     },
@@ -62,6 +62,90 @@ const HomePage: React.FC = () => {
       </Head>
 
       <Hero />
+
+      {/* Hamburger Menü Video Reklam Alanı */}
+      <section className="relative w-full h-[520px] flex items-center justify-center overflow-hidden">
+        <img
+          src="/images/mutfaktan/hamburger-menu.jpeg"
+          alt="Hamburger Menü Arka Plan"
+          className="absolute inset-0 w-full h-full object-cover blur-md scale-105"
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-black/50 pointer-events-none" />
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-center w-full h-full">
+          <video
+            className="object-contain max-h-[420px] md:max-h-[500px] max-w-[90vw] md:max-w-[400px] rounded-2xl shadow-2xl border-4 border-white/10"
+            src="/images/mutfaktan/hamaburger-menu.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            aria-label="Hamburger Menü Reklam Videosu"
+            tabIndex={0}
+            style={{ background: 'black' }}
+          />
+          <div className="mt-6 md:mt-0 md:ml-12 flex flex-col items-center justify-center text-center px-4">
+            <div className="bg-black/60 rounded-xl px-6 py-6 md:px-12 md:py-8 shadow-lg backdrop-blur-sm inline-block">
+              <h2 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4 animate-fade-in-up">
+                Hamburger Menü
+              </h2>
+              <p className="text-lg md:text-2xl text-white/90 mb-6 max-w-xl animate-fade-in-up delay-100">
+                Hamburger, patates ve istediğiniz içecek ile lezzetli bir menü sizi bekliyor!
+              </p>
+              <a
+                href="/menu#hamburger-menu"
+                className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 animate-fade-in-up delay-200"
+                tabIndex={0}
+                aria-label="Hamburger Menüye Git"
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { window.location.href = '/menu#hamburger-menu'; } }}
+              >
+                Menüye Git
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Yakında: Bubble Tea Bölümü */}
+      <section className="relative w-full py-16 bg-gradient-to-br from-pink-100 via-purple-100 to-yellow-50 flex flex-col items-center justify-center">
+        <div className="mb-8 flex flex-col items-center">
+          <span className="inline-block bg-pink-500 text-white text-xs font-bold px-4 py-1 rounded-full shadow animate-bounce mb-3">Çok Yakında!</span>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-pink-700 mb-2 drop-shadow">Bubble Tea Lezzetleri</h2>
+          <p className="text-lg text-gray-700 max-w-xl text-center">5 farklı, rengarenk ve ferahlatıcı bubble tea çeşidimiz çok yakında menümüzde! Favorini seçmeye hazır ol!</p>
+        </div>
+        <div className="flex flex-wrap justify-center gap-6 mt-6">
+          {/* Bubble Tea Kartları */}
+          {[
+            { name: "Mango Bubble Tea", color: "bg-yellow-300", ring: "ring-yellow-400", img: "/images/bubbletea/mango.png" },
+            { name: "Çilek Bubble Tea", color: "bg-pink-300", ring: "ring-pink-400", img: "/images/bubbletea/cilek.png" },
+            { name: "Yaban Mersini Bubble Tea", color: "bg-purple-300", ring: "ring-purple-400", img: "/images/bubbletea/yaban-mersini.png" },
+            { name: "Yeşil Elma Bubble Tea", color: "bg-green-300", ring: "ring-green-400", img: "/images/bubbletea/yesil-elma.png" },
+            { name: "Karamel Bubble Tea", color: "bg-amber-300", ring: "ring-amber-400", img: "/images/bubbletea/karamel.png" },
+          ].map((tea, i) => (
+            <div
+              key={tea.name}
+              className={`relative flex flex-col items-center justify-end w-40 h-72 rounded-3xl shadow-xl ${tea.color} ${tea.ring} ring-4 transition-transform duration-300 hover:scale-105 animate-fade-in-up`}
+              style={{ animationDelay: `${i * 0.1 + 0.2}s` }}
+              tabIndex={0}
+              aria-label={tea.name}
+            >
+              {/* Büyük dikey dikdörtgen görsel alanı */}
+              <div className="w-32 h-48 rounded-3xl bg-white shadow-lg mt-4 flex items-center justify-center overflow-hidden">
+                {tea.img ? (
+                  <img
+                    src={tea.img}
+                    alt={tea.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <svg width="64" height="96" viewBox="0 0 64 96" fill="none"><rect x="0" y="0" width="64" height="96" rx="24" fill="#fff" /><text x="50%" y="54%" textAnchor="middle" fill="#bbb" fontSize="16" fontFamily="Arial" dy=".3em">Fotoğraf</text></svg>
+                )}
+              </div>
+              <span className="mt-4 text-lg font-bold text-pink-900 drop-shadow text-center px-2">{tea.name}</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Features Section */}
       <section className="py-16 bg-gray-50">

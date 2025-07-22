@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { handleImageError } from "../utils/imageUtils";
 
 interface MenuItem {
@@ -19,6 +19,19 @@ const MenuPage: React.FC = () => {
     src: string;
     alt: string;
   } | null>(null);
+
+  // Hash ile mutfaktan kategorisini ve hamburger menüye scroll
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash === '#hamburger-menu') {
+      setActiveCategory('mutfaktan');
+      setTimeout(() => {
+        const el = document.getElementById('hamburger-menu');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300); // kategori değişimi ve render için kısa gecikme
+    }
+  }, []);
 
   const handleImageClick = (image: string, name: string) => {
     setSelectedImage({ src: image, alt: name });
@@ -266,7 +279,7 @@ const MenuPage: React.FC = () => {
         "Dışı çıtır simit, içi nefis pizza harcıyla dolu enfes bir lezzet bombası",
       price: "70₺",
       category: "simitler",
-      image: "/images/simitler/atom.jpg",
+      image: "/images/simitler/atom-simit.jpeg",
       popular: true,
     },
     {
@@ -369,7 +382,7 @@ const MenuPage: React.FC = () => {
       description: "Sucuk ve kaşar peyniri ile hazırlanmış lezzetli poğaça",
       price: "30₺",
       category: "pogacalar",
-      image: "/images/pogacalar/sucuk-kasarli-pogaca.jpg",
+      image: "/images/pogacalar/sucuklu-kasarli-pogaca.jpeg",
     },
 
     // Açmalar
@@ -395,7 +408,7 @@ const MenuPage: React.FC = () => {
       description: "Kaşar peyniri ile hazırlanmış sıcacık ve lezzetli açma",
       price: "25₺",
       category: "acmalar",
-      image: "/images/acmalar/sade-acma.png",
+      image: "/images/acmalar/kasarli-acma.jpeg",
     },
     {
       id: 33,
@@ -411,7 +424,7 @@ const MenuPage: React.FC = () => {
       description: "Sucuk ve kaşar peyniri ile hazırlanmış baharatlı açma",
       price: "30₺",
       category: "acmalar",
-      image: "/images/acmalar/sade-acma.png",
+      image: "/images/acmalar/sucuklu-kasarli.jpeg",
     },
     {
       id: 35,
@@ -438,7 +451,7 @@ const MenuPage: React.FC = () => {
         "Peynir, domates, salatalık ve yeşillik ile hazırlanmış klasik sandviç",
       price: "80₺",
       category: "sandvic",
-      image: "/images/sandvic/sandvic.webp",
+      image: "/images/sandvic/sade.jpeg",
     },
     {
       id: 38,
@@ -447,7 +460,7 @@ const MenuPage: React.FC = () => {
         "7 farklı tahıl ile hazırlanmış sağlıklı ve besleyici sandviç",
       price: "80₺",
       category: "sandvic",
-      image: "/images/sandvic/tambugday.jpeg",
+      image: "/images/sandvic/7-tahilli.jpeg",
     },
     {
       id: 39,
@@ -456,7 +469,7 @@ const MenuPage: React.FC = () => {
         "Tam buğday ekmeği ile hazırlanmış sağlıklı sandviç seçeneği",
       price: "80₺",
       category: "sandvic",
-      image: "/images/sandvic/tambugdaysandvic.jpeg",
+      image: "/images/sandvic/tambugday.jpeg",
     },
     {
       id: 40,
@@ -465,7 +478,7 @@ const MenuPage: React.FC = () => {
         "Et köftesi, peynir, domates, salatalık ve özel sos ile burger sandviç",
       price: "60₺",
       category: "sandvic",
-      image: "/images/sandvic/burgersandvic.jpg",
+      image: "/images/sandvic/burger.jpeg",
     },
     {
       id: 41,
@@ -473,7 +486,7 @@ const MenuPage: React.FC = () => {
       description: "Simit ile hazırlanmış özel sandviç",
       price: "80₺",
       category: "sandvic",
-      image: "/images/sandvic/simit-sandvic.jpg",
+      image: "/images/sandvic/simit-sandvic.png",
     },
 
     // Börekler
@@ -607,7 +620,7 @@ const MenuPage: React.FC = () => {
       description: "Çeşitli tatlar seçeneği ile dilim pasta",
       price: "140₺",
       category: "tatlilar",
-      image: "/images/tatlılar/dilimpastaa.png",
+      image: "/images/tatlılar/dilimpasta.jpeg",
     },
     {
       id: 60,
@@ -674,6 +687,14 @@ const MenuPage: React.FC = () => {
       price: "100₺",
       category: "mutfaktan",
       image: "/images/mutfaktan/sogus-tabagi.webp",
+    },
+    {
+      id: 68,
+      name: "Hamburger Menü",
+      description: "Hamburger, patates ve istediğiniz içecek ile servis edilir.",
+      price: "250₺",
+      category: "mutfaktan",
+      image: "/images/mutfaktan/hamburger-menu.jpeg",
     },
 
     // Aperatifler
@@ -1001,6 +1022,14 @@ const MenuPage: React.FC = () => {
       category: "soguk-icecekler",
       image: "/images/soguk-icecekler/churchill.webp",
     },
+    {
+      id: 108,
+      name: "Beypazarı Coala",
+      description: "Doğal maden suyu ve cola lezzetinin birleşimiyle ferahlatıcı içecek.",
+      price: "30₺",
+      category: "soguk-icecekler",
+      image: "/images/soguk-icecekler/coala.png",
+    },
 
     // Soğuk Kahveler
     {
@@ -1177,6 +1206,7 @@ const MenuPage: React.FC = () => {
                 {filteredItems.map((item, index) => (
                   <motion.div
                     key={item.id}
+                    id={item.name === "Hamburger Menü" ? "hamburger-menu" : undefined}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{

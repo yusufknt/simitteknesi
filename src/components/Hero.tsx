@@ -11,7 +11,8 @@ const Hero: React.FC = () => {
         className="absolute inset-0 z-0"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(0, 0, 0, 0.3), rgba(239, 68, 68, 0.4)), url("https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80")',
+            'linear-gradient(rgba(0, 0, 0, 0.3), rgba(239, 68, 68, 0.4)), url("/images/simitteknesi.png")',
+          // 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(239, 68, 68, 0.4)), url("https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80")',
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",
@@ -43,31 +44,36 @@ const Hero: React.FC = () => {
           </motion.div>
 
           {/* Main Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight"
-          >
-            <span
-              className="bg-gradient-to-r from-white via-red-400 to-red-600 bg-clip-text text-transparent drop-shadow-lg"
-              style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontWeight: "700",
-              }}
-            >
-              Simit Teknesi Nazilli'ye
-            </span>
-            <span
-              className="block bg-gradient-to-r from-white via-red-400 to-red-600 bg-clip-text text-transparent drop-shadow-lg mt-2"
-              style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontWeight: "700",
-              }}
-            >
-              Hoş Geldiniz
-            </span>
-          </motion.h1>
+          <motion.div className="flex flex-col items-center justify-center w-full">
+            <div className="relative inline-block">
+              <div className="absolute inset-0 rounded-2xl bg-black/60 backdrop-blur-md px-4 py-2 md:px-8 md:py-4 -z-10" aria-hidden="true" />
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight"
+              >
+                <span
+                  className="bg-gradient-to-r from-white via-red-500 to-red-700 bg-clip-text text-transparent drop-shadow-2xl"
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontWeight: "700",
+                  }}
+                >
+                  Simit Teknesi Nazilli'ye
+                </span>
+                <span
+                  className="block bg-gradient-to-r from-white via-red-500 to-red-700 bg-clip-text text-transparent drop-shadow-2xl mt-2"
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontWeight: "700",
+                  }}
+                >
+                  Hoş Geldiniz
+                </span>
+              </motion.h1>
+            </div>
+          </motion.div>
 
           {/* Subtitle */}
           <motion.p
