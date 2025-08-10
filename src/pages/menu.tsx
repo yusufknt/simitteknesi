@@ -19,6 +19,7 @@ const MenuPage: React.FC = () => {
     src: string;
     alt: string;
   } | null>(null);
+  const [showBubbleTeaModal, setShowBubbleTeaModal] = useState(false);
 
   // Hash ile mutfaktan kategorisini ve hamburger menüye scroll
   useEffect(() => {
@@ -33,8 +34,25 @@ const MenuPage: React.FC = () => {
     }
   }, []);
 
+  // Hash ile bubble tea çeşitlerine scroll
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash === '#bubble-tea-cesitleri') {
+      setActiveCategory('soguk-icecekler');
+      setTimeout(() => {
+        const el = document.getElementById('bubble-tea-cesitleri');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300); // kategori değişimi ve render için kısa gecikme
+    }
+  }, []);
+
   const handleImageClick = (image: string, name: string) => {
     setSelectedImage({ src: image, alt: name });
+  };
+
+  const handleBubbleTeaClick = () => {
+    setShowBubbleTeaModal(true);
   };
 
   const closeImageModal = () => {
@@ -636,7 +654,7 @@ const MenuPage: React.FC = () => {
       id: 68,
       name: "Hamburger Menü",
       description: "Hamburger, patates ve istediğiniz içecek ile servis edilir.",
-      price: "250₺",
+      price: "230₺",
       category: "mutfaktan",
       image: "/images/mutfaktan/hamburger-menu.jpeg",
     },
@@ -896,6 +914,30 @@ const MenuPage: React.FC = () => {
     // Soğuk İçecekler
     {
       id: 92,
+      name: "Bubble Tea Çeşitleri",
+      description: "Çilek, Karamel, Mango, Yaban Mersini, Yeşil Elma aromalı bubble tea çeşitleri. İçinde yumuşak boba topları ile servis edilir.",
+      price: "120₺",
+      category: "soguk-icecekler",
+      image: "/images/bubbletea/cilek.png",
+    },
+    {
+      id: 93,
+      name: "Cool Lime",
+      description: "Ferahlatıcı lime aromalı soğuk içecek",
+      price: "120₺",
+      category: "soguk-icecekler",
+      image: "/images/soguk-icecekler/cool-lime.webp",
+    },
+    {
+      id: 94,
+      name: "Cool Berry",
+      description: "Karışık meyve aromalı soğuk içecek",
+      price: "120₺",
+      category: "soguk-icecekler",
+      image: "/images/soguk-icecekler/cool-berry.jpg",
+    },
+    {
+      id: 95,
       name: "Su 500ml",
       description: "500ml doğal kaynak suyu",
       price: "15₺",
@@ -903,7 +945,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/su.webp",
     },
     {
-      id: 93,
+      id: 96,
       name: "Meyve Suyu 200ml",
       description: "200ml taze meyve suyu, çeşitli tatlar mevcut",
       price: "20₺",
@@ -911,7 +953,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/meyvesuyu200.jpg",
     },
     {
-      id: 94,
+      id: 97,
       name: "Caprisun",
       description: "Capri-Sun, meyve suyu lezzetini pratik ve eğlenceli ambalajında sunan ferahlatıcı bir içecektir.",
       price: "30₺",
@@ -919,7 +961,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/caprisun.jpg",
     },
     {
-      id: 95,
+      id: 98,
       name: "Süt",
       description: "Taze ve doğal süt",
       price: "20₺",
@@ -927,7 +969,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/süt.webp",
     },
     {
-      id: 96,
+      id: 99,
       name: "Meyveli Süt",
       description: "Meyve aromalı süt",
       price: "20₺",
@@ -935,7 +977,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/meyveli-sut.png",
     },
     {
-      id: 97,
+      id: 100,
       name: "Juss Tea",
       description: "Ferahlatıcı çay aromalı içecek",
       price: "60₺",
@@ -943,7 +985,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/soguk-cay.webp",
     },
     {
-      id: 98,
+      id: 101,
       name: "Cola 330ml",
       description: "330ml soğuk cola içeceği",
       price: "60₺",
@@ -951,7 +993,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/kola.webp",
     },
     {
-      id: 99,
+      id: 102,
       name: "Fanta 330ml",
       description: "330ml soğuk fanta içeceği",
       price: "60₺",
@@ -959,7 +1001,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/fanta.jpg",
     },
     {
-      id: 100,
+      id: 103,
       name: "Link",
       description: "330ml soğuk link içeceği",
       price: "20₺",
@@ -967,7 +1009,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/link.webp",
     },
     {
-      id: 101,
+      id: 104,
       name: "Ayran 175ml",
       description: "175ml geleneksel Türk ayranı",
       price: "20₺",
@@ -975,7 +1017,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/ayran.jpg",
     },
     {
-      id: 102,
+      id: 105,
       name: "Sade Soda",
       description: "Sade maden suyu",
       price: "25₺",
@@ -983,7 +1025,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/sadesoda.webp",
     },
     {
-      id: 103,
+      id: 106,
       name: "Meyveli Soda",
       description: "Meyve aromalı maden suyu",
       price: "30₺",
@@ -991,7 +1033,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/meyvelisoda.jpg",
     },
     {
-      id: 104,
+      id: 107,
       name: "Red Bull",
       description: "Enerji içeceği",
       price: "75₺",
@@ -999,7 +1041,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/redbull.jpeg",
     },
     {
-      id: 105,
+      id: 108,
       name: "Limonata",
       description: "Taze sıkılmış limon ile hazırlanmış limonata",
       price: "80₺",
@@ -1007,7 +1049,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/limonata.jpg",
     },
     {
-      id: 106,
+      id: 109,
       name: " Kuşadası, Nazilli Gazoz",
       description: "Geleneksel Türk gazozu",
       price: "50₺",
@@ -1015,7 +1057,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/gazoz.webp",
     },
     {
-      id: 107,
+      id: 110,
       name: "Churchill",
       description: "Churchill içeceği",
       price: "75₺",
@@ -1023,7 +1065,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/churchill.webp",
     },
     {
-      id: 108,
+      id: 111,
       name: "Beypazarı Coala",
       description: "Doğal maden suyu ve cola lezzetinin birleşimiyle ferahlatıcı içecek.",
       price: "30₺",
@@ -1033,7 +1075,7 @@ const MenuPage: React.FC = () => {
 
     // Soğuk Kahveler
     {
-      id: 92,
+      id: 112,
       name: "Ice Americano",
       description: "Soğuk americano kahve",
       price: "100₺",
@@ -1041,7 +1083,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-kahveler/ice-americano.jpg",
     },
     {
-      id: 93,
+      id: 113,
       name: "Ice Latte",
       description: "Soğuk latte kahve",
       price: "120₺",
@@ -1049,7 +1091,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-kahveler/ice-latte.webp",
     },
     {
-      id: 94,
+      id: 114,
       name: "Ice Mocha",
       description: "Soğuk mocha kahve",
       price: "150₺",
@@ -1057,7 +1099,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-kahveler/ice-mocha.webp",
     },
     {
-      id: 95,
+      id: 115,
       name: "Ice Chocolate",
       description: "Soğuk çikolata",
       price: "120₺",
@@ -1065,7 +1107,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-kahveler/ice-chocolate.webp",
     },
     {
-      id: 96,
+      id: 116,
       name: "Ice Cappuccino",
       description: "Soğuk cappuccino kahve",
       price: "120₺",
@@ -1073,7 +1115,7 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-kahveler/ice-cappuccino.png",
     },
     {
-      id: 97,
+      id: 117,
       name: "Ice Macchiato",
       description: "Soğuk macchiato kahve",
       price: "120₺",
@@ -1206,7 +1248,7 @@ const MenuPage: React.FC = () => {
                 {filteredItems.map((item, index) => (
                   <motion.div
                     key={item.id}
-                    id={item.name === "Hamburger Menü" ? "hamburger-menu" : undefined}
+                    id={item.name === "Hamburger Menü" ? "hamburger-menu" : item.name === "Bubble Tea Çeşitleri" ? "bubble-tea-cesitleri" : undefined}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
@@ -1236,11 +1278,19 @@ const MenuPage: React.FC = () => {
                           scale: 1.03,
                           transition: { duration: 0.3, ease: "easeOut" },
                         }}
-                        onClick={() => handleImageClick(item.image, item.name)}
+                        onClick={() => 
+                          item.name === "Bubble Tea Çeşitleri" 
+                            ? handleBubbleTeaClick() 
+                            : handleImageClick(item.image, item.name)
+                        }
                       />
                       <div
                         className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center cursor-pointer"
-                        onClick={() => handleImageClick(item.image, item.name)}
+                        onClick={() => 
+                          item.name === "Bubble Tea Çeşitleri" 
+                            ? handleBubbleTeaClick() 
+                            : handleImageClick(item.image, item.name)
+                        }
                       >
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <svg
@@ -1345,6 +1395,142 @@ const MenuPage: React.FC = () => {
                   {selectedImage.alt}
                 </h3>
               </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Bubble Tea Modal */}
+      <AnimatePresence>
+        {showBubbleTeaModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[9999] bg-black bg-opacity-90 flex items-center justify-center p-4"
+            onClick={() => setShowBubbleTeaModal(false)}
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+            role="dialog"
+            aria-modal="true"
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="relative max-w-6xl max-h-full bg-white rounded-2xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setShowBubbleTeaModal(false)}
+                className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 z-10"
+                aria-label="Close modal"
+              >
+                <svg
+                  className="w-6 h-6 text-gray-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              {/* Header */}
+              <div className="bg-gradient-to-r from-pink-500 to-purple-600 text-white p-8 text-center">
+                <h2 className="text-4xl font-bold mb-2">Bubble Tea Çeşitleri</h2>
+                <p className="text-xl opacity-90">Tüm aromalarımızı keşfedin!</p>
+              </div>
+
+              {/* Content */}
+              <div className="p-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {/* Çilek Bubble Tea */}
+                  <div className="text-center group">
+                    <div className="relative overflow-hidden rounded-xl mb-4">
+                      <img
+                        src="/images/bubbletea/cilek.png"
+                        alt="Çilek Bubble Tea"
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={handleImageError}
+                      />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Çilek</h3>
+                    <p className="text-gray-600 text-sm">Çilek aromalı bubble tea, içinde yumuşak boba topları ile</p>
+                  </div>
+
+                  {/* Karamel Bubble Tea */}
+                  <div className="text-center group">
+                    <div className="relative overflow-hidden rounded-xl mb-4">
+                      <img
+                        src="/images/bubbletea/karamel.png"
+                        alt="Karamel Bubble Tea"
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={handleImageError}
+                      />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Karamel</h3>
+                    <p className="text-gray-600 text-sm">Karamel aromalı bubble tea, içinde yumuşak boba topları ile</p>
+                  </div>
+
+                  {/* Mango Bubble Tea */}
+                  <div className="text-center group">
+                    <div className="relative overflow-hidden rounded-xl mb-4">
+                      <img
+                        src="/images/bubbletea/mango.png"
+                        alt="Mango Bubble Tea"
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={handleImageError}
+                      />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Mango</h3>
+                    <p className="text-gray-600 text-sm">Mango aromalı bubble tea, içinde yumuşak boba topları ile</p>
+                  </div>
+
+                  {/* Yaban Mersini Bubble Tea */}
+                  <div className="text-center group">
+                    <div className="relative overflow-hidden rounded-xl mb-4">
+                      <img
+                        src="/images/bubbletea/yaban-mersini.png"
+                        alt="Yaban Mersini Bubble Tea"
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={handleImageError}
+                      />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Yaban Mersini</h3>
+                    <p className="text-gray-600 text-sm">Yaban mersini aromalı bubble tea, içinde yumuşak boba topları ile</p>
+                  </div>
+
+                  {/* Yeşil Elma Bubble Tea */}
+                  <div className="text-center group">
+                    <div className="relative overflow-hidden rounded-xl mb-4">
+                      <img
+                        src="/images/bubbletea/yesil-elma.png"
+                        alt="Yeşil Elma Bubble Tea"
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={handleImageError}
+                      />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Yeşil Elma</h3>
+                    <p className="text-gray-600 text-sm">Yeşil elma aromalı bubble tea, içinde yumuşak boba topları ile</p>
+                  </div>
+                </div>
+
+                {/* Price and Info */}
+                <div className="mt-8 text-center bg-gray-50 rounded-xl p-6">
+                  <div className="text-3xl font-bold text-red-600 mb-2">120₺</div>
+                  <p className="text-gray-600">Tüm bubble tea çeşitleri aynı fiyatla sunulmaktadır</p>
+                  <p className="text-sm text-gray-500 mt-2">İçinde yumuşak boba topları ile servis edilir</p>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         )}

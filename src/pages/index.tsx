@@ -105,12 +105,12 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Yakında: Bubble Tea Bölümü */}
+      {/* Bubble Tea Bölümü */}
       <section className="relative w-full py-16 bg-gradient-to-br from-pink-100 via-purple-100 to-yellow-50 flex flex-col items-center justify-center">
         <div className="mb-8 flex flex-col items-center">
-          <span className="inline-block bg-pink-500 text-white text-xs font-bold px-4 py-1 rounded-full shadow animate-bounce mb-3">Çok Yakında!</span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-pink-700 mb-2 drop-shadow">Bubble Tea Lezzetleri</h2>
-          <p className="text-lg text-gray-700 max-w-xl text-center">5 farklı, rengarenk ve ferahlatıcı bubble tea çeşidimiz çok yakında menümüzde! Favorini seçmeye hazır ol!</p>
+          <span className="inline-block bg-green-500 text-white text-xs font-bold px-4 py-1 rounded-full shadow mb-3">Menümüzde Mevcut!</span>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-pink-700 mb-2 drop-shadow">Bubble Tea Çeşitleri</h2>
+          <p className="text-lg text-gray-700 max-w-xl text-center">5 farklı, rengarenk ve ferahlatıcı bubble tea çeşidimiz artık menümüzde! Favorini seçmeye hazır ol!</p>
         </div>
         <div className="flex flex-wrap justify-center gap-6 mt-6">
           {/* Bubble Tea Kartları */}
@@ -121,12 +121,13 @@ const HomePage: React.FC = () => {
             { name: "Yeşil Elma Bubble Tea", color: "bg-green-300", ring: "ring-green-400", img: "/images/bubbletea/yesil-elma.png" },
             { name: "Karamel Bubble Tea", color: "bg-amber-300", ring: "ring-amber-400", img: "/images/bubbletea/karamel.png" },
           ].map((tea, i) => (
-            <div
+            <Link
+              href="/menu#bubble-tea-cesitleri"
               key={tea.name}
-              className={`relative flex flex-col items-center justify-end w-40 h-72 rounded-3xl shadow-xl ${tea.color} ${tea.ring} ring-4 transition-transform duration-300 hover:scale-105 animate-fade-in-up`}
+              className={`relative flex flex-col items-center justify-end w-40 h-72 rounded-3xl shadow-xl ${tea.color} ${tea.ring} ring-4 transition-transform duration-300 hover:scale-105 animate-fade-in-up cursor-pointer`}
               style={{ animationDelay: `${i * 0.1 + 0.2}s` }}
               tabIndex={0}
-              aria-label={tea.name}
+              aria-label={`${tea.name} - Bubble Tea Çeşitlerine Git`}
             >
               {/* Büyük dikey dikdörtgen görsel alanı */}
               <div className="w-32 h-48 rounded-3xl bg-white shadow-lg mt-4 flex items-center justify-center overflow-hidden">
@@ -141,8 +142,20 @@ const HomePage: React.FC = () => {
                 )}
               </div>
               <span className="mt-4 text-lg font-bold text-pink-900 drop-shadow text-center px-2">{tea.name}</span>
-            </div>
+            </Link>
           ))}
+        </div>
+        
+        {/* Menüye Git Butonu */}
+        <div className="mt-8 text-center">
+          <Link
+            href="/menu#bubble-tea-cesitleri"
+            className="inline-block bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2"
+            tabIndex={0}
+            aria-label="Bubble Tea Çeşitlerini Menüde Gör"
+          >
+            Menüde Gör
+          </Link>
         </div>
       </section>
 
