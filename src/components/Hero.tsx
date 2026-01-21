@@ -40,9 +40,9 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="mb-16 relative"
+            className="mb-6 md:mb-16 relative"
           >
-            <div className="w-32 h-32 md:w-48 md:h-48 lg:w-56 lg:h-56 mx-auto relative">
+            <div className="w-24 h-24 md:w-48 md:h-48 lg:w-56 lg:h-56 mx-auto relative">
               <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-red-500 rounded-full blur-3xl opacity-30 animate-pulse" />
               <img
                 src="/images/logo.png"
@@ -53,14 +53,14 @@ const Hero: React.FC = () => {
           </motion.div>
 
           {/* Main Heading - Modern Design */}
-          <motion.div className="flex flex-col items-center justify-center w-full mb-6">
+          <motion.div className="flex flex-col items-center justify-center w-full mb-4 md:mb-6">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight text-center"
+              className="text-3xl md:text-7xl lg:text-8xl font-extrabold leading-tight text-center"
             >
-              <span className="block bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent drop-shadow-2xl mb-2">
+              <span className="block bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent drop-shadow-2xl mb-1 md:mb-2">
                 Simit Teknesi
               </span>
               <span className="block bg-gradient-to-r from-amber-400 via-red-500 to-amber-400 bg-clip-text text-transparent drop-shadow-2xl">
@@ -72,11 +72,11 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-4 flex items-center space-x-2"
+              className="mt-2 md:mt-4 flex items-center space-x-2"
             >
-              <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500" />
-              <span className="text-amber-400 text-sm font-semibold tracking-wider">TAZE & LEZZETLİ</span>
-              <div className="h-px w-12 bg-gradient-to-l from-transparent to-amber-500" />
+              <div className="h-px w-8 md:w-12 bg-gradient-to-r from-transparent to-amber-500" />
+              <span className="text-amber-400 text-xs md:text-sm font-semibold tracking-wider">TAZE & LEZZETLİ</span>
+              <div className="h-px w-8 md:w-12 bg-gradient-to-l from-transparent to-amber-500" />
             </motion.div>
           </motion.div>
 
@@ -85,7 +85,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed text-center"
+            className="text-sm md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed text-center px-4"
           >
             Günlük taze üretim simit, poğaça ve böreklerimiz ile özel kahve çeşitlerimizi keşfedin
           </motion.p>
@@ -95,20 +95,20 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-10"
+            className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center pt-6 md:pt-10"
           >
             <Link
               href="/menu"
-              className="group relative overflow-hidden bg-gradient-to-r from-amber-500 to-red-500 text-white px-12 py-5 rounded-full font-bold text-xl shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 transform hover:scale-105 flex items-center space-x-3"
+              className="group relative overflow-hidden bg-gradient-to-r from-amber-500 to-red-500 text-white px-8 py-3 md:px-12 md:py-5 rounded-full font-bold text-base md:text-xl shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 md:space-x-3"
             >
               <span className="relative z-10">Menüyü Keşfet</span>
-              <ArrowRightIcon className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300 relative z-10" />
+              <ArrowRightIcon className="h-5 w-5 md:h-6 md:w-6 group-hover:translate-x-2 transition-transform duration-300 relative z-10" />
               <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Link>
 
             <Link
               href="/iletisim"
-              className="group relative overflow-hidden border-2 border-white/30 backdrop-blur-md bg-white/10 text-white px-12 py-5 rounded-full font-bold text-xl hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-xl"
+              className="group relative overflow-hidden border-2 border-white/30 backdrop-blur-md bg-white/10 text-white px-8 py-3 md:px-12 md:py-5 rounded-full font-bold text-base md:text-xl hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-xl"
             >
               <span>İletişim</span>
             </Link>
