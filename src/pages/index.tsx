@@ -32,22 +32,28 @@ const HomePage: React.FC = () => {
   const popularItems = [
     {
       name: "Atom Simit",
-      price: "70₺",
+      price: "90₺",
       image: "/images/simitler/atom-simit.jpeg",
       description:
-        "Dışı çıtır simit, içi nefis pizza harcıyla dolu enfes bir lezzet bombası",
+        "İçi pizza harcıyla dolu lezzet bombası",
     },
     {
       name: "Limonata",
-      price: "70₺",
+      price: "90₺",
       image: "/images/soguk-icecekler/limonata.jpg",
-      description: "Taze sıkılmış limon ile hazırlanmış limonata",
+      description: "Taze sıkılmış limonata",
     },
     {
       name: "Türk Kahvesi",
       price: "80₺",
       image: "/images/sicak-icecekler/turkkahvesi.webp",
-      description: "Geleneksel Türk kahvesi, cezve ile hazırlanmış",
+      description: "Geleneksel Türk kahvesi",
+    },
+    {
+      name: "Kruvasan",
+      price: "90₺",
+      image: "/images/tatlılar/kruvasan.webp",
+      description: "Katmanlı taze kruvasan",
     },
   ];
 
@@ -63,202 +69,369 @@ const HomePage: React.FC = () => {
 
       <Hero />
 
-      {/* Hamburger Menü Video Reklam Alanı */}
-      <section className="relative w-full min-h-[400px] md:h-[520px] flex items-center justify-center overflow-hidden">
-        <img
-          src="/images/mutfaktan/hamburger-menu.jpeg"
-          alt="Hamburger Menü Arka Plan"
-          className="absolute inset-0 w-full h-full object-cover blur-md scale-105"
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 bg-black/50 pointer-events-none" />
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-center w-full h-full py-6">
-          <video
-            className="object-contain max-h-full max-w-[90vw] md:max-h-[500px] md:max-w-[400px] rounded-2xl shadow-2xl border-4 border-white/10 bg-black"
-            src="/images/mutfaktan/hamaburger-menu.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            aria-label="Hamburger Menü Reklam Videosu"
-            tabIndex={0}
-          />
-          <div className="mt-6 md:mt-0 md:ml-12 flex flex-col items-center justify-center text-center px-4">
-            <div className="bg-black/60 rounded-xl px-6 py-6 md:px-12 md:py-8 shadow-lg backdrop-blur-sm inline-block">
-              <h2 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4 animate-fade-in-up">
-                Hamburger Menü
-              </h2>
-              <p className="text-lg md:text-2xl text-white/90 mb-6 max-w-xl animate-fade-in-up delay-100">
-                Hamburger, patates ve istediğiniz içecek ile lezzetli bir menü sizi bekliyor!
-              </p>
-              <a
-                href="/menu#hamburger-menu"
-                className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 animate-fade-in-up delay-200"
-                tabIndex={0}
-                aria-label="Hamburger Menüye Git"
-                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { window.location.href = '/menu#hamburger-menu'; } }}
-              >
-                Menüye Git
-              </a>
-            </div>
+      {/* Hamburger & Pizza Menü Showcase - Modern Design */}
+      <section className="relative py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+            backgroundSize: '40px 40px'
+          }} />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-bold px-4 py-2 rounded-full mb-4">
+              ÖNE ÇIKAN MENÜ
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Hamburger & Pizza Menü
+            </h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Lezzet dolu bir deneyim için özel menümüz
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            {/* Hamburger Card */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl overflow-hidden shadow-2xl hover:shadow-amber-500/20 transition-all duration-500"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white">
+                    Hamburger Menü
+                  </h3>
+                  <span className="text-3xl md:text-4xl font-bold text-amber-500">
+                    270₺
+                  </span>
+                </div>
+
+                <div className="aspect-video mb-6 rounded-2xl overflow-hidden bg-gray-700">
+                  <img
+                    src="/images/mutfaktan/hamburger-menu.jpeg"
+                    alt="Hamburger Menü"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center text-gray-300">
+                    <svg className="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                      <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
+                    </svg>
+                    <span>Lezzetli hamburger</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <svg className="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                      <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
+                    </svg>
+                    <span>Çıtır patates kızartması</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <svg className="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                      <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
+                    </svg>
+                    <span>İstediğiniz içecek</span>
+                  </div>
+                </div>
+
+                <Link
+                  href="/menu"
+                  className="block w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-center py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105"
+                >
+                  Sipariş Ver
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Pizza Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl overflow-hidden shadow-2xl hover:shadow-amber-500/20 transition-all duration-500"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white">
+                    Pizza Menü
+                  </h3>
+                  <span className="text-3xl md:text-4xl font-bold text-amber-500">
+                    270₺
+                  </span>
+                </div>
+
+                <div className="aspect-video mb-6 rounded-2xl overflow-hidden bg-gray-700">
+                  <img
+                    src="/images/mutfaktan/hamburger-menu.jpeg"
+                    alt="Pizza Menü"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center text-gray-300">
+                    <svg className="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                      <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
+                    </svg>
+                    <span>Sıcacık pizza</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <svg className="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                      <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
+                    </svg>
+                    <span>Çıtır patates kızartması</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <svg className="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                      <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
+                    </svg>
+                    <span>İstediğiniz içecek</span>
+                  </div>
+                </div>
+
+                <Link
+                  href="/menu"
+                  className="block w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-center py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105"
+                >
+                  Sipariş Ver
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Bubble Tea Bölümü */}
-      <section className="relative w-full py-16 bg-gradient-to-br from-pink-100 via-purple-100 to-yellow-50 flex flex-col items-center justify-center">
-        <div className="mb-8 flex flex-col items-center">
-          <span className="inline-block bg-green-500 text-white text-xs font-bold px-4 py-1 rounded-full shadow mb-3">Menümüzde Mevcut!</span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-pink-700 mb-2 drop-shadow">Bubble Tea Çeşitleri</h2>
-          <p className="text-lg text-gray-700 max-w-xl text-center">5 farklı, rengarenk ve ferahlatıcı bubble tea çeşidimiz artık menümüzde! Favorini seçmeye hazır ol!</p>
-        </div>
-        <div className="flex flex-wrap justify-center gap-6 mt-6">
-          {/* Bubble Tea Kartları */}
-          {[
-            { name: "Mango Bubble Tea", color: "bg-yellow-300", ring: "ring-yellow-400", img: "/images/bubbletea/mango.png" },
-            { name: "Çilek Bubble Tea", color: "bg-pink-300", ring: "ring-pink-400", img: "/images/bubbletea/cilek.png" },
-            { name: "Yaban Mersini Bubble Tea", color: "bg-purple-300", ring: "ring-purple-400", img: "/images/bubbletea/yaban-mersini.png" },
-            { name: "Yeşil Elma Bubble Tea", color: "bg-green-300", ring: "ring-green-400", img: "/images/bubbletea/yesil-elma.png" },
-            { name: "Karamel Bubble Tea", color: "bg-amber-300", ring: "ring-amber-400", img: "/images/bubbletea/karamel.png" },
-          ].map((tea, i) => (
-            <Link
-              href="/menu#bubble-tea-cesitleri"
-              key={tea.name}
-              className={`relative flex flex-col items-center justify-end w-40 h-72 rounded-3xl shadow-xl ${tea.color} ${tea.ring} ring-4 transition-transform duration-300 hover:scale-105 animate-fade-in-up cursor-pointer`}
-              style={{ animationDelay: `${i * 0.1 + 0.2}s` }}
-              tabIndex={0}
-              aria-label={`${tea.name} - Bubble Tea Çeşitlerine Git`}
-            >
-              {/* Büyük dikey dikdörtgen görsel alanı */}
-              <div className="w-32 h-48 rounded-3xl bg-white shadow-lg mt-4 flex items-center justify-center overflow-hidden">
-                {tea.img ? (
-                  <img
-                    src={tea.img}
-                    alt={tea.name}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <svg width="64" height="96" viewBox="0 0 64 96" fill="none"><rect x="0" y="0" width="64" height="96" rx="24" fill="#fff" /><text x="50%" y="54%" textAnchor="middle" fill="#bbb" fontSize="16" fontFamily="Arial" dy=".3em">Fotoğraf</text></svg>
-                )}
-              </div>
-              <span className="mt-4 text-lg font-bold text-pink-900 drop-shadow text-center px-2">{tea.name}</span>
-            </Link>
-          ))}
-        </div>
-        
-        {/* Menüye Git Butonu */}
-        <div className="mt-8 text-center">
-          <Link
-            href="/menu#bubble-tea-cesitleri"
-            className="inline-block bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2"
-            tabIndex={0}
-            aria-label="Bubble Tea Çeşitlerini Menüde Gör"
-          >
-            Menüde Gör
-          </Link>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 bg-gray-50">
+      {/* Özel Lezzetler Bölümü */}
+      <section className="py-20 bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Neden Simit Teknesi Nazilli?
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Özel Lezzetlerimiz
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Müşterilerimize en iyi deneyimi sunmak için özenle çalışıyoruz
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Her gün taze hazırlanan, özenle seçilmiş ürünlerimiz
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <FeatureCard
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Taze Fırın Ürünleri",
+                description: "Simit, poğaça ve açmalarımız her gün taptaze olarak hazırlanır",
+                icon: "🥯",
+                color: "from-amber-500 to-orange-500"
+              },
+              {
+                title: "Özel Kahve Çeşitleri",
+                description: "Barista kalitesinde hazırlanan sıcak ve soğuk kahvelerimiz",
+                icon: "☕",
+                color: "from-orange-500 to-red-500"
+              },
+              {
+                title: "Tatlı & Börek",
+                description: "Geleneksel tariflerle hazırlanan lezzetli tatlı ve börekler",
+                icon: "🥐",
+                color: "from-red-500 to-pink-500"
+              }
+            ].map((item, index) => (
+              <motion.div
                 key={index}
-                icon={feature.icon}
-                title={feature.title}
-                description={feature.description}
-                index={index}
-              />
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300"
+              >
+                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${item.color} rounded-t-2xl`} />
+                <div className="text-6xl mb-4">{item.icon}</div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {item.description}
+                </p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Popular Items Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Features Section - Modern Redesign */}
+      <section className="py-20 bg-white relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-red-100 rounded-full blur-3xl opacity-20" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-100 rounded-full blur-3xl opacity-20" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Popüler Ürünlerimiz
+            <span className="inline-block bg-gradient-to-r from-red-500 to-amber-500 text-white text-sm font-bold px-4 py-2 rounded-full mb-4">
+              NEDEN BİZ?
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Simit Teknesi Nazilli Farkı
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              En çok tercih edilen lezzetlerimizi keşfedin
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Kalite, lezzet ve hizmet anlayışımızla fark yaratıyoruz
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                className="group relative bg-gradient-to-br from-white to-gray-50 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-amber-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-amber-500 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <div className="text-white">
+                      {feature.icon}
+                    </div>
+                  </div>
+
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-red-600 transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {feature.description}
+                  </p>
+
+                  <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="h-1 w-12 bg-gradient-to-r from-red-500 to-amber-500 rounded-full" />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Popular Items Section - Luxury Cafe Style */}
+      <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-20 w-72 h-72 bg-amber-500 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-20 w-72 h-72 bg-red-500 rounded-full blur-3xl animate-pulse delay-1000" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block bg-gradient-to-r from-amber-500 to-red-500 text-white text-sm font-bold px-4 py-2 rounded-full mb-4">
+              EN ÇOK TERCİH EDİLEN
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Popüler Lezzetlerimiz
+            </h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Misafirlerimizin vazgeçilmez favorileri
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {popularItems.map((item, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group relative overflow-hidden bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3"
+                className="group relative"
               >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
-                    onError={handleImageError}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
-                    <span className="text-sm font-bold text-red-600">
-                      Popüler
-                    </span>
-                  </div>
-                </div>
+                <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-2xl hover:shadow-amber-500/30 transition-all duration-500">
+                  {/* Image */}
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      onError={handleImageError}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60" />
+                    
+                    {/* Popular Badge */}
+                    <div className="absolute top-4 right-4">
+                      <div className="bg-gradient-to-r from-amber-500 to-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                        ⭐ Popüler
+                      </div>
+                    </div>
 
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-3">
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-red-600 transition-colors duration-300">
+                    {/* Price Tag */}
+                    <div className="absolute bottom-4 left-4">
+                      <div className="bg-black/80 backdrop-blur-sm text-amber-400 px-4 py-2 rounded-full text-xl font-bold shadow-lg border border-amber-500/30">
+                        {item.price}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors duration-300">
                       {item.name}
                     </h3>
-                    <span className="text-xl font-bold text-red-600 bg-red-50 px-3 py-1 rounded-full">
-                      {item.price}
-                    </span>
-                  </div>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                    <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                      {item.description}
+                    </p>
 
-                  <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <Link
                       href="/menu"
-                      className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-2 rounded-lg font-medium hover:from-red-600 hover:to-red-700 transition-all duration-200 inline-block text-center"
+                      className="inline-flex items-center text-amber-400 font-semibold hover:text-amber-300 transition-colors duration-300 group/link"
                     >
-                      Menüde İncele
+                      <span>Detayları Gör</span>
+                      <svg className="w-4 h-4 ml-2 group-hover/link:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
                     </Link>
                   </div>
-                </div>
 
-                {/* Decorative element */}
-                <div className="absolute -bottom-2 -right-2 w-20 h-20 bg-accent-100 rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+                  {/* Hover Effect Border */}
+                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-amber-500/50 rounded-2xl transition-all duration-500 pointer-events-none" />
+                </div>
               </motion.div>
             ))}
           </div>
@@ -268,16 +441,16 @@ const HomePage: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mt-12"
+            className="text-center mt-16"
           >
             <Link
               href="/menu"
-              className="group bg-gradient-to-r from-primary-500 to-primary-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-primary-600 hover:to-primary-700 transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl inline-flex items-center space-x-2"
+              className="group inline-flex items-center space-x-3 bg-gradient-to-r from-amber-500 to-red-500 text-white px-10 py-5 rounded-full font-bold text-lg hover:from-amber-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-amber-500/50"
             >
-              <span>Tüm Menüyü İncele</span>
-              <span className="group-hover:translate-x-1 transition-transform duration-300">
-                →
-              </span>
+              <span>Tüm Menüyü Keşfet</span>
+              <svg className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
             </Link>
           </motion.div>
         </div>

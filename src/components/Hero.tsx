@@ -5,19 +5,27 @@ import React from "react";
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(0, 0, 0, 0.3), rgba(239, 68, 68, 0.4)), url("/images/simitteknesi.png")',
-          // 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(239, 68, 68, 0.4)), url("https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80")',
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-        }}
-      />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 z-0">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'url("/images/simitteknesi.png")',
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundAttachment: "fixed",
+            opacity: 0.3,
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-red-900/40 to-amber-900/40" />
+      </div>
+
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-red-500/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -32,47 +40,44 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="mb-8"
+            className="mb-8 relative"
           >
-            <div className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto">
+            <div className="w-32 h-32 md:w-48 md:h-48 lg:w-56 lg:h-56 mx-auto relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-red-500 rounded-full blur-3xl opacity-30 animate-pulse" />
               <img
                 src="/images/logo.png"
                 alt="Simit Teknesi Nazilli Logo"
-                className="w-full h-full object-contain drop-shadow-2xl"
+                className="w-full h-full object-contain drop-shadow-2xl relative z-10"
               />
             </div>
           </motion.div>
 
-          {/* Main Heading */}
-          <motion.div className="flex flex-col items-center justify-center w-full">
-            <div className="relative inline-block">
-              <div className="absolute inset-0 rounded-2xl bg-black/60 backdrop-blur-md px-4 py-2 md:px-8 md:py-4 -z-10" aria-hidden="true" />
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight"
-              >
-                <span
-                  className="bg-gradient-to-r from-white via-red-500 to-red-700 bg-clip-text text-transparent drop-shadow-2xl"
-                  style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontWeight: "700",
-                  }}
-                >
-                  Simit Teknesi Nazilli'ye
-                </span>
-                <span
-                  className="block bg-gradient-to-r from-white via-red-500 to-red-700 bg-clip-text text-transparent drop-shadow-2xl mt-2"
-                  style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontWeight: "700",
-                  }}
-                >
-                  Hoş Geldiniz
-                </span>
-              </motion.h1>
-            </div>
+          {/* Main Heading - Modern Design */}
+          <motion.div className="flex flex-col items-center justify-center w-full mb-6">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight text-center"
+            >
+              <span className="block bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent drop-shadow-2xl mb-2">
+                Simit Teknesi
+              </span>
+              <span className="block bg-gradient-to-r from-amber-400 via-red-500 to-amber-400 bg-clip-text text-transparent drop-shadow-2xl">
+                Nazilli
+              </span>
+            </motion.h1>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="mt-4 flex items-center space-x-2"
+            >
+              <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500" />
+              <span className="text-amber-400 text-sm font-semibold tracking-wider">TAZE & LEZZETLİ</span>
+              <div className="h-px w-12 bg-gradient-to-l from-transparent to-amber-500" />
+            </motion.div>
           </motion.div>
 
           {/* Subtitle */}
@@ -80,74 +85,52 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed text-center"
           >
-            Nazilli'nin en taze ve lezzetli simit, açma, poğaça çeşitleri ile
-            özel kahve karışımları ve doğal limonatalarımızı keşfedin.
+            Günlük taze üretim simit, poğaça ve böreklerimiz ile özel kahve çeşitlerimizi keşfedin
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons - Modern Style */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-10"
           >
             <Link
               href="/menu"
-              className="group bg-gradient-to-r from-white to-gray-50 text-primary-600 px-10 py-5 rounded-full font-bold text-xl hover:from-primary-500 hover:to-primary-600 hover:text-white transition-all duration-300 transform hover:scale-110 shadow-xl hover:shadow-2xl flex items-center space-x-3"
+              className="group relative overflow-hidden bg-gradient-to-r from-amber-500 to-red-500 text-white px-12 py-5 rounded-full font-bold text-xl shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 transform hover:scale-105 flex items-center space-x-3"
             >
-              <span>Menümüze Göz Atın</span>
-              <ArrowRightIcon className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
+              <span className="relative z-10">Menüyü Keşfet</span>
+              <ArrowRightIcon className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300 relative z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Link>
 
             <Link
-              href="/hakkimizda"
-              className="text-white border-2 border-white px-10 py-5 rounded-full font-bold text-xl hover:bg-white hover:text-primary-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl backdrop-blur-sm"
+              href="/iletisim"
+              className="group relative overflow-hidden border-2 border-white/30 backdrop-blur-md bg-white/10 text-white px-12 py-5 rounded-full font-bold text-xl hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-xl"
             >
-              Hakkımızda
+              <span>İletişim</span>
             </Link>
           </motion.div>
 
-          {/* Floating Elements */}
+          {/* Features Quick Info */}
           <motion.div
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-20 left-10 opacity-20"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="flex flex-wrap justify-center gap-6 mt-16"
           >
-            <img
-              src="/images/logo.png"
-              alt="Logo"
-              className="w-16 h-16 object-contain"
-            />
-          </motion.div>
-          <motion.div
-            animate={{ y: [0, -15, 0] }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-            className="absolute top-40 right-20 text-5xl opacity-20"
-          >
-            ☕
-          </motion.div>
-          <motion.div
-            animate={{ y: [0, -25, 0] }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
-            className="absolute bottom-20 left-20 opacity-20"
-          >
-            <img
-              src="/images/logo.png"
-              alt="Logo"
-              className="w-12 h-12 object-contain"
-            />
+            {[
+              { icon: "🥯", text: "Günlük Taze" },
+              { icon: "☕", text: "Özel Kahveler" },
+              { icon: "⚡", text: "Hızlı Servis" }
+            ].map((item, index) => (
+              <div key={index} className="flex items-center space-x-2 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20">
+                <span className="text-2xl">{item.icon}</span>
+                <span className="text-white font-semibold">{item.text}</span>
+              </div>
+            ))}
           </motion.div>
         </motion.div>
       </div>
