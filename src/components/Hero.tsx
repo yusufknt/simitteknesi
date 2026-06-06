@@ -1,119 +1,91 @@
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
-      {/* Background Image with Overlay */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Background Image Container */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'url("/images/simitteknesi.png")',
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundAttachment: "fixed",
-            opacity: 0.3,
-          }}
+        <img
+          alt="Simit Teknesi Interior"
+          className="w-full h-full object-cover"
+          src="/images/simitteknesi.png"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-red-900/40 to-amber-900/40" />
+        <div className="absolute inset-0 hero-overlay" />
       </div>
 
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-red-500/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Content Container */}
+      <div className="relative z-10 w-full px-4 md:px-margin-desktop max-w-container-max mx-auto text-center flex flex-col items-center">
+        {/* Logo Container */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="space-y-6"
+          initial={{ opacity: 0, y: 20, scale: 1.1 }}
+          animate={{ opacity: 1, y: 0, scale: 1.3 }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+          className="mb-8 transform"
         >
-          {/* Logo Above Heading */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="mb-6 md:mb-16 relative"
-          >
-            <div className="w-24 h-24 md:w-48 md:h-48 lg:w-56 lg:h-56 mx-auto relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-red-500 rounded-full blur-3xl opacity-30 animate-pulse" />
-              <img
-                src="/images/logo.png"
-                alt="Simit Teknesi Nazilli Logo"
-                className="w-full h-full object-contain drop-shadow-2xl relative z-10"
-              />
-            </div>
-          </motion.div>
-
-          {/* Main Heading - Modern Design */}
-          <motion.div className="flex flex-col items-center justify-center w-full mb-4 md:mb-6">
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-3xl md:text-7xl lg:text-8xl font-extrabold leading-tight text-center"
-            >
-              <span className="block bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent drop-shadow-2xl mb-1 md:mb-2">
-                Simit Teknesi
-              </span>
-              <span className="block bg-gradient-to-r from-amber-400 via-red-500 to-amber-400 bg-clip-text text-transparent drop-shadow-2xl">
-                Nazilli
-              </span>
-            </motion.h1>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-2 md:mt-4 flex items-center space-x-2"
-            >
-              <div className="h-px w-8 md:w-12 bg-gradient-to-r from-transparent to-amber-500" />
-              <span className="text-amber-400 text-xs md:text-sm font-semibold tracking-wider">TAZE & LEZZETLİ</span>
-              <div className="h-px w-8 md:w-12 bg-gradient-to-l from-transparent to-amber-500" />
-            </motion.div>
-          </motion.div>
-
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-sm md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed text-center px-4"
-          >
-            Günlük taze üretim simit, poğaça ve böreklerimiz ile özel kahve çeşitlerimizi keşfedin
-          </motion.p>
-
-          {/* CTA Buttons - Modern Style */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center pt-6 md:pt-10"
-          >
-            <Link
-              href="/menu"
-              className="group relative overflow-hidden bg-gradient-to-r from-amber-500 to-red-500 text-white px-8 py-3 md:px-12 md:py-5 rounded-full font-bold text-base md:text-xl shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 md:space-x-3"
-            >
-              <span className="relative z-10">Menüyü Keşfet</span>
-              <ArrowRightIcon className="h-5 w-5 md:h-6 md:w-6 group-hover:translate-x-2 transition-transform duration-300 relative z-10" />
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </Link>
-
-            <Link
-              href="/iletisim"
-              className="group relative overflow-hidden border-2 border-white/30 backdrop-blur-md bg-white/10 text-white px-8 py-3 md:px-12 md:py-5 rounded-full font-bold text-base md:text-xl hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-xl"
-            >
-              <span>İletişim</span>
-            </Link>
-          </motion.div>
+          <img
+            alt="Simit Teknesi Logo"
+            className="w-24 h-24 md:w-32 md:h-32 object-contain"
+            src="/images/logo.png"
+          />
         </motion.div>
+
+        {/* Title */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
+          className="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-6 tracking-tight leading-tight"
+        >
+          Simit Teknesi <span className="text-baked-gold">Nazilli</span>
+        </motion.h1>
+
+        {/* Divider */}
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+          className="h-px w-24 bg-baked-gold mb-8 origin-center"
+        />
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
+          className="font-body-lg text-body-lg text-white/90 max-w-2xl mb-12"
+        >
+          {"Taze & Lezzetli — Günlük taze üretim simit, poğaça ve böreklerimiz ile özel kahve çeşitlerimizi keşfedin. Nazilli'nin kalbinde bir sanat eseri lezzetler."}
+        </motion.p>
+
+        {/* Action Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 1.1 }}
+          className="flex flex-col sm:flex-row gap-6"
+        >
+          <Link
+            href="/menu"
+            className="bg-baked-gold text-white px-10 py-5 rounded-DEFAULT font-label-lg text-label-lg flex items-center justify-center gap-3 hover:bg-hearth-bronze transition-all hover:-translate-y-1 shadow-lg shadow-black/20 active:scale-95 duration-200"
+          >
+            Menüyü Keşfet
+            <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </Link>
+          <Link
+            href="/iletisim"
+            className="border border-white/30 text-white backdrop-blur-sm px-10 py-5 rounded-DEFAULT font-label-lg text-label-lg hover:bg-white/10 transition-all active:scale-95 duration-200"
+          >
+            İletişim
+          </Link>
+        </motion.div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60">
+        <span className="font-label-sm text-label-sm text-white uppercase tracking-widest">Keşfet</span>
+        <div className="w-px h-12 bg-gradient-to-b from-baked-gold to-transparent" />
       </div>
     </section>
   );

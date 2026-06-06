@@ -25,8 +25,8 @@ const MenuPage: React.FC = () => {
   // Hash ile mutfaktan kategorisini ve hamburger menüye scroll
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hash === '#hamburger-menu') {
-      setActiveCategory('mutfaktan');
       setTimeout(() => {
+        setActiveCategory('mutfaktan');
         const el = document.getElementById('hamburger-menu');
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -38,8 +38,8 @@ const MenuPage: React.FC = () => {
   // Hash ile bubble tea çeşitlerine scroll
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hash === '#bubble-tea-cesitleri') {
-      setActiveCategory('soguk-icecekler');
       setTimeout(() => {
+        setActiveCategory('soguk-icecekler');
         const el = document.getElementById('bubble-tea-cesitleri');
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -109,7 +109,7 @@ const MenuPage: React.FC = () => {
     },
     {
       id: "aperatifler",
-      name: "Aperatifler",
+      name: "Kahvaltılık & Atıştırmalık",
       icon: "🍫",
     },
   ];
@@ -166,7 +166,7 @@ const MenuPage: React.FC = () => {
       name: "Sucuklu Yumurta",
       description:
         "Sucuk ile pişirilmiş baharatlı yumurta",
-      price: "150₺",
+      price: "250₺",
       category: "kahvaltilar",
       image: "/images/kahvaltılar/sucukluyumurta2.webp",
     },
@@ -260,7 +260,7 @@ const MenuPage: React.FC = () => {
       name: "Sade Poğaça",
       description:
         "Yumuşacık ev yapımı poğaça",
-      price: "35₺",
+      price: "25₺",
       category: "firindanlar",
       image: "/images/pogacalar/sade-pogaca2.jpg",
       popular: true,
@@ -317,14 +317,7 @@ const MenuPage: React.FC = () => {
       category: "firindanlar",
       image: "/images/acmalar/sucuklu-kasarli.jpeg",
     },
-    {
-      id: 36,
-      name: "Mini Tahinli Çörek",
-      description: "Tahin dolgulu küçük boy çörek",
-      price: "85₺",
-      category: "firindanlar",
-      image: "/images/acmalar/tahinli-corek.webp",
-    },
+
 
     // Sandviçler
     {
@@ -367,7 +360,7 @@ const MenuPage: React.FC = () => {
       id: 441,
       name: "Gül Böreği (Patatesli / Peynirli / Ispanaklı)",
       description: "Gül şeklinde sarılmış özel börek çeşitleri",
-      price: "80₺",
+      price: "56₺",
       category: "borekler",
       image: "/images/borekler/gul-boregi.jpg",
     },
@@ -492,8 +485,16 @@ const MenuPage: React.FC = () => {
     // Mutfaktan
     {
       id: 68,
-      name: "Hamburger / Pizza Menü",
-      description: "Hamburger veya pizza, patates ve içecek ile servis edilir",
+      name: "Hamburger Menü",
+      description: "Hamburger, patates kızartması ve içecek ile servis edilir",
+      price: "320₺",
+      category: "mutfaktan",
+      image: "/images/mutfaktan/hamburger-menu.jpeg",
+    },
+    {
+      id: 681,
+      name: "Pizza Menü",
+      description: "Pizza, patates kızartması ve içecek ile servis edilir",
       price: "270₺",
       category: "mutfaktan",
       image: "/images/mutfaktan/hamburger-menu.jpeg",
@@ -505,30 +506,6 @@ const MenuPage: React.FC = () => {
       price: "100₺",
       category: "mutfaktan",
       image: "/images/mutfaktan/cipes.webp",
-    },
-    {
-      id: 621,
-      name: "Karışık Sıcak Tabağı",
-      description: "Patates, nugget ve soğan halkası karışımı",
-      price: "190₺",
-      category: "mutfaktan",
-      image: "/images/mutfaktan/karisikcips.jpeg",
-    },
-    {
-      id: 631,
-      name: "Nugget",
-      description: "Çıtır tavuk nugget",
-      price: "120₺",
-      category: "mutfaktan",
-      image: "/images/mutfaktan/nugget.jpg",
-    },
-    {
-      id: 64,
-      name: "Soğan Halkası",
-      description: "Çıtır soğan halkası",
-      price: "75₺",
-      category: "mutfaktan",
-      image: "/images/mutfaktan/sogan-halkasi.webp",
     },
 
     // İçecekler
@@ -569,7 +546,7 @@ const MenuPage: React.FC = () => {
       id: 77,
       name: "Americano",
       description: "Sıcak americano",
-      price: "100₺",
+      price: "M: 135₺ / L: 150₺",
       category: "icecekler",
       image: "/images/sicak-icecekler/americano.jpeg",
     },
@@ -577,7 +554,7 @@ const MenuPage: React.FC = () => {
       id: 78,
       name: "Latte / Cappuccino / Macchiato",
       description: "Sütlü espresso kahve çeşitleri",
-      price: "120₺",
+      price: "M: 135₺ / L: 150₺",
       category: "icecekler",
       image: "/images/sicak-icecekler/latte.jpeg",
     },
@@ -585,7 +562,7 @@ const MenuPage: React.FC = () => {
       id: 79,
       name: "Mocha",
       description: "Çikolatalı espresso kahve",
-      price: "150₺",
+      price: "M: 135₺ / L: 150₺",
       category: "icecekler",
       image: "/images/sicak-icecekler/mocha.jpg",
     },
@@ -609,7 +586,7 @@ const MenuPage: React.FC = () => {
       id: 112,
       name: "Ice Americano",
       description: "Buzlu americano",
-      price: "100₺",
+      price: "M: 135₺ / L: 150₺",
       category: "icecekler",
       image: "/images/soguk-kahveler/ice-americano.jpg",
     },
@@ -617,7 +594,7 @@ const MenuPage: React.FC = () => {
       id: 113,
       name: "Ice Latte / Ice Macchiato / Ice Chocolate",
       description: "Buzlu espresso içecekleri",
-      price: "120₺",
+      price: "M: 135₺ / L: 150₺",
       category: "icecekler",
       image: "/images/soguk-kahveler/ice-latte.webp",
     },
@@ -625,7 +602,7 @@ const MenuPage: React.FC = () => {
       id: 114,
       name: "Ice Mocha",
       description: "Buzlu çikolatalı kahve",
-      price: "150₺",
+      price: "M: 135₺ / L: 150₺",
       category: "icecekler",
       image: "/images/soguk-kahveler/ice-mocha.webp",
     },
@@ -650,7 +627,7 @@ const MenuPage: React.FC = () => {
       id: 101,
       name: "Cola / Fanta",
       description: "Soğuk meşrubat",
-      price: "75₺",
+      price: "85₺",
       category: "icecekler",
       image: "/images/soguk-icecekler/kola.webp",
     },
@@ -762,6 +739,22 @@ const MenuPage: React.FC = () => {
     return matchesCategory && matchesSearch;
   });
 
+  const getGroupedItems = () => {
+    if (activeCategory !== "tümü") {
+      return { [activeCategory]: filteredItems };
+    }
+    const groups: { [key: string]: MenuItem[] } = {};
+    categories.forEach((cat) => {
+      if (cat.id !== "tümü") {
+        const items = filteredItems.filter((item) => item.category === cat.id);
+        if (items.length > 0) {
+          groups[cat.id] = items;
+        }
+      }
+    });
+    return groups;
+  };
+
   return (
     <>
       <Head>
@@ -772,95 +765,77 @@ const MenuPage: React.FC = () => {
         />
       </Head>
 
-      <div className="pt-16">
-        {/* Search and Category Filter */}
-        <section className="bg-white py-8 shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-900"
-            >
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="pt-24 bg-parchment-light min-h-screen"
+      >
+        {/* Page Header & Search */}
+        <section className="py-12 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <span className="font-label-lg text-label-lg text-baked-gold uppercase tracking-[0.3em] mb-4 inline-block">
+              SEÇKİN LEZZETLERİMİZ
+            </span>
+            <h1 className="font-display-lg text-display-lg-mobile md:text-headline-lg text-charcoal-deep mb-6">
               Menümüz
-            </motion.h1>
+            </h1>
+            <div className="h-px w-24 bg-baked-gold mx-auto mb-10 origin-center" />
             
             {/* Search Box */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="mb-6 max-w-md mx-auto"
-            >
+            <div className="mb-12 max-w-md mx-auto">
               <div className="relative">
-                <motion.input
+                <input
                   type="text"
                   placeholder="Menüde ara..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-full focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 ease-out"
-                  whileFocus={{
-                    scale: 1.02,
-                    transition: { duration: 0.2, ease: "easeOut" },
-                  }}
+                  className="w-full px-6 py-3.5 pl-14 bg-white border border-slate-muted focus:border-baked-gold focus:ring-1 focus:ring-baked-gold rounded-full font-body-md text-charcoal-deep transition-all duration-300 ease-out outline-none shadow-sm focus:scale-[1.01]"
                 />
-                <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                <div className="absolute left-5 top-1/2 transform -translate-y-1/2 text-baked-gold">
                   <svg
-                    className="w-5 h-5 text-gray-400"
+                    className="w-5 h-5 text-baked-gold/80"
                     fill="none"
                     stroke="currentColor"
+                    strokeWidth={2}
                     viewBox="0 0 24 24"
                   >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      strokeWidth={2}
                       d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                     />
                   </svg>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Category Buttons */}
-            <div className="flex flex-wrap justify-center gap-2">
-              {categories.map((category, index) => (
-                <motion.button
+            <div className="flex flex-wrap justify-center gap-3">
+              {categories.map((category) => (
+                <button
                   key={category.id}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    duration: 0.3,
-                    delay: index * 0.03,
-                    ease: "easeOut",
-                  }}
-                  whileHover={{
-                    scale: 1.05,
-                    transition: { duration: 0.2, ease: "easeOut" },
-                  }}
-                  whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveCategory(category.id)}
-                  className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ease-out flex items-center space-x-2 ${
+                  className={`px-6 py-2.5 rounded-full font-label-lg text-label-lg transition-all duration-300 ease-out active:scale-98 ${
                     activeCategory === category.id
-                      ? "bg-red-600 text-white shadow-lg"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md"
+                      ? "bg-baked-gold text-white shadow-md shadow-baked-gold/10"
+                      : "bg-white border border-slate-muted/60 text-charcoal-deep hover:bg-white hover:border-baked-gold hover:text-baked-gold"
                   }`}
                 >
-                  <span className="text-lg">{category.icon}</span>
                   <span>{category.name}</span>
-                </motion.button>
+                </button>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Menu Items */}
-        <section className="py-12 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Menu Items Grid */}
+        <section className="py-12 relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeCategory}
-                className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8"
+                className="space-y-16"
                 layout
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -870,89 +845,76 @@ const MenuPage: React.FC = () => {
                   ease: "easeInOut",
                 }}
               >
-                {filteredItems.map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    id={item.name === "Hamburger Menü" ? "hamburger-menu" : item.name === "Bubble Tea Çeşitleri" ? "bubble-tea-cesitleri" : undefined}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.4,
-                      delay: index * 0.03,
-                      ease: [0.25, 0.46, 0.45, 0.94],
-                    }}
-                    whileHover={{
-                      y: -8,
-                      transition: { duration: 0.2, ease: "easeOut" },
-                    }}
-                    className="card overflow-hidden group relative bg-white rounded-lg shadow-md"
-                  >
-                    {item.popular && (
-                      <div className="absolute top-4 left-4 z-10 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                        Popüler
-                      </div>
-                    )}
-
-                    <div className="aspect-w-16 aspect-h-9 overflow-hidden relative">
-                      <motion.img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-48 object-cover cursor-pointer"
-                        onError={handleImageError}
-                        whileHover={{
-                          scale: 1.03,
-                          transition: { duration: 0.3, ease: "easeOut" },
-                        }}
-                        onClick={() => 
-                          item.name === "Bubble Tea Çeşitleri" 
-                            ? handleBubbleTeaClick() 
-                            : handleImageClick(item.image, item.name)
-                        }
-                      />
-                      <div
-                        className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center cursor-pointer"
-                        onClick={() => 
-                          item.name === "Bubble Tea Çeşitleri" 
-                            ? handleBubbleTeaClick() 
-                            : handleImageClick(item.image, item.name)
-                        }
-                      >
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <svg
-                            className="w-8 h-8 text-white"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
+                {Object.entries(getGroupedItems()).map(([catId, items]) => {
+                  const categoryName = categories.find((c) => c.id === catId)?.name || "";
+                  return (
+                    <div key={catId} className="space-y-6">
+                      {activeCategory === "tümü" && (
+                        <div className="flex items-center gap-4">
+                          <h2 className="font-display-lg text-xl md:text-2xl text-charcoal-deep font-bold tracking-wide">
+                            {categoryName}
+                          </h2>
+                          <div className="h-px bg-baked-gold/20 flex-grow" />
                         </div>
-                      </div>
-                    </div>
+                      )}
 
-                    <div className="p-6">
-                      <div className="flex justify-between items-start mb-3">
-                        <h3 className="text-xl font-semibold text-gray-900">
-                          {item.name}
-                        </h3>
-                        <span className="text-lg font-bold text-red-600">
-                          {item.price}
-                        </span>
+                      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+                        {items.map((item, index) => (
+                          <div
+                            key={item.id}
+                            id={item.name === "Hamburger Menü" ? "hamburger-menu" : item.name === "Bubble Tea Çeşitleri" ? "bubble-tea-cesitleri" : undefined}
+                            className="group relative bg-white border border-slate-muted/40 rounded-2xl overflow-hidden hover:shadow-xl hover:border-baked-gold/30 hover:-translate-y-1.5 transition-all duration-300 flex flex-col"
+                          >
+                            <div className="h-44 md:h-56 overflow-hidden relative bg-gray-50">
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                className="w-full h-full object-cover cursor-pointer transition-transform duration-500 group-hover:scale-105"
+                                onError={handleImageError}
+                                onClick={() => 
+                                  item.name === "Bubble Tea Çeşitleri" 
+                                    ? handleBubbleTeaClick() 
+                                    : handleImageClick(item.image, item.name)
+                                }
+                              />
+                              <div
+                                className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center cursor-pointer"
+                                onClick={() => 
+                                  item.name === "Bubble Tea Çeşitleri" 
+                                    ? handleBubbleTeaClick() 
+                                    : handleImageClick(item.image, item.name)
+                                }
+                              >
+                                <span className="material-symbols-outlined text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  zoom_in
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="p-4 md:p-6 flex flex-col flex-grow">
+                              <div className="flex justify-between items-start gap-3 mb-3">
+                                <h3 className="font-headline-md text-base md:text-title-lg text-charcoal-deep font-bold">
+                                  {item.name}
+                                </h3>
+                                <span className="font-display-lg text-base md:text-title-lg text-baked-gold whitespace-nowrap">
+                                  {item.price}
+                                </span>
+                              </div>
+                              <p className="font-body-md text-xs md:text-sm text-on-surface-variant leading-relaxed">
+                                {item.description}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        {item.description}
-                      </p>
                     </div>
-                  </motion.div>
-                ))}
+                  );
+                })}
               </motion.div>
             </AnimatePresence>
           </div>
         </section>
-      </div>
+      </motion.div>
 
       {/* Image Modal */}
       <AnimatePresence>
@@ -962,7 +924,7 @@ const MenuPage: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[9999] bg-black bg-opacity-90 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4"
             onClick={closeImageModal}
             onKeyDown={handleKeyDown}
             tabIndex={0}
@@ -970,10 +932,10 @@ const MenuPage: React.FC = () => {
             aria-modal="true"
           >
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.96, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              exit={{ scale: 0.96, opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="relative max-w-4xl max-h-full flex flex-col items-center"
               onClick={(e) => e.stopPropagation()}
             >
@@ -1004,19 +966,19 @@ const MenuPage: React.FC = () => {
                 alt={selectedImage.alt}
                 className="w-full h-auto max-h-[70vh] object-contain rounded-lg shadow-2xl"
                 onError={handleImageError}
-                initial={{ scale: 0.9 }}
+                initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
               />
 
               {/* Image Title */}
               <motion.div
-                initial={{ y: 20, opacity: 0 }}
+                initial={{ y: 10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
-                className="mt-4 bg-black bg-opacity-80 text-white px-6 py-3 rounded-lg backdrop-blur-sm shadow-lg"
+                className="mt-4 bg-charcoal-deep/90 text-white px-6 py-3 rounded-lg backdrop-blur-sm shadow-lg border border-white/10"
               >
-                <h3 className="text-lg font-semibold text-center">
+                <h3 className="text-base font-semibold text-center tracking-wide">
                   {selectedImage.alt}
                 </h3>
               </motion.div>
@@ -1033,7 +995,7 @@ const MenuPage: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[9999] bg-black bg-opacity-90 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4"
             onClick={() => setShowBubbleTeaModal(false)}
             onKeyDown={handleKeyDown}
             tabIndex={0}
@@ -1041,17 +1003,17 @@ const MenuPage: React.FC = () => {
             aria-modal="true"
           >
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.96, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="relative max-w-6xl max-h-full bg-white rounded-2xl overflow-hidden"
+              exit={{ scale: 0.96, opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="relative max-w-6xl max-h-[90vh] bg-parchment-light rounded-2xl overflow-hidden flex flex-col border border-slate-muted"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
               <button
                 onClick={() => setShowBubbleTeaModal(false)}
-                className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 z-10"
+                className="absolute top-6 right-6 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 z-10 border border-slate-muted/40"
                 aria-label="Close modal"
               >
                 <svg
@@ -1070,90 +1032,90 @@ const MenuPage: React.FC = () => {
               </button>
 
               {/* Header */}
-              <div className="bg-gradient-to-r from-pink-500 to-purple-600 text-white p-8 text-center">
-                <h2 className="text-4xl font-bold mb-2">Bubble Tea Çeşitleri</h2>
-                <p className="text-xl opacity-90">Tüm aromalarımızı keşfedin!</p>
+              <div className="bg-charcoal-deep text-white p-8 text-center relative border-b border-baked-gold/20">
+                <h2 className="font-display-lg text-headline-lg mb-2">Bubble Tea Çeşitleri</h2>
+                <p className="font-body-lg text-baked-gold uppercase tracking-widest text-sm font-semibold">Özel Serinletici Tariflerimiz</p>
               </div>
 
-              {/* Content */}
-              <div className="p-8">
+              {/* Content (Scrollable) */}
+              <div className="p-8 overflow-y-auto flex-grow max-h-[60vh]">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {/* Çilek Bubble Tea */}
-                  <div className="text-center group">
-                    <div className="relative overflow-hidden rounded-xl mb-4">
+                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-sm group hover:border-baked-gold transition-colors duration-300">
+                    <div className="relative overflow-hidden rounded-lg mb-4 h-48">
                       <img
                         src="/images/bubbletea/cilek.png"
                         alt="Çilek Bubble Tea"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         onError={handleImageError}
                       />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Çilek</h3>
-                    <p className="text-gray-600 text-sm">Çilek aromalı bubble tea, içinde yumuşak boba topları ile</p>
+                    <h3 className="font-headline-md text-lg font-bold text-charcoal-deep mb-2 text-center">Çilek</h3>
+                    <p className="font-body-md text-sm text-on-surface-variant text-center">Çilek aromalı bubble tea, içinde yumuşak boba topları ile</p>
                   </div>
 
                   {/* Karamel Bubble Tea */}
-                  <div className="text-center group">
-                    <div className="relative overflow-hidden rounded-xl mb-4">
+                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-sm group hover:border-baked-gold transition-colors duration-300">
+                    <div className="relative overflow-hidden rounded-lg mb-4 h-48">
                       <img
                         src="/images/bubbletea/karamel.png"
                         alt="Karamel Bubble Tea"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         onError={handleImageError}
                       />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Karamel</h3>
-                    <p className="text-gray-600 text-sm">Karamel aromalı bubble tea, içinde yumuşak boba topları ile</p>
+                    <h3 className="font-headline-md text-lg font-bold text-charcoal-deep mb-2 text-center">Karamel</h3>
+                    <p className="font-body-md text-sm text-on-surface-variant text-center">Karamel aromalı bubble tea, içinde yumuşak boba topları ile</p>
                   </div>
 
                   {/* Mango Bubble Tea */}
-                  <div className="text-center group">
-                    <div className="relative overflow-hidden rounded-xl mb-4">
+                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-sm group hover:border-baked-gold transition-colors duration-300">
+                    <div className="relative overflow-hidden rounded-lg mb-4 h-48">
                       <img
                         src="/images/bubbletea/mango.png"
                         alt="Mango Bubble Tea"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         onError={handleImageError}
                       />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Mango</h3>
-                    <p className="text-gray-600 text-sm">Mango aromalı bubble tea, içinde yumuşak boba topları ile</p>
+                    <h3 className="font-headline-md text-lg font-bold text-charcoal-deep mb-2 text-center">Mango</h3>
+                    <p className="font-body-md text-sm text-on-surface-variant text-center">Mango aromalı bubble tea, içinde yumuşak boba topları ile</p>
                   </div>
 
                   {/* Yaban Mersini Bubble Tea */}
-                  <div className="text-center group">
-                    <div className="relative overflow-hidden rounded-xl mb-4">
+                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-sm group hover:border-baked-gold transition-colors duration-300">
+                    <div className="relative overflow-hidden rounded-lg mb-4 h-48">
                       <img
                         src="/images/bubbletea/yaban-mersini.png"
                         alt="Yaban Mersini Bubble Tea"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         onError={handleImageError}
                       />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Yaban Mersini</h3>
-                    <p className="text-gray-600 text-sm">Yaban mersini aromalı bubble tea, içinde yumuşak boba topları ile</p>
+                    <h3 className="font-headline-md text-lg font-bold text-charcoal-deep mb-2 text-center">Yaban Mersini</h3>
+                    <p className="font-body-md text-sm text-on-surface-variant text-center">Yaban mersini aromalı bubble tea, içinde yumuşak boba topları ile</p>
                   </div>
 
                   {/* Yeşil Elma Bubble Tea */}
-                  <div className="text-center group">
-                    <div className="relative overflow-hidden rounded-xl mb-4">
+                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-sm group hover:border-baked-gold transition-colors duration-300">
+                    <div className="relative overflow-hidden rounded-lg mb-4 h-48">
                       <img
                         src="/images/bubbletea/yesil-elma.png"
                         alt="Yeşil Elma Bubble Tea"
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         onError={handleImageError}
                       />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Yeşil Elma</h3>
-                    <p className="text-gray-600 text-sm">Yeşil elma aromalı bubble tea, içinde yumuşak boba topları ile</p>
+                    <h3 className="font-headline-md text-lg font-bold text-charcoal-deep mb-2 text-center">Yeşil Elma</h3>
+                    <p className="font-body-md text-sm text-on-surface-variant text-center">Yeşil elma aromalı bubble tea, içinde yumuşak boba topları ile</p>
                   </div>
                 </div>
 
                 {/* Price and Info */}
-                <div className="mt-8 text-center bg-gray-50 rounded-xl p-6">
-                  <div className="text-3xl font-bold text-red-600 mb-2">120₺</div>
-                  <p className="text-gray-600">Tüm bubble tea çeşitleri aynı fiyatla sunulmaktadır</p>
-                  <p className="text-sm text-gray-500 mt-2">İçinde yumuşak boba topları ile servis edilir</p>
+                <div className="mt-8 text-center bg-white border border-slate-muted/55 rounded-xl p-6 shadow-sm">
+                  <div className="font-display-lg text-headline-lg text-baked-gold mb-2">120₺</div>
+                  <p className="font-body-md text-charcoal-deep">Tüm bubble tea çeşitleri aynı fiyatla sunulmaktadır</p>
+                  <p className="font-label-sm text-[12px] text-on-surface-variant mt-2 uppercase tracking-wider">İçinde yumuşak boba topları ile servis edilir</p>
                 </div>
               </div>
             </motion.div>

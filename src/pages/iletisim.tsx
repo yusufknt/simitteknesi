@@ -17,6 +17,7 @@ const ContactPage: React.FC = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
@@ -94,19 +95,35 @@ const ContactPage: React.FC = () => {
         />
       </Head>
 
-      <div className="pt-16">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="pt-24 bg-parchment-light min-h-screen"
+      >
         {/* Header */}
-        <section className="bg-gradient-to-br from-red-500 via-red-600 to-red-800 text-white py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <section className="py-20 relative overflow-hidden bg-charcoal-deep text-white border-b border-baked-gold/20">
+          <div
+            className="absolute inset-0 opacity-5 pointer-events-none"
+            style={{
+              backgroundImage: "radial-gradient(#B21F24 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+            }}
+          />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="font-label-lg text-label-lg text-baked-gold uppercase tracking-[0.3em] mb-4 inline-block">
+                İLETİŞİM
+              </span>
+              <h1 className="font-display-lg text-display-lg-mobile md:text-headline-lg text-white mb-6">
                 Bize Ulaşın
               </h1>
-              <p className="text-xl text-white/80 max-w-2xl mx-auto">
+              <div className="h-px w-24 bg-baked-gold mx-auto mb-8" />
+              <p className="font-body-lg text-body-lg text-white/90 max-w-2xl mx-auto leading-relaxed">
                 Sorularınız, önerileriniz veya rezervasyon talepleriniz için
                 bizimle iletişime geçin
               </p>
@@ -115,52 +132,48 @@ const ContactPage: React.FC = () => {
         </section>
 
         {/* Contact Info Cards */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {contactInfo.map((info, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="card p-6 text-center"
+                  className="bg-white border border-slate-muted/40 p-8 text-center rounded-2xl shadow-sm hover:shadow-xl hover:border-baked-gold/30 hover:-translate-y-1.5 transition-all duration-300"
                 >
-                  <div className="text-red-600 flex justify-center mb-4">
+                  <div className="text-baked-gold flex justify-center mb-6">
                     {info.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                  <h3 className="font-headline-md text-title-lg text-charcoal-deep mb-4 font-bold">
                     {info.title}
                   </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">
+                  <p className="font-body-md text-on-surface-variant leading-relaxed whitespace-pre-line text-sm">
                     {info.content}
                   </p>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
         {/* Contact Form & Map */}
-        <section className="py-16 bg-white">
+        <section className="py-20 bg-white/40 border-t border-b border-slate-muted/40">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               {/* Contact Form */}
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                <h2 className="font-display-lg text-headline-lg-mobile md:text-headline-md text-charcoal-deep mb-8 font-bold">
                   Mesaj Gönderin
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label
                       htmlFor="name"
-                      className="block text-sm font-medium text-gray-700 mb-2"
+                      className="block font-label-lg text-sm text-charcoal-deep font-semibold mb-2"
                     >
                       Adınız Soyadınız
                     </label>
@@ -171,7 +184,7 @@ const ContactPage: React.FC = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-5 py-3 border border-slate-muted rounded-xl bg-white focus:ring-1 focus:ring-baked-gold focus:border-baked-gold font-body-md text-charcoal-deep transition-all duration-200 outline-none"
                       placeholder="Adınız ve soyadınız"
                     />
                   </div>
@@ -179,7 +192,7 @@ const ContactPage: React.FC = () => {
                   <div>
                     <label
                       htmlFor="email"
-                      className="block text-sm font-medium text-gray-700 mb-2"
+                      className="block font-label-lg text-sm text-charcoal-deep font-semibold mb-2"
                     >
                       E-posta Adresiniz
                     </label>
@@ -190,7 +203,7 @@ const ContactPage: React.FC = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-5 py-3 border border-slate-muted rounded-xl bg-white focus:ring-1 focus:ring-baked-gold focus:border-baked-gold font-body-md text-charcoal-deep transition-all duration-200 outline-none"
                       placeholder="ornek@email.com"
                     />
                   </div>
@@ -198,7 +211,7 @@ const ContactPage: React.FC = () => {
                   <div>
                     <label
                       htmlFor="message"
-                      className="block text-sm font-medium text-gray-700 mb-2"
+                      className="block font-label-lg text-sm text-charcoal-deep font-semibold mb-2"
                     >
                       Mesajınız
                     </label>
@@ -209,14 +222,14 @@ const ContactPage: React.FC = () => {
                       onChange={handleInputChange}
                       required
                       rows={6}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 resize-none"
+                      className="w-full px-5 py-3 border border-slate-muted rounded-xl bg-white focus:ring-1 focus:ring-baked-gold focus:border-baked-gold font-body-md text-charcoal-deep transition-all duration-200 resize-none outline-none"
                       placeholder="Mesajınızı buraya yazın..."
                     />
                   </div>
 
                   {/* Status Mesajları */}
                   {submitStatus === "success" && (
-                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <div className="p-4 bg-green-50 border border-green-200 rounded-xl">
                       <div className="flex items-center">
                         <svg
                           className="w-5 h-5 text-green-500 mr-2"
@@ -238,7 +251,7 @@ const ContactPage: React.FC = () => {
                   )}
 
                   {submitStatus === "error" && (
-                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
                       <div className="flex items-center">
                         <svg
                           className="w-5 h-5 text-red-500 mr-2"
@@ -262,36 +275,19 @@ const ContactPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className={`w-full btn-primary ${
-                      isLoading ? "opacity-50 cursor-not-allowed" : ""
+                    className={`w-full bg-baked-gold hover:bg-hearth-bronze text-white py-4 rounded-xl font-label-lg text-label-lg transition-all duration-300 shadow-md hover:shadow-lg active:scale-98 relative overflow-hidden ${
+                      isLoading ? "cursor-not-allowed text-white/50" : ""
                     }`}
                   >
-                    {isLoading ? (
-                      <div className="flex items-center justify-center">
-                        <svg
-                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
-                        Gönderiliyor...
+                    <span className={`flex items-center justify-center transition-all duration-300 ${isLoading ? "opacity-0" : "opacity-100"}`}>
+                      Mesajı Gönder
+                    </span>
+                    {isLoading && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-baked-gold">
+                        <span className="font-label-lg tracking-widest animate-pulse">
+                          Gönderiliyor...
+                        </span>
                       </div>
-                    ) : (
-                      "Mesajı Gönder"
                     )}
                   </button>
                 </form>
@@ -299,15 +295,23 @@ const ContactPage: React.FC = () => {
 
               {/* Map */}
               <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                <h2 className="font-display-lg text-headline-lg-mobile md:text-headline-md text-charcoal-deep mb-8 font-bold">
                   Konumumuz
                 </h2>
-                <div className="rounded-lg overflow-hidden shadow-lg">
+                <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-muted/50 relative bg-slate-50 h-96 w-full flex items-center justify-center">
+                  {!mapLoaded && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-tr from-charcoal-deep/5 to-baked-gold/5 animate-pulse z-10">
+                      <MapPinIcon className="h-10 w-10 text-baked-gold mb-3 animate-bounce" style={{ animationDuration: '2s' }} />
+                      <span className="font-label-lg text-sm text-charcoal-deep/60 tracking-wider">
+                        Harita Yükleniyor...
+                      </span>
+                    </div>
+                  )}
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3125.1234567890123!2d28.27847222222222!3d37.89833333333333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDUzJzU0LjAiTiAyOMKwMTYnNDIuNSJF!5e0!3m2!1str!2str!4v1234567890123"
                     width="100%"
@@ -317,25 +321,28 @@ const ContactPage: React.FC = () => {
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Simit Teknesi Nazilli Konumu"
-                    className="w-full h-96"
+                    onLoad={() => setMapLoaded(true)}
+                    className={`w-full h-full transition-opacity duration-1000 ${
+                      mapLoaded ? "opacity-100" : "opacity-0"
+                    }`}
                   ></iframe>
                 </div>
 
-                <div className="mt-6 p-6 bg-red-50 rounded-lg">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                <div className="mt-8 p-8 bg-white border border-slate-muted/40 rounded-2xl shadow-sm">
+                  <h3 className="font-headline-md text-lg font-bold text-charcoal-deep mb-4">
                     Ulaşım Bilgileri
                   </h3>
-                  <ul className="space-y-2 text-gray-600 text-sm">
+                  <ul className="space-y-3 text-on-surface-variant font-body-md text-sm">
                     <li>• Otobüs: Şehir içi 1, 2, 3 numaralı hatlar</li>
                     <li>• Dolmuş: Merkez-Cumhuriyet hattı</li>
                     <li>• Ücretsiz otopark imkanı mevcut</li>
                   </ul>
-                  <div className="mt-4 pt-4 border-t border-red-200">
+                  <div className="mt-6 pt-6 border-t border-slate-100">
                     <a
                       href="https://maps.google.com/?q=37.89833333333333,28.27847222222222"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center text-red-600 hover:text-red-700 font-medium transition-colors duration-200"
+                      className="inline-flex items-center text-baked-gold hover:text-hearth-bronze font-bold transition-colors duration-200"
                     >
                       <svg
                         className="w-5 h-5 mr-2"
@@ -348,7 +355,7 @@ const ContactPage: React.FC = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      Google Maps'te Aç
+                      {"Google Maps'te Aç"}
                     </a>
                   </div>
                 </div>
@@ -359,35 +366,34 @@ const ContactPage: React.FC = () => {
 
         {/* CTA Section */}
         <section
-          className="relative py-20 bg-fixed bg-cover bg-center"
+          className="relative py-24 bg-fixed bg-cover bg-center"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(220, 38, 38, 0.9), rgba(185, 28, 28, 0.8)), url("https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80")',
+              'linear-gradient(rgba(26, 26, 26, 0.92), rgba(26, 26, 26, 0.85)), url("https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80")',
           }}
         >
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               viewport={{ once: true }}
-              className="text-white"
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Sizi Kafeymizde Ağırlamaktan Mutluluk Duyarız
+              <h2 className="font-display-lg text-2xl md:text-3xl text-white mb-6">
+                Sizi Kafemizde Ağırlamaktan Mutluluk Duyarız
               </h2>
-              <p className="text-xl text-white/90 leading-relaxed mb-8">
-                Nazilli'nin kalbindeki sıcak atmosferimizde, lezzetli
-                ürünlerimizi deneyimlemeye davetlisiniz.
+              <p className="font-body-lg text-white/90 leading-relaxed mb-8 max-w-2xl mx-auto">
+                {"Nazilli'nin kalbindeki sıcak atmosferimizde, lezzetli ürünlerimizi deneyimlemeye davetlisiniz."}
               </p>
-              <div className="text-lg font-medium">
-                📍 Nazilli, Aydın &nbsp;&nbsp;•&nbsp;&nbsp; 📞 +90 (531)
-                330 09 65 &nbsp;&nbsp;•&nbsp;&nbsp; 🕒 Her Gün Açık  10:00 - 22:00
+              <div className="font-label-lg text-baked-gold uppercase tracking-wider text-sm md:text-base flex flex-wrap justify-center gap-x-8 gap-y-3 font-semibold">
+                <span>📍 Bamboo AVM, Nazilli, Aydın</span>
+                <span>📞 +90 (531) 330 09 65</span>
+                <span>🕒 Her Gün 10:00 - 22:00</span>
               </div>
             </motion.div>
           </div>
         </section>
-      </div>
+      </motion.div>
     </>
   );
 };
