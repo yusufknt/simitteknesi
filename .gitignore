@@ -127,3 +127,9 @@ yarn-error.log*
 # Local backups
 public/images_backup/
 main.html
+
+# System and Editor files
+.DS_Store
+.vscode/
+**/ .DS_Store
+
