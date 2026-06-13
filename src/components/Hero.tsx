@@ -10,7 +10,7 @@ const Hero: React.FC = () => {
         <img
           alt="Simit Teknesi Interior"
           className="w-full h-full object-cover"
-          src="/images/simitteknesi.jpg"
+          src="/images/simitteknesi.webp"
         />
         <div className="absolute inset-0 hero-overlay" />
       </div>
