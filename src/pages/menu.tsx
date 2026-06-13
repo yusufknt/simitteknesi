@@ -78,6 +78,11 @@ const MenuPage: React.FC = () => {
       icon: "🍳",
     },
     {
+      id: "mutfaktan",
+      name: "Mutfaktan",
+      icon: "🍲",
+    },
+    {
       id: "firindanlar",
       name: "Fırından",
       icon: "🥯",
@@ -98,11 +103,6 @@ const MenuPage: React.FC = () => {
       icon: "🍰",
     },
     {
-      id: "mutfaktan",
-      name: "Mutfaktan",
-      icon: "🍲",
-    },
-    {
       id: "icecekler",
       name: "İçecekler",
       icon: "☕",
@@ -114,7 +114,7 @@ const MenuPage: React.FC = () => {
     },
   ];
 
-  const menuItems: MenuItem[] = [
+    const menuItems: MenuItem[] = [
     // Kahvaltılar
     {
       id: 1,
@@ -123,7 +123,7 @@ const MenuPage: React.FC = () => {
         "Omlet, peynir, salam, bal, tereyağ, reçel, domates, salatalık, simit ve çay",
       price: "350₺",
       category: "kahvaltilar",
-      image: "/images/kahvaltılar/kahvalti-tabagi-3-83e4.jpg",
+      image: "/images/kahvaltilar/kahvalti-tabagi.jpg",
     },
     {
       id: 3,
@@ -132,7 +132,7 @@ const MenuPage: React.FC = () => {
         "Simit, peynir, zeytin, reçel, söğüş, yeşillik ve çay ile hafif kahvaltı",
       price: "200₺",
       category: "kahvaltilar",
-      image: "/images/kahvaltılar/simitTabagi.jpg",
+      image: "/images/kahvaltilar/simit-kahvaltı-tabagi.jpg",
     },
     {
       id: 4,
@@ -141,16 +141,25 @@ const MenuPage: React.FC = () => {
         "Taze kruvasan, peynir çeşitleri, reçel, bal, tereyağ ve çay",
       price: "350₺",
       category: "kahvaltilar",
-      image: "/images/kahvaltılar/kruvasan-kahvalti.jpg",
+      image: "/images/kahvaltilar/kruvasan-kahvalti-tabagi.jpg",
     },
     {
       id: 5,
-      name: "Menemen (Sade / Kaşarlı)",
+      name: "Sade Menemen",
       description:
-        "Domates, biber ve yumurta ile hazırlanmış geleneksel menemen",
-      price: "180₺ / 200₺",
+        "Domates, biber ve yumurta ile hazırlanmış geleneksel sade menemen",
+      price: "180₺",
       category: "kahvaltilar",
-      image: "/images/kahvaltılar/menemen.jpg",
+      image: "/images/kahvaltilar/kasarli-menemen.jpg",
+    },
+    {
+      id: 501,
+      name: "Kaşarlı Menemen",
+      description:
+        "Eriyen kaşar peyniri, domates, biber ve yumurta ile hazırlanmış nefis menemen",
+      price: "200₺",
+      category: "kahvaltilar",
+      image: "/images/kahvaltilar/kasarli-menemen.jpg",
     },
     {
       id: 6,
@@ -159,7 +168,7 @@ const MenuPage: React.FC = () => {
         "Tereyağında pişirilmiş taze yumurta",
       price: "100₺",
       category: "kahvaltilar",
-      image: "/images/kahvaltılar/sahanda-yumurta.webp",
+      image: "/images/kahvaltilar/tavada-yumurta.jpg",
     },
     {
       id: 7,
@@ -168,7 +177,7 @@ const MenuPage: React.FC = () => {
         "Sucuk ile pişirilmiş baharatlı yumurta",
       price: "250₺",
       category: "kahvaltilar",
-      image: "/images/kahvaltılar/sucukluyumurta2.webp",
+      image: "/images/kahvaltilar/sucuklu-yumurta.jpg",
     },
     {
       id: 8,
@@ -177,18 +186,36 @@ const MenuPage: React.FC = () => {
         "Peynir ve sebzelerle hazırlanmış yumuşacık omlet",
       price: "120₺",
       category: "kahvaltilar",
-      image: "/images/kahvaltılar/omlet2.webp",
+      image: "/images/kahvaltilar/omlet.jpg",
     },
 
     // Tostlar
     {
       id: 11,
-      name: "Tost (Kaşarlı / Sucuklu / Kaşarlı Sucuklu)",
+      name: "Kaşarlı Tost",
       description:
-        "Sıcacık ve çıtır tost çeşitleri",
-      price: "185₺ / 220₺ / 250₺",
+        "Sıcacık ve çıtır kaşarlı tost",
+      price: "185₺",
       category: "sandvic-tost",
-      image: "/images/tostlar/kasarli-tost-dcb9.webp",
+      image: "/images/tostlar/kasarli-tost.jpg",
+    },
+    {
+      id: 111,
+      name: "Sucuklu Tost",
+      description:
+        "Baharatlı sucuk ile hazırlanmış çıtır tost",
+      price: "220₺",
+      category: "sandvic-tost",
+      image: "/images/tostlar/sucuk-kasarli-tost.jpg",
+    },
+    {
+      id: 112,
+      name: "Sucuklu Kaşarlı Tost",
+      description:
+        "Nefis sucuk ve eriyen kaşar peynirli zengin tost",
+      price: "250₺",
+      category: "sandvic-tost",
+      image: "/images/tostlar/sucuk-kasarli-tost.jpg",
     },
 
     // Fırından (Simit, Poğaça, Açma)
@@ -198,17 +225,27 @@ const MenuPage: React.FC = () => {
       description: "Taptaze susamlı simit",
       price: "20₺",
       category: "firindanlar",
-      image: "/images/simitler/sade-simit.png",
+      image: "/images/simitler/tereyagli-simit.jpg",
       popular: true,
     },
     {
       id: 15,
-      name: "Tereyağlı / Sütlü Simit",
+      name: "Tereyağlı Simit",
       description:
-        "Tereyağı veya süt ile zenginleştirilmiş yumuşak simit",
+        "Tereyağı ile zenginleştirilmiş yumuşak simit",
       price: "30₺",
       category: "firindanlar",
-      image: "/images/simitler/sade-simit.png",
+      image: "/images/simitler/tereyagli-simit.jpg",
+      popular: true,
+    },
+    {
+      id: 151,
+      name: "Sütlü Simit",
+      description:
+        "Süt ile yoğrulmuş taze ve yumuşak simit",
+      price: "30₺",
+      category: "firindanlar",
+      image: "/images/simitler/tereyagli-simit.jpg",
       popular: true,
     },
     {
@@ -218,8 +255,16 @@ const MenuPage: React.FC = () => {
         "Çikolata ile tatlandırılmış özel simit",
       price: "35₺",
       category: "firindanlar",
-      image: "/images/simitler/cikolatali-simit.png",
+      image: "/images/simitler/tereyagli-simit.jpg",
       popular: true,
+    },
+    {
+      id: 20,
+      name: "Ankara Tereyağlısı",
+      description: "Ankara usulü tereyağlı simit",
+      price: "30₺",
+      category: "firindanlar",
+      image: "/images/simitler/tereyagli-simit.jpg",
     },
     {
       id: 18,
@@ -237,15 +282,7 @@ const MenuPage: React.FC = () => {
       description: "Kaşar peyniri dolgulu simit",
       price: "50₺",
       category: "firindanlar",
-      image: "/images/simitler/sade-simit.png",
-    },
-    {
-      id: 20,
-      name: "Ankara Tereyağlısı",
-      description: "Ankara usulü tereyağlı simit",
-      price: "30₺",
-      category: "firindanlar",
-      image: "/images/simitler/sade-simit.png",
+      image: "/images/simitler/kasarli-simit.jpg",
     },
     {
       id: 21,
@@ -253,7 +290,7 @@ const MenuPage: React.FC = () => {
       description: "Sucuk dolgulu baharatlı simit",
       price: "60₺",
       category: "firindanlar",
-      image: "/images/simitler/sade-simit.png",
+      image: "/images/simitler/sucuk-kasarli-simit.jpg",
     },
     {
       id: 22,
@@ -262,27 +299,67 @@ const MenuPage: React.FC = () => {
         "Yumuşacık ev yapımı poğaça",
       price: "25₺",
       category: "firindanlar",
-      image: "/images/pogacalar/sade-pogaca2.jpg",
+      image: "/images/pogacalar/peynirli-pogaca.jpg",
       popular: true,
     },
     {
       id: 23,
-      name: "Peynirli / Zeytinli / Patatesli Poğaça",
+      name: "Peynirli Poğaça",
       description:
-        "Bol içli yumuşacık poğaça çeşitleri",
+        "Peynirli yumuşacık poğaça",
       price: "25₺",
       category: "firindanlar",
-      image: "/images/pogacalar/peynirli-pogoca.png",
+      image: "/images/pogacalar/peynirli-pogaca.jpg",
+      popular: true,
+    },
+    {
+      id: 231,
+      name: "Zeytinli Poğaça",
+      description:
+        "Nefis zeytin parçacıklı poğaça",
+      price: "25₺",
+      category: "firindanlar",
+      image: "/images/pogacalar/zeytinli-pogaca.jpg",
+      popular: true,
+    },
+    {
+      id: 232,
+      name: "Patatesli Poğaça",
+      description:
+        "Patates harçlı yumuşacık poğaça",
+      price: "25₺",
+      category: "firindanlar",
+      image: "/images/pogacalar/peynirli-pogaca.jpg",
       popular: true,
     },
     {
       id: 25,
-      name: "Kaşarlı / Kars / Dereotlu / Labneli Poğaça",
+      name: "Kaşarlı Poğaça",
       description:
-        "Özel dolgulu poğaça çeşitleri",
+        "Kaşar peyniri dolgulu poğaça",
       price: "30₺",
       category: "firindanlar",
-      image: "/images/pogacalar/kasarli-pogoca.png",
+      image: "/images/pogacalar/kasarli-pogaca.jpg",
+      popular: true,
+    },
+    {
+      id: 251,
+      name: "Kars Poğaçası",
+      description:
+        "Kars kaşarlı özel poğaça",
+      price: "30₺",
+      category: "firindanlar",
+      image: "/images/pogacalar/kars-pogacasi.jpg",
+      popular: true,
+    },
+    {
+      id: 252,
+      name: "Dereotlu Poğaça",
+      description:
+        "Dereotlu ve peynirli poğaça",
+      price: "30₺",
+      category: "firindanlar",
+      image: "/images/pogacalar/dereotlu-pogaca.jpg",
       popular: true,
     },
     {
@@ -291,7 +368,7 @@ const MenuPage: React.FC = () => {
       description: "Sucuk ve kaşar dolgulu zengin poğaça",
       price: "35₺",
       category: "firindanlar",
-      image: "/images/pogacalar/sucuklu-kasarli-pogaca.jpeg",
+      image: "/images/pogacalar/sucuk-kasarli-pogaca.jpg",
     },
     {
       id: 30,
@@ -299,15 +376,39 @@ const MenuPage: React.FC = () => {
       description: "Yumuşacık sade açma",
       price: "30₺",
       category: "firindanlar",
-      image: "/images/acmalar/sade-acma.png",
+      image: "/images/acmalar/sade-acma.jpg",
     },
     {
       id: 31,
-      name: "Zeytinli / Kaşarlı / Patatesli / Çikolatalı Açma",
-      description: "Çeşitli dolgulu taze açmalar",
+      name: "Zeytinli Açma",
+      description: "Zeytin dolgulu yumuşak açma",
       price: "35₺",
       category: "firindanlar",
-      image: "/images/acmalar/zeytinli-acma.png",
+      image: "/images/acmalar/zeytinli-acma.jpg",
+    },
+    {
+      id: 311,
+      name: "Kaşarlı Açma",
+      description: "Eriyen kaşar peynirli taze açma",
+      price: "35₺",
+      category: "firindanlar",
+      image: "/images/acmalar/kasarli-acma.jpg",
+    },
+    {
+      id: 312,
+      name: "Patatesli Açma",
+      description: "Nefis patates harçlı taze açma",
+      price: "35₺",
+      category: "firindanlar",
+      image: "/images/acmalar/patatesli-acma.jpg",
+    },
+    {
+      id: 313,
+      name: "Çikolatalı Açma",
+      description: "Tatlı çikolata dolgulu yumuşak açma",
+      price: "35₺",
+      category: "firindanlar",
+      image: "/images/acmalar/cikolatali-acma.jpg",
     },
     {
       id: 34,
@@ -315,38 +416,54 @@ const MenuPage: React.FC = () => {
       description: "Sucuk ve kaşar dolgulu açma",
       price: "40₺",
       category: "firindanlar",
-      image: "/images/acmalar/sucuklu-kasarli.jpeg",
+      image: "/images/acmalar/kasarli-acma.jpg",
     },
-
 
     // Sandviçler
     {
       id: 37,
-      name: "Sandviç (Sade / 7 Tahıllı / Tam Buğday / Simit)",
+      name: "Sade Sandviç (Sade / Simit)",
       description:
         "Peynir, domates, salatalık ve yeşillik ile taze sandviç çeşitleri",
       price: "100₺",
       category: "sandvic-tost",
-      image: "/images/sandvic/sade.jpeg",
+      image: "/images/sandvic/sandvic.jpg",
+    },
+    {
+      id: 371,
+      name: "Tam Tahıllı Sandviç",
+      description:
+        "7 tahıllı ve tam buğday ekmeğine taze malzemelerle sağlıklı sandviç",
+      price: "100₺",
+      category: "sandvic-tost",
+      image: "/images/sandvic/tam-tahıllı-sandvic.jpg",
     },
     {
       id: 40,
       name: "Burger Sandviç",
       description:
-        "Peynir ve yeşillik dolgulu sandviç",
+        "Peynir ve yeşillik dolgulu burger şeklinde sandviç",
       price: "90₺",
       category: "sandvic-tost",
-      image: "/images/sandvic/burger.jpeg",
+      image: "/images/mutfaktan/sade-burger.jpg",
     },
 
     // Börekler
     {
       id: 42,
-      name: "Kol Böreği (Peynirli / Patatesli) (kg)",
-      description: "El açması geleneksel kol böreği",
+      name: "Peynirli Kol Böreği (kg)",
+      description: "El açması bol peynirli geleneksel kol böreği",
       price: "600₺",
       category: "borekler",
-      image: "/images/borekler/kolboregi.jpg",
+      image: "/images/borekler/patatesli-kol-boregi.jpg",
+    },
+    {
+      id: 421,
+      name: "Patatesli Kol Böreği (kg)",
+      description: "El açması lezzetli patatesli kol böreği",
+      price: "600₺",
+      category: "borekler",
+      image: "/images/borekler/patatesli-kol-boregi.jpg",
     },
     {
       id: 43,
@@ -354,56 +471,55 @@ const MenuPage: React.FC = () => {
       description: "Kıyma dolgulu kol böreği",
       price: "720₺",
       category: "borekler",
-      image: "/images/borekler/kolboregi.jpg",
+      image: "/images/borekler/kiymali-kol-boregi.jpg",
+    },
+    {
+      id: 4512,
+      name: "Avcı Böreği (Patlıcanlı)",
+      description: "Özel patlıcan harçlı çıtır avcı böreği",
+      price: "75₺",
+      category: "borekler",
+      image: "/images/borekler/patlicanli-avci-boregi.jpg",
+    },
+    {
+      id: 451,
+      name: "Avcı Böreği (Sosis Kaşarlı)",
+      description: "Sosis ve kaşar dolgulu çıtır avcı böreği",
+      price: "75₺",
+      category: "borekler",
+      image: "/images/borekler/sos-kasarli-avci-boregi.jpg",
+    },
+    {
+      id: 4511,
+      name: "Avcı Böreği (Patatesli)",
+      description: "Patates dolgulu çıtır avcı böreği",
+      price: "75₺",
+      category: "borekler",
+      image: "/images/borekler/peynirli-avci-boregi.jpg",
     },
     {
       id: 441,
-      name: "Gül Böreği (Patatesli / Peynirli / Ispanaklı)",
-      description: "Gül şeklinde sarılmış özel börek çeşitleri",
+      name: "Peynirli Gül Böreği",
+      description: "Peynir dolgulu gül şeklinde sarılmış özel börek",
       price: "56₺",
       category: "borekler",
       image: "/images/borekler/gul-boregi.jpg",
     },
     {
-      id: 451,
-      name: "Avcı Böreği (Sosis Kaşarlı / Patatesli / Patlıcanlı)",
-      description:
-        "Çıtır yufkalı avcı böreği çeşitleri",
-      price: "75₺",
-      category: "borekler",
-      image: "/images/borekler/avci.jpg",
-    },
-    {
       id: 48,
       name: "Adana Böreği (kg)",
-      description: "Adana usulü özel börek",
+      description: "Adana usulü bol peynirli özel börek",
       price: "600₺",
       category: "borekler",
-      image: "/images/borekler/adana-boregi.webp",
+      image: "/images/borekler/adana-boregi.jpg",
     },
     {
-      id: 49,
-      name: "Kaşarlı Gözleme",
-      description: "El açması kaşarlı gözleme",
-      price: "150₺",
+      id: 481,
+      name: "Su Böreği (kg)",
+      description: "El açması bol peynirli geleneksel su böreği",
+      price: "600₺",
       category: "borekler",
-      image: "/images/borekler/gozleme.jpg",
-    },
-    {
-      id: 50,
-      name: "Gözleme (Patatesli / Peynirli)",
-      description: "El açması gözleme çeşitleri",
-      price: "130₺",
-      category: "borekler",
-      image: "/images/borekler/gozleme.jpg",
-    },
-    {
-      id: 52,
-      name: "Talaş Böreği",
-      description: "Geleneksel talaş böreği",
-      price: "75₺",
-      category: "borekler",
-      image: "/images/borekler/talas-boregi.jpg",
+      image: "/images/borekler/su-boregi.jpg",
     },
     {
       id: 9,
@@ -412,26 +528,17 @@ const MenuPage: React.FC = () => {
         "Gözleme, patates kızartması, salata, zeytin ve çay ile servis edilir",
       price: "230₺",
       category: "borekler",
-      image: "/images/kahvaltılar/peynirigozleme.webp",
+      image: "/images/borekler/gozleme-menu.jpg",
     },
 
     // Tatlılar
-    {
-      id: 600,
-      name: "Donut",
-      description: "Taze donut",
-      price: "80₺",
-      category: "tatlilar",
-      image: "/images/tatlılar/ekler.jpg",
-      popular: true,
-    },
     {
       id: 53,
       name: "Portakallı Kurabiye",
       description: "Portakal aromalı yumuşak kurabiye",
       price: "60₺",
       category: "tatlilar",
-      image: "/images/tatlılar/portakalli-kurabiye.png",
+      image: "/images/tatlilar/portakalli-kurabiye.jpg",
     },
     {
       id: 54,
@@ -439,23 +546,47 @@ const MenuPage: React.FC = () => {
       description: "Geleneksel ay çöreği",
       price: "70₺",
       category: "tatlilar",
-      image: "/images/tatlılar/aycorek.jpg",
+      image: "/images/tatlilar/ay-coregi.jpg",
     },
     {
       id: 561,
-      name: "Mini Ekler (Lotus / Muz)",
-      description: "Lotus veya muz aromalı mini ekler",
+      name: "Mini Ekler (Lotus)",
+      description: "Lotus aromalı nefis mini ekler",
       price: "45₺",
       category: "tatlilar",
-      image: "/images/tatlılar/ekler.jpg",
+      image: "/images/tatlilar/lotuslu-ekler.jpg",
+    },
+    {
+      id: 562,
+      name: "Mini Ekler (Muz)",
+      description: "Muz aromalı taze mini ekler",
+      price: "45₺",
+      category: "tatlilar",
+      image: "/images/tatlilar/lotuslu-ekler.jpg",
     },
     {
       id: 563,
-      name: "Mini Ekler (Çikolata / Beyaz Çikolata / Frambuaz)",
-      description: "Çeşitli aromalı mini ekler",
+      name: "Mini Ekler (Çikolata)",
+      description: "Sütlü çikolatalı mini ekler",
       price: "40₺",
       category: "tatlilar",
-      image: "/images/tatlılar/ekler.jpg",
+      image: "/images/tatlilar/cikolatali-mini-ekler.jpg",
+    },
+    {
+      id: 564,
+      name: "Mini Ekler (Beyaz Çikolata)",
+      description: "Beyaz çikolatalı mini ekler",
+      price: "40₺",
+      category: "tatlilar",
+      image: "/images/tatlilar/beyaz-cikolatali-ekler.jpg",
+    },
+    {
+      id: 565,
+      name: "Mini Ekler (Frambuaz)",
+      description: "Frambuaz aromalı taze mini ekler",
+      price: "40₺",
+      category: "tatlilar",
+      image: "/images/tatlilar/frambuazli-ekler.jpg",
     },
     {
       id: 57,
@@ -463,7 +594,7 @@ const MenuPage: React.FC = () => {
       description: "Katmanlı taze kruvasan",
       price: "90₺",
       category: "tatlilar",
-      image: "/images/tatlılar/kruvasan.webp",
+      image: "/images/tatlilar/kruvasan.jpg",
     },
     {
       id: 59,
@@ -471,15 +602,63 @@ const MenuPage: React.FC = () => {
       description: "Günlük taze pasta dilimleri",
       price: "160₺",
       category: "tatlilar",
-      image: "/images/tatlılar/dilimpasta.jpeg",
+      image: "/images/tatlilar/dilim-pastalar.jpg",
+    },
+    {
+      id: 593,
+      name: "Vanilyalı Alman Pastası",
+      description: "Klasik pudra şekerli nefis Alman pastası",
+      price: "80₺",
+      category: "tatlilar",
+      image: "/images/tatlilar/vanilyali-alman-pastasi.jpg",
+    },
+    {
+      id: 591,
+      name: "Çikolatalı Alman Pastası",
+      description: "Özel kremalı ve çikolata kaplı taze Alman pastası",
+      price: "80₺",
+      category: "tatlilar",
+      image: "/images/tatlilar/cikolatali-alman-pastasi.jpg",
+    },
+    {
+      id: 592,
+      name: "Frambuazlı Alman Pastası",
+      description: "Taze frambuaz taneleri ve kreması ile Alman pastası",
+      price: "80₺",
+      category: "tatlilar",
+      image: "/images/tatlilar/frambuazli-alman-pastasi.jpg",
     },
     {
       id: 60,
       name: "İzmir Bombası",
-      description: "İzmir usulü özel tatlı",
+      description: "İzmir usulü özel akışkan çikolatalı tatlı",
       price: "70₺",
       category: "tatlilar",
-      image: "/images/tatlılar/izmirbomba.jpg",
+      image: "/images/tatlilar/izmir-bombasi.jpg",
+    },
+    {
+      id: 594,
+      name: "Limonlu Cheesecake",
+      description: "Altı bisküvi tabanlı, üstü limon soslu nefis cheesecake",
+      price: "160₺",
+      category: "tatlilar",
+      image: "/images/tatlilar/cheesekek.jpg",
+    },
+    {
+      id: 595,
+      name: "Elmalı Turta",
+      description: "Kafes desenli, elmalı ve tarçınlı klasik turta",
+      price: "85₺",
+      category: "tatlilar",
+      image: "/images/tatlilar/elmali-turta.jpg",
+    },
+    {
+      id: 596,
+      name: "Cup Cake",
+      description: "Rengarenk süslemeli, lezzetli cup cake çeşitleri",
+      price: "160₺",
+      category: "tatlilar",
+      image: "/images/tatlilar/cup-cake.jpg",
     },
 
     // Mutfaktan
@@ -489,7 +668,7 @@ const MenuPage: React.FC = () => {
       description: "Hamburger, patates kızartması ve içecek ile servis edilir",
       price: "320₺",
       category: "mutfaktan",
-      image: "/images/mutfaktan/hamburger-menu.jpeg",
+      image: "/images/mutfaktan/hamburger-menu.jpg",
     },
     {
       id: 681,
@@ -497,15 +676,15 @@ const MenuPage: React.FC = () => {
       description: "Pizza, patates kızartması ve içecek ile servis edilir",
       price: "270₺",
       category: "mutfaktan",
-      image: "/images/mutfaktan/hamburger-menu.jpeg",
+      image: "/images/mutfaktan/pizza-menu.jpg",
     },
     {
       id: 61,
       name: "Cips Tabağı",
-      description: "Çıtır patates cips",
+      description: "Çıtır çıtır taze patates kızartması",
       price: "100₺",
       category: "mutfaktan",
-      image: "/images/mutfaktan/cipes.webp",
+      image: "/images/mutfaktan/patates-kizartmasi.jpg",
     },
 
     // İçecekler
@@ -540,36 +719,52 @@ const MenuPage: React.FC = () => {
       description: "Geleneksel Türk kahvesi",
       price: "80₺",
       category: "icecekler",
-      image: "/images/sicak-icecekler/turkkahvesi.webp",
+      image: "/images/sicak-icecekler/turk-kahvesi.jpg",
     },
     {
       id: 77,
       name: "Americano",
-      description: "Sıcak americano",
+      description: "Sıcak demlenmiş espresso ve su",
       price: "M: 135₺ / L: 150₺",
       category: "icecekler",
-      image: "/images/sicak-icecekler/americano.jpeg",
+      image: "/images/sicak-icecekler/americano.jpg",
     },
     {
       id: 78,
-      name: "Latte / Cappuccino / Macchiato",
-      description: "Sütlü espresso kahve çeşitleri",
+      name: "Latte",
+      description: "Espresso ve kadifemsi sıcak süt",
       price: "M: 135₺ / L: 150₺",
       category: "icecekler",
-      image: "/images/sicak-icecekler/latte.jpeg",
+      image: "/images/sicak-icecekler/americano.jpg",
+    },
+    {
+      id: 782,
+      name: "Cappuccino",
+      description: "Yoğun espresso ve bol sıcak süt köpüğü",
+      price: "M: 135₺ / L: 150₺",
+      category: "icecekler",
+      image: "/images/sicak-icecekler/americano.jpg",
+    },
+    {
+      id: 781,
+      name: "Karamel Macchiato",
+      description: "Süt köpüğü, espresso ve nefis karamel sosu",
+      price: "M: 145₺ / L: 160₺",
+      category: "icecekler",
+      image: "/images/sicak-icecekler/americano.jpg",
     },
     {
       id: 79,
       name: "Mocha",
-      description: "Çikolatalı espresso kahve",
+      description: "Çikolata şurubu, espresso ve süt",
       price: "M: 135₺ / L: 150₺",
       category: "icecekler",
-      image: "/images/sicak-icecekler/mocha.jpg",
+      image: "/images/sicak-icecekler/americano.jpg",
     },
     {
       id: 81,
       name: "Espresso",
-      description: "Yoğun espresso",
+      description: "Yoğun ve zengin aromalı sade kahve",
       price: "85₺",
       category: "icecekler",
       image: "/images/sicak-icecekler/espresso.jpg",
@@ -577,7 +772,7 @@ const MenuPage: React.FC = () => {
     {
       id: 83,
       name: "Sıcak Çikolata",
-      description: "Sıcak kakao",
+      description: "Sıcak ve tatlı çikolata keyfi",
       price: "120₺",
       category: "icecekler",
       image: "/images/sicak-icecekler/sicak-cikolata.jpg",
@@ -585,26 +780,34 @@ const MenuPage: React.FC = () => {
     {
       id: 112,
       name: "Ice Americano",
-      description: "Buzlu americano",
+      description: "Espresso ve buzlu soğuk suyun ferahlatıcı buluşması",
       price: "M: 135₺ / L: 150₺",
       category: "icecekler",
       image: "/images/soguk-kahveler/ice-americano.jpg",
     },
     {
       id: 113,
-      name: "Ice Latte / Ice Macchiato / Ice Chocolate",
-      description: "Buzlu espresso içecekleri",
+      name: "Ice Latte",
+      description: "Buzlu espresso ve soğuk süt ile hazırlanan klasik lezzet",
       price: "M: 135₺ / L: 150₺",
       category: "icecekler",
-      image: "/images/soguk-kahveler/ice-latte.webp",
+      image: "/images/soguk-kahveler/ice-latte.jpg",
+    },
+    {
+      id: 1131,
+      name: "Ice Macchiato",
+      description: "Buzlu espresso ve süt köpüklü macchiato",
+      price: "M: 135₺ / L: 150₺",
+      category: "icecekler",
+      image: "/images/soguk-kahveler/ice-latte.jpg",
     },
     {
       id: 114,
       name: "Ice Mocha",
-      description: "Buzlu çikolatalı kahve",
+      description: "Espresso, çikolata ve soğuk sütün buzlu uyumu",
       price: "M: 135₺ / L: 150₺",
       category: "icecekler",
-      image: "/images/soguk-kahveler/ice-mocha.webp",
+      image: "/images/soguk-kahveler/ice-latte.jpg",
     },
     {
       id: 95,
@@ -625,8 +828,8 @@ const MenuPage: React.FC = () => {
     },
     {
       id: 101,
-      name: "Cola / Fanta",
-      description: "Soğuk meşrubat",
+      name: "Kola / Fanta",
+      description: "Soğuk meşrubat çeşitleri",
       price: "85₺",
       category: "icecekler",
       image: "/images/soguk-icecekler/kola.webp",
@@ -641,8 +844,8 @@ const MenuPage: React.FC = () => {
     },
     {
       id: 96,
-      name: "Meyve Suyu / Süt / Meyveli Süt / Link",
-      description: "Soğuk içecekler",
+      name: "Çocuk & Kutu İçecek Çeşitleri",
+      description: "Meyve Suyu, Sade Süt, Meyveli Süt ve Link seçenekleri",
       price: "25₺",
       category: "icecekler",
       image: "/images/soguk-icecekler/meyvesuyu200.jpg",
@@ -662,6 +865,30 @@ const MenuPage: React.FC = () => {
       price: "90₺",
       category: "icecekler",
       image: "/images/soguk-icecekler/limonata.jpg",
+    },
+    {
+      id: 1081,
+      name: "Çilekli Milkshake",
+      description: "Taze çilek püresi, soğuk süt ve vanilyalı dondurma ile hazırlanan milkshake",
+      price: "130₺",
+      category: "icecekler",
+      image: "/images/soguk-icecekler/cilekli-milkshake.jpg",
+    },
+    {
+      id: 1082,
+      name: "Milkshake (Çikolatalı / Vanilyalı)",
+      description: "Çikolatalı veya vanilyalı dondurma ile hazırlanan milkshake",
+      price: "130₺",
+      category: "icecekler",
+      image: "/images/soguk-icecekler/milkshake.jpg",
+    },
+    {
+      id: 1083,
+      name: "Taze Sıkılmış Portakal Suyu",
+      description: "Günlük taze sıkılmış C vitamini deposu",
+      price: "120₺",
+      category: "icecekler",
+      image: "/images/soguk-icecekler/portakal-suyu.jpg",
     },
     {
       id: 110,
@@ -836,7 +1063,6 @@ const MenuPage: React.FC = () => {
               <motion.div
                 key={activeCategory}
                 className="space-y-16"
-                layout
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -871,19 +1097,25 @@ const MenuPage: React.FC = () => {
                                 alt={item.name}
                                 className="w-full h-full object-cover cursor-pointer transition-transform duration-500 group-hover:scale-105"
                                 onError={handleImageError}
-                                onClick={() => 
-                                  item.name === "Bubble Tea Çeşitleri" 
-                                    ? handleBubbleTeaClick() 
-                                    : handleImageClick(item.image, item.name)
-                                }
+                                loading="lazy"
+                                decoding="async"
+                                onClick={() => {
+                                  if (item.name === "Bubble Tea Çeşitleri") {
+                                    handleBubbleTeaClick();
+                                  } else {
+                                    handleImageClick(item.image, item.name);
+                                  }
+                                }}
                               />
                               <div
                                 className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center cursor-pointer"
-                                onClick={() => 
-                                  item.name === "Bubble Tea Çeşitleri" 
-                                    ? handleBubbleTeaClick() 
-                                    : handleImageClick(item.image, item.name)
-                                }
+                                onClick={() => {
+                                  if (item.name === "Bubble Tea Çeşitleri") {
+                                    handleBubbleTeaClick();
+                                  } else {
+                                    handleImageClick(item.image, item.name);
+                                  }
+                                }}
                               >
                                 <span className="material-symbols-outlined text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   zoom_in
@@ -901,10 +1133,10 @@ const MenuPage: React.FC = () => {
                                 </span>
                               </div>
                               <p className="font-body-md text-xs md:text-sm text-on-surface-variant leading-relaxed">
-                                {item.description}
-                              </p>
+                                  {item.description}
+                                </p>
+                              </div>
                             </div>
-                          </div>
                         ))}
                       </div>
                     </div>
@@ -1122,6 +1354,7 @@ const MenuPage: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
     </>
   );
 };

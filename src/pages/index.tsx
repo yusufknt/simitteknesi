@@ -67,7 +67,7 @@ const HomePage: React.FC = () => {
                   <img
                     alt="Premium Burger Set"
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    src="/images/mutfaktan/hamburger-menu.jpeg"
+                    src="/images/mutfaktan/hamburger-menu.jpg"
                     onError={handleImageError}
                   />
                 </div>
@@ -111,7 +111,7 @@ const HomePage: React.FC = () => {
                   <img
                     alt="Premium Pizza Set"
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    src="/images/mutfaktan/hamburger-menu.jpeg"
+                    src="/images/mutfaktan/pizza-menu.jpg"
                     onError={handleImageError}
                   />
                 </div>

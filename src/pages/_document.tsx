@@ -2,7 +2,7 @@ import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
-    <Html lang="tr">
+    <Html lang="tr" data-scroll-behavior="smooth">
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
