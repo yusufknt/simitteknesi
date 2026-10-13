@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Head from "next/head";
-import React, { useState, useEffect } from "react";
-import { handleImageError } from "../utils/imageUtils";
+import React, { useState, useEffect, useRef } from "react";
+import { handleImageError, imageFallbackRef } from "../utils/imageUtils";
 
 interface MenuItem {
   id: number;
@@ -13,6 +13,19 @@ interface MenuItem {
   popular?: boolean;
 }
 
+// Linkle doğrudan gidilebilen ürünler (ör. /menu#hamburger-menu)
+const ITEM_ANCHORS: Record<string, { itemId: number; category: string }> = {
+  "hamburger-menu": { itemId: 68, category: "mutfaktan" },
+  "pizza-menu": { itemId: 681, category: "mutfaktan" },
+  "bubble-tea-cesitleri": { itemId: 1084, category: "icecekler" },
+};
+
+const ANCHOR_BY_ITEM_ID: Record<number, string> = Object.fromEntries(
+  Object.entries(ITEM_ANCHORS).map(([anchor, target]) => [target.itemId, anchor])
+);
+
+const BUBBLE_TEA_ITEM_ID = ITEM_ANCHORS["bubble-tea-cesitleri"].itemId;
+
 const MenuPage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState("tümü");
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,30 +35,20 @@ const MenuPage: React.FC = () => {
   } | null>(null);
   const [showBubbleTeaModal, setShowBubbleTeaModal] = useState(false);
 
-  // Hash ile mutfaktan kategorisini ve hamburger menüye scroll
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.hash === '#hamburger-menu') {
-      setTimeout(() => {
-        setActiveCategory('mutfaktan');
-        const el = document.getElementById('hamburger-menu');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 300); // kategori değişimi ve render için kısa gecikme
-    }
-  }, []);
+  // Hash ile ilgili ürüne git (ör. #hamburger-menu, #bubble-tea-cesitleri)
+  // Kategori geçiş animasyonu bitip yeni liste ekrana gelmeden kaydırılırsa konum yanlış
+  // hesaplanıyor; bu yüzden kart yeni kategoride mount olduğunda kaydırılıyor (bkz. kart ref'i)
+  const pendingScrollIdRef = useRef<string | null>(null);
 
-  // Hash ile bubble tea çeşitlerine scroll
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.hash === '#bubble-tea-cesitleri') {
-      setTimeout(() => {
-        setActiveCategory('soguk-icecekler');
-        const el = document.getElementById('bubble-tea-cesitleri');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 300); // kategori değişimi ve render için kısa gecikme
-    }
+    const anchor = window.location.hash.slice(1);
+    const target = ITEM_ANCHORS[anchor];
+    if (!target) return;
+    pendingScrollIdRef.current = anchor;
+    const timer = setTimeout(() => {
+      setActiveCategory(target.category);
+    }, 300); // hydrate sonrası kategori değişimi için kısa gecikme
+    return () => clearTimeout(timer);
   }, []);
 
   const handleImageClick = (image: string, name: string) => {
@@ -60,11 +63,58 @@ const MenuPage: React.FC = () => {
     setSelectedImage(null);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Escape") {
-      closeImageModal();
-    }
+  const closeBubbleTeaModal = () => {
+    setShowBubbleTeaModal(false);
   };
+
+  // Açık pencere (modal) için: Esc ile kapatma, odağı pencereye taşıma ve içinde tutma,
+  // arka plan kaydırmasını kilitleme; kapanınca odağı tıklanan öğeye geri verme
+  const isModalOpen = selectedImage !== null || showBubbleTeaModal;
+  const modalRef = useRef<HTMLDivElement>(null);
+  const modalCloseButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    modalCloseButtonRef.current?.focus();
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelectedImage(null);
+        setShowBubbleTeaModal(false);
+        return;
+      }
+      if (e.key === "Tab" && modalRef.current) {
+        const focusables = modalRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement;
+        if (!modalRef.current.contains(active)) {
+          e.preventDefault();
+          first.focus();
+        } else if (e.shiftKey && active === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && active === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previouslyFocused?.focus();
+    };
+  }, [isModalOpen]);
 
   const categories = [
     {
@@ -132,7 +182,7 @@ const MenuPage: React.FC = () => {
         "Simit, peynir, zeytin, reçel, söğüş, yeşillik ve çay ile hafif kahvaltı",
       price: "200₺",
       category: "kahvaltilar",
-      image: "/images/kahvaltilar/simit-kahvaltı-tabagi.jpg",
+      image: "/images/kahvaltilar/simit-kahvalti-tabagi.jpg",
     },
     {
       id: 4,
@@ -225,7 +275,7 @@ const MenuPage: React.FC = () => {
       description: "Taptaze susamlı simit",
       price: "20₺",
       category: "firindanlar",
-      image: "/images/simitler/tereyagli-simit.jpg",
+      image: "/images/simitler/sade-simit.jpg",
       popular: true,
     },
     {
@@ -436,7 +486,7 @@ const MenuPage: React.FC = () => {
         "7 tahıllı ve tam buğday ekmeğine taze malzemelerle sağlıklı sandviç",
       price: "100₺",
       category: "sandvic-tost",
-      image: "/images/sandvic/tam-tahıllı-sandvic.jpg",
+      image: "/images/sandvic/tam-tahilli-sandvic.jpg",
     },
     {
       id: 40,
@@ -751,7 +801,7 @@ const MenuPage: React.FC = () => {
       description: "Süt köpüğü, espresso ve nefis karamel sosu",
       price: "M: 145₺ / L: 160₺",
       category: "icecekler",
-      image: "/images/sicak-icecekler/americano.jpg",
+      image: "/images/soguk-kahveler/karamel-machiato.jpg",
     },
     {
       id: 79,
@@ -778,7 +828,7 @@ const MenuPage: React.FC = () => {
       image: "/images/sicak-icecekler/sicak-cikolata.jpg",
     },
     {
-      id: 112,
+      id: 1121,
       name: "Ice Americano",
       description: "Espresso ve buzlu soğuk suyun ferahlatıcı buluşması",
       price: "M: 135₺ / L: 150₺",
@@ -899,6 +949,14 @@ const MenuPage: React.FC = () => {
       image: "/images/soguk-icecekler/portakal-suyu.jpg",
     },
     {
+      id: 1084,
+      name: "Bubble Tea Çeşitleri",
+      description: "Çilek, karamel, mango, yaban mersini ve yeşil elma aromalı; yumuşak boba topları ile",
+      price: "150₺",
+      category: "icecekler",
+      image: "/images/bubbletea/cilek.png",
+    },
+    {
       id: 110,
       name: "Churchill",
       description: "Churchill gazoz",
@@ -944,7 +1002,7 @@ const MenuPage: React.FC = () => {
       id: 702,
       name: "Sütaş Peynir Çeşitleri",
       description: "Sütaş peynir",
-      price: "12.5₺",
+      price: "12,5₺",
       category: "aperatifler",
       image: "/images/aperatifler/sutas-peynir.jpeg",
     },
@@ -966,11 +1024,26 @@ const MenuPage: React.FC = () => {
     },
   ];
 
+  // Türkçe büyük/küçük harf kurallarıyla küçült ve Türkçe karakterleri sadeleştir
+  // ("KAŞARLI", "kasarli", "izmir" → "İzmir Bombası" gibi aramalar eşleşsin)
+  const normalizeForSearch = (text: string) =>
+    text
+      .toLocaleLowerCase("tr")
+      .replace(/ç/g, "c")
+      .replace(/ğ/g, "g")
+      .replace(/ı/g, "i")
+      .replace(/ö/g, "o")
+      .replace(/ş/g, "s")
+      .replace(/ü/g, "u")
+      .trim();
+
+  const normalizedQuery = normalizeForSearch(searchQuery);
+
   const filteredItems = menuItems.filter((item) => {
     const matchesCategory = activeCategory === "tümü" || item.category === activeCategory;
-    const matchesSearch = searchQuery === "" || 
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = normalizedQuery === "" ||
+      normalizeForSearch(item.name).includes(normalizedQuery) ||
+      normalizeForSearch(item.description).includes(normalizedQuery);
     return matchesCategory && matchesSearch;
   });
 
@@ -1000,12 +1073,7 @@ const MenuPage: React.FC = () => {
         />
       </Head>
 
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="pt-24 bg-parchment-light min-h-screen"
-      >
+      <div className="pt-24 bg-parchment-light min-h-screen animate-page-in motion-reduce:animate-none">
         {/* Page Header & Search */}
         <section className="py-12 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
@@ -1020,14 +1088,18 @@ const MenuPage: React.FC = () => {
             {/* Search Box */}
             <div className="mb-12 max-w-md mx-auto">
               <div className="relative">
+                <label htmlFor="menu-search" className="sr-only">
+                  Menüde ara
+                </label>
                 <input
-                  type="text"
+                  id="menu-search"
+                  type="search"
                   placeholder="Menüde ara..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-6 py-3.5 pl-14 bg-white border border-slate-muted focus:border-baked-gold focus:ring-1 focus:ring-baked-gold rounded-full font-body-md text-charcoal-deep transition-all duration-300 ease-out outline-none shadow-sm focus:scale-[1.01]"
+                  className="w-full px-6 py-3.5 pl-14 bg-white border border-slate-muted focus:border-baked-gold focus:ring-1 focus:ring-baked-gold rounded-full font-body-md text-charcoal-deep transition-all duration-300 ease-out outline-hidden shadow-xs focus:scale-[1.01]"
                 />
-                <div className="absolute left-5 top-1/2 transform -translate-y-1/2 text-baked-gold">
+                <div className="absolute left-5 top-1/2 transform -translate-y-1/2 text-baked-gold" aria-hidden="true">
                   <svg
                     className="w-5 h-5 text-baked-gold/80"
                     fill="none"
@@ -1050,6 +1122,8 @@ const MenuPage: React.FC = () => {
               {categories.map((category) => (
                 <button
                   key={category.id}
+                  type="button"
+                  aria-pressed={activeCategory === category.id}
                   onClick={() => setActiveCategory(category.id)}
                   className={`px-6 py-2.5 rounded-full font-label-lg text-label-lg transition-all duration-300 ease-out active:scale-98 ${
                     activeCategory === category.id
@@ -1067,7 +1141,7 @@ const MenuPage: React.FC = () => {
         {/* Menu Items Grid */}
         <section className="py-12 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={activeCategory}
                 className="space-y-16"
@@ -1079,6 +1153,27 @@ const MenuPage: React.FC = () => {
                   ease: "easeInOut",
                 }}
               >
+                {filteredItems.length === 0 && (
+                  <div className="text-center py-16">
+                    <p className="font-headline-md text-title-lg text-charcoal-deep font-bold mb-2">
+                      Sonuç bulunamadı
+                    </p>
+                    <p className="font-body-md text-sm text-on-surface-variant mb-6">
+                      {searchQuery.trim()
+                        ? `"${searchQuery.trim()}" ile eşleşen bir ürün bulunamadı.`
+                        : "Bu kategoride henüz ürün bulunmuyor."}
+                    </p>
+                    {searchQuery && (
+                      <button
+                        type="button"
+                        onClick={() => setSearchQuery("")}
+                        className="px-6 py-2.5 rounded-full font-label-lg text-label-lg bg-white border border-slate-muted/60 text-charcoal-deep hover:border-baked-gold hover:text-baked-gold transition-all duration-300"
+                      >
+                        Aramayı Temizle
+                      </button>
+                    )}
+                  </div>
+                )}
                 {Object.entries(getGroupedItems()).map(([catId, items]) => {
                   const categoryName = categories.find((c) => c.id === catId)?.name || "";
                   return (
@@ -1088,56 +1183,77 @@ const MenuPage: React.FC = () => {
                           <h2 className="font-display-lg text-xl md:text-2xl text-charcoal-deep font-bold tracking-wide">
                             {categoryName}
                           </h2>
-                          <div className="h-px bg-baked-gold/20 flex-grow" />
+                          <div className="h-px bg-baked-gold/20 grow" />
                         </div>
                       )}
 
                       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-                        {items.map((item, index) => (
+                        {items.map((item) => (
                           <div
                             key={item.id}
-                            id={item.name === "Hamburger Menü" ? "hamburger-menu" : item.name === "Bubble Tea Çeşitleri" ? "bubble-tea-cesitleri" : undefined}
+                            // id sadece ürünün kendi kategorisi açıkken verilir; "Tümü" listesinde de
+                            // olursa tarayıcının kendi hash kaydırması bizim kaydırmamızla yarışıyor
+                            id={activeCategory === item.category ? ANCHOR_BY_ITEM_ID[item.id] : undefined}
+                            ref={(el) => {
+                              if (
+                                el &&
+                                el.id &&
+                                el.id === pendingScrollIdRef.current &&
+                                activeCategory === item.category
+                              ) {
+                                pendingScrollIdRef.current = null;
+                                el.scrollIntoView({ behavior: "smooth", block: "center" });
+                              }
+                            }}
                             className="group relative bg-white border border-slate-muted/40 rounded-2xl overflow-hidden hover:shadow-xl hover:border-baked-gold/30 hover:-translate-y-1.5 transition-all duration-300 flex flex-col"
                           >
                             <div className="h-44 md:h-56 overflow-hidden relative bg-gray-50">
                               <img
                                 src={item.image}
                                 alt={item.name}
-                                className="w-full h-full object-cover cursor-pointer transition-transform duration-500 group-hover:scale-105"
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                ref={imageFallbackRef}
                                 onError={handleImageError}
                                 loading="lazy"
                                 decoding="async"
-                                onClick={() => {
-                                  if (item.name === "Bubble Tea Çeşitleri") {
-                                    handleBubbleTeaClick();
-                                  } else {
-                                    handleImageClick(item.image, item.name);
-                                  }
-                                }}
                               />
-                              <div
-                                className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center cursor-pointer"
+                              <button
+                                type="button"
+                                className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-all duration-300 flex items-center justify-center cursor-pointer outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-baked-gold"
+                                aria-label={
+                                  item.id === BUBBLE_TEA_ITEM_ID
+                                    ? "Bubble Tea çeşitlerini göster"
+                                    : `${item.name} görselini büyüt`
+                                }
                                 onClick={() => {
-                                  if (item.name === "Bubble Tea Çeşitleri") {
+                                  if (item.id === BUBBLE_TEA_ITEM_ID) {
                                     handleBubbleTeaClick();
                                   } else {
                                     handleImageClick(item.image, item.name);
                                   }
                                 }}
                               >
-                                <span className="material-symbols-outlined text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <span className="material-symbols-outlined text-white text-3xl" aria-hidden="true">
                                   zoom_in
                                 </span>
-                              </div>
+                              </button>
                             </div>
 
-                            <div className="p-4 md:p-6 flex flex-col flex-grow">
-                              <div className="flex justify-between items-start gap-3 mb-3">
+                            <div className="p-4 md:p-6 flex flex-col grow">
+                              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-1 md:gap-3 mb-3">
                                 <h3 className="font-headline-md text-base md:text-title-lg text-charcoal-deep font-bold">
                                   {item.name}
                                 </h3>
-                                <span className="font-display-lg text-base md:text-title-lg text-baked-gold whitespace-nowrap">
-                                  {item.price}
+                                {/* Boyutlu fiyatlar ("M: 135₺ / L: 150₺") dar ekranda satır kırabilsin diye parçalanıyor */}
+                                <span className="font-display-lg text-base md:text-title-lg text-baked-gold md:text-right">
+                                  {item.price.split(" / ").map((part, i, parts) => (
+                                    <React.Fragment key={part}>
+                                      <span className="whitespace-nowrap">
+                                        {i < parts.length - 1 ? `${part} /` : part}
+                                      </span>
+                                      {i < parts.length - 1 && " "}
+                                    </React.Fragment>
+                                  ))}
                                 </span>
                               </div>
                               <p className="font-body-md text-xs md:text-sm text-on-surface-variant leading-relaxed">
@@ -1154,7 +1270,7 @@ const MenuPage: React.FC = () => {
             </AnimatePresence>
           </div>
         </section>
-      </motion.div>
+      </div>
 
       {/* Image Modal */}
       <AnimatePresence>
@@ -1164,12 +1280,12 @@ const MenuPage: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4"
+            className="fixed inset-0 z-9999 bg-black/90 flex items-center justify-center p-4"
             onClick={closeImageModal}
-            onKeyDown={handleKeyDown}
-            tabIndex={0}
             role="dialog"
             aria-modal="true"
+            aria-labelledby="image-modal-title"
+            ref={modalRef}
           >
             <motion.div
               initial={{ scale: 0.96, opacity: 0 }}
@@ -1181,9 +1297,11 @@ const MenuPage: React.FC = () => {
             >
               {/* Close Button */}
               <button
+                type="button"
+                ref={modalCloseButtonRef}
                 onClick={closeImageModal}
                 className="absolute -top-4 -right-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 z-10"
-                aria-label="Close modal"
+                aria-label="Kapat"
               >
                 <svg
                   className="w-6 h-6 text-gray-600"
@@ -1216,9 +1334,9 @@ const MenuPage: React.FC = () => {
                 initial={{ y: 10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
-                className="mt-4 bg-charcoal-deep/90 text-white px-6 py-3 rounded-lg backdrop-blur-sm shadow-lg border border-white/10"
+                className="mt-4 bg-charcoal-deep/90 text-white px-6 py-3 rounded-lg backdrop-blur-xs shadow-lg border border-white/10"
               >
-                <h3 className="text-base font-semibold text-center tracking-wide">
+                <h3 id="image-modal-title" className="text-base font-semibold text-center tracking-wide">
                   {selectedImage.alt}
                 </h3>
               </motion.div>
@@ -1235,12 +1353,12 @@ const MenuPage: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4"
-            onClick={() => setShowBubbleTeaModal(false)}
-            onKeyDown={handleKeyDown}
-            tabIndex={0}
+            className="fixed inset-0 z-9999 bg-black/90 flex items-center justify-center p-4"
+            onClick={closeBubbleTeaModal}
             role="dialog"
             aria-modal="true"
+            aria-labelledby="bubble-tea-modal-title"
+            ref={modalRef}
           >
             <motion.div
               initial={{ scale: 0.96, opacity: 0 }}
@@ -1252,9 +1370,11 @@ const MenuPage: React.FC = () => {
             >
               {/* Close Button */}
               <button
-                onClick={() => setShowBubbleTeaModal(false)}
+                type="button"
+                ref={modalCloseButtonRef}
+                onClick={closeBubbleTeaModal}
                 className="absolute top-6 right-6 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 z-10 border border-slate-muted/40"
-                aria-label="Close modal"
+                aria-label="Kapat"
               >
                 <svg
                   className="w-6 h-6 text-gray-600"
@@ -1273,15 +1393,15 @@ const MenuPage: React.FC = () => {
 
               {/* Header */}
               <div className="bg-charcoal-deep text-white p-8 text-center relative border-b border-baked-gold/20">
-                <h2 className="font-display-lg text-headline-lg mb-2">Bubble Tea Çeşitleri</h2>
-                <p className="font-body-lg text-baked-gold uppercase tracking-widest text-sm font-semibold">Özel Serinletici Tariflerimiz</p>
+                <h2 id="bubble-tea-modal-title" className="font-display-lg text-headline-lg mb-2">Bubble Tea Çeşitleri</h2>
+                <p className="font-body-lg text-ember uppercase tracking-widest text-sm font-semibold">Özel Serinletici Tariflerimiz</p>
               </div>
 
               {/* Content (Scrollable) */}
-              <div className="p-8 overflow-y-auto flex-grow max-h-[60vh]">
+              <div className="p-8 overflow-y-auto grow max-h-[60vh]">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {/* Çilek Bubble Tea */}
-                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-sm group hover:border-baked-gold transition-colors duration-300">
+                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-xs group hover:border-baked-gold transition-colors duration-300">
                     <div className="relative overflow-hidden rounded-lg mb-4 h-48">
                       <img
                         src="/images/bubbletea/cilek.png"
@@ -1295,7 +1415,7 @@ const MenuPage: React.FC = () => {
                   </div>
 
                   {/* Karamel Bubble Tea */}
-                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-sm group hover:border-baked-gold transition-colors duration-300">
+                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-xs group hover:border-baked-gold transition-colors duration-300">
                     <div className="relative overflow-hidden rounded-lg mb-4 h-48">
                       <img
                         src="/images/bubbletea/karamel.png"
@@ -1309,7 +1429,7 @@ const MenuPage: React.FC = () => {
                   </div>
 
                   {/* Mango Bubble Tea */}
-                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-sm group hover:border-baked-gold transition-colors duration-300">
+                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-xs group hover:border-baked-gold transition-colors duration-300">
                     <div className="relative overflow-hidden rounded-lg mb-4 h-48">
                       <img
                         src="/images/bubbletea/mango.png"
@@ -1323,7 +1443,7 @@ const MenuPage: React.FC = () => {
                   </div>
 
                   {/* Yaban Mersini Bubble Tea */}
-                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-sm group hover:border-baked-gold transition-colors duration-300">
+                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-xs group hover:border-baked-gold transition-colors duration-300">
                     <div className="relative overflow-hidden rounded-lg mb-4 h-48">
                       <img
                         src="/images/bubbletea/yaban-mersini.png"
@@ -1337,7 +1457,7 @@ const MenuPage: React.FC = () => {
                   </div>
 
                   {/* Yeşil Elma Bubble Tea */}
-                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-sm group hover:border-baked-gold transition-colors duration-300">
+                  <div className="bg-white border border-slate-muted/50 rounded-xl p-4 shadow-xs group hover:border-baked-gold transition-colors duration-300">
                     <div className="relative overflow-hidden rounded-lg mb-4 h-48">
                       <img
                         src="/images/bubbletea/yesil-elma.png"
@@ -1352,8 +1472,8 @@ const MenuPage: React.FC = () => {
                 </div>
 
                 {/* Price and Info */}
-                <div className="mt-8 text-center bg-white border border-slate-muted/55 rounded-xl p-6 shadow-sm">
-                  <div className="font-display-lg text-headline-lg text-baked-gold mb-2">120₺</div>
+                <div className="mt-8 text-center bg-white border border-slate-muted/55 rounded-xl p-6 shadow-xs">
+                  <div className="font-display-lg text-headline-lg text-baked-gold mb-2">150₺</div>
                   <p className="font-body-md text-charcoal-deep">Tüm bubble tea çeşitleri aynı fiyatla sunulmaktadır</p>
                   <p className="font-label-sm text-[12px] text-on-surface-variant mt-2 uppercase tracking-wider">İçinde yumuşak boba topları ile servis edilir</p>
                 </div>

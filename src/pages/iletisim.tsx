@@ -7,7 +7,23 @@ import {
 } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+
+// EmailJS bilgileri ortam değişkenlerinden okunur (.env.example). Bunlar EmailJS'in
+// tarayıcıya açık "public" anahtarlarıdır; ortam değişkeni tanımlı değilse mevcut
+// hesap bilgileri kullanılır, böylece yayındaki form çalışmaya devam eder.
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_u4gpsnl";
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_k1sp3j9";
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "ECyqBLsuahLujQ0-k";
+
+// Spam koruması: sayfa açıldıktan bu süre geçmeden gönderilen formlar bot kabul edilir
+const MIN_FILL_TIME_MS = 3000;
+
+const PHONE_DISPLAY = "+90 531 330 09 65";
+const PHONE_HREF = "tel:+905313300965";
+const EMAIL = "info@simitteknesinazilli.com";
+const MAP_LAT = 37.89833333333333;
+const MAP_LNG = 28.27847222222222;
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +31,11 @@ const ContactPage: React.FC = () => {
     email: "",
     message: "",
   });
+
+  // Botların doldurduğu gizli alan (honeypot); gerçek kullanıcılar bu alanı görmez
+  const [honeypot, setHoneypot] = useState("");
+  const [formOpenedAt] = useState(() => Date.now());
+  const lastSubmitRef = useRef(0);
 
   const [isLoading, setIsLoading] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -34,15 +55,24 @@ const ContactPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Bot gibi görünen gönderimleri sessizce yut (botlara hata ipucu verme)
+    const now = Date.now();
+    if (honeypot || now - formOpenedAt < MIN_FILL_TIME_MS) {
+      setSubmitStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+      return;
+    }
+    // Art arda gönderimi engelle (30 sn)
+    if (now - lastSubmitRef.current < 30000) {
+      setSubmitStatus("error");
+      return;
+    }
+
     setIsLoading(true);
     setSubmitStatus("idle");
 
     try {
-      // EmailJS konfigürasyonu - Bu değerleri kendi EmailJS hesabınızdan alacaksınız
-      const serviceId = "service_u4gpsnl"; // Gmail, Outlook vb. servisi
-      const templateId = "template_k1sp3j9"; // Email template ID'si
-      const publicKey = "ECyqBLsuahLujQ0-k"; // EmailJS public key
-
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
@@ -50,8 +80,9 @@ const ContactPage: React.FC = () => {
         to_name: "Simit Teknesi Nazilli", // Alıcı ismi
       };
 
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY);
 
+      lastSubmitRef.current = Date.now();
       setSubmitStatus("success");
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
@@ -62,21 +93,29 @@ const ContactPage: React.FC = () => {
     }
   };
 
-  const contactInfo = [
+  const contactInfo: {
+    icon: React.ReactNode;
+    title: string;
+    content: string;
+    href?: string;
+  }[] = [
     {
       icon: <MapPinIcon className="h-6 w-6" />,
       title: "Adres",
       content: "Bamboo Avm \nNazilli, Aydın",
+      href: `https://maps.google.com/?q=${MAP_LAT},${MAP_LNG}`,
     },
     {
       icon: <PhoneIcon className="h-6 w-6" />,
       title: "Telefon",
-      content: "+90 531 330 09 65",
+      content: PHONE_DISPLAY,
+      href: PHONE_HREF,
     },
     {
       icon: <EnvelopeIcon className="h-6 w-6" />,
       title: "E-posta",
-      content: "info@simitteknesinazilli.com",
+      content: EMAIL,
+      href: `mailto:${EMAIL}`,
     },
     {
       icon: <ClockIcon className="h-6 w-6" />,
@@ -95,12 +134,7 @@ const ContactPage: React.FC = () => {
         />
       </Head>
 
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="pt-24 bg-parchment-light min-h-screen"
-      >
+      <div className="pt-24 bg-parchment-light min-h-screen animate-page-in motion-reduce:animate-none">
         {/* Header */}
         <section className="py-20 relative overflow-hidden bg-charcoal-deep text-white border-b border-baked-gold/20">
           <div
@@ -111,12 +145,8 @@ const ContactPage: React.FC = () => {
             }}
           />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <span className="font-label-lg text-label-lg text-baked-gold uppercase tracking-[0.3em] mb-4 inline-block">
+            <div>
+              <span className="font-label-lg text-label-lg text-ember uppercase tracking-[0.3em] mb-4 inline-block">
                 İLETİŞİM
               </span>
               <h1 className="font-display-lg text-display-lg-mobile md:text-headline-lg text-white mb-6">
@@ -127,7 +157,7 @@ const ContactPage: React.FC = () => {
                 Sorularınız, önerileriniz veya rezervasyon talepleriniz için
                 bizimle iletişime geçin
               </p>
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -138,16 +168,28 @@ const ContactPage: React.FC = () => {
               {contactInfo.map((info, index) => (
                 <div
                   key={index}
-                  className="bg-white border border-slate-muted/40 p-8 text-center rounded-2xl shadow-sm hover:shadow-xl hover:border-baked-gold/30 hover:-translate-y-1.5 transition-all duration-300"
+                  className="bg-white border border-slate-muted/40 p-8 text-center rounded-2xl shadow-xs hover:shadow-xl hover:border-baked-gold/30 hover:-translate-y-1.5 transition-all duration-300"
                 >
-                  <div className="text-baked-gold flex justify-center mb-6">
+                  <div className="text-baked-gold flex justify-center mb-6" aria-hidden="true">
                     {info.icon}
                   </div>
                   <h3 className="font-headline-md text-title-lg text-charcoal-deep mb-4 font-bold">
                     {info.title}
                   </h3>
                   <p className="font-body-md text-on-surface-variant leading-relaxed whitespace-pre-line text-sm">
-                    {info.content}
+                    {info.href ? (
+                      <a
+                        href={info.href}
+                        className="hover:text-baked-gold underline-offset-4 hover:underline transition-colors break-words"
+                        {...(info.href.startsWith("http")
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                      >
+                        {info.content}
+                      </a>
+                    ) : (
+                      info.content
+                    )}
                   </p>
                 </div>
               ))}
@@ -170,6 +212,19 @@ const ContactPage: React.FC = () => {
                   Mesaj Gönderin
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Honeypot: ekranda ve ekran okuyucularda gizli, sadece botlar doldurur */}
+                  <div className="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
+                    <label htmlFor="website">Web siteniz</label>
+                    <input
+                      type="text"
+                      id="website"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                    />
+                  </div>
                   <div>
                     <label
                       htmlFor="name"
@@ -184,7 +239,7 @@ const ContactPage: React.FC = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-5 py-3 border border-slate-muted rounded-xl bg-white focus:ring-1 focus:ring-baked-gold focus:border-baked-gold font-body-md text-charcoal-deep transition-all duration-200 outline-none"
+                      className="w-full px-5 py-3 border border-slate-muted rounded-xl bg-white focus:ring-1 focus:ring-baked-gold focus:border-baked-gold font-body-md text-charcoal-deep transition-all duration-200 outline-hidden"
                       placeholder="Adınız ve soyadınız"
                     />
                   </div>
@@ -203,7 +258,7 @@ const ContactPage: React.FC = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-5 py-3 border border-slate-muted rounded-xl bg-white focus:ring-1 focus:ring-baked-gold focus:border-baked-gold font-body-md text-charcoal-deep transition-all duration-200 outline-none"
+                      className="w-full px-5 py-3 border border-slate-muted rounded-xl bg-white focus:ring-1 focus:ring-baked-gold focus:border-baked-gold font-body-md text-charcoal-deep transition-all duration-200 outline-hidden"
                       placeholder="ornek@email.com"
                     />
                   </div>
@@ -222,7 +277,7 @@ const ContactPage: React.FC = () => {
                       onChange={handleInputChange}
                       required
                       rows={6}
-                      className="w-full px-5 py-3 border border-slate-muted rounded-xl bg-white focus:ring-1 focus:ring-baked-gold focus:border-baked-gold font-body-md text-charcoal-deep transition-all duration-200 resize-none outline-none"
+                      className="w-full px-5 py-3 border border-slate-muted rounded-xl bg-white focus:ring-1 focus:ring-baked-gold focus:border-baked-gold font-body-md text-charcoal-deep transition-all duration-200 resize-none outline-hidden"
                       placeholder="Mesajınızı buraya yazın..."
                     />
                   </div>
@@ -305,7 +360,7 @@ const ContactPage: React.FC = () => {
                 </h2>
                 <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-muted/50 relative bg-slate-50 h-96 w-full flex items-center justify-center">
                   {!mapLoaded && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-tr from-charcoal-deep/5 to-baked-gold/5 animate-pulse z-10">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-linear-to-tr from-charcoal-deep/5 to-baked-gold/5 animate-pulse z-10">
                       <MapPinIcon className="h-10 w-10 text-baked-gold mb-3 animate-bounce" style={{ animationDuration: '2s' }} />
                       <span className="font-label-lg text-sm text-charcoal-deep/60 tracking-wider">
                         Harita Yükleniyor...
@@ -313,7 +368,7 @@ const ContactPage: React.FC = () => {
                     </div>
                   )}
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3125.1234567890123!2d28.27847222222222!3d37.89833333333333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDUzJzU0LjAiTiAyOMKwMTYnNDIuNSJF!5e0!3m2!1str!2str!4v1234567890123"
+                    src={`https://maps.google.com/maps?q=${MAP_LAT},${MAP_LNG}&z=17&hl=tr&output=embed`}
                     width="100%"
                     height="400"
                     style={{ border: 0 }}
@@ -328,7 +383,7 @@ const ContactPage: React.FC = () => {
                   ></iframe>
                 </div>
 
-                <div className="mt-8 p-8 bg-white border border-slate-muted/40 rounded-2xl shadow-sm">
+                <div className="mt-8 p-8 bg-white border border-slate-muted/40 rounded-2xl shadow-xs">
                   <h3 className="font-headline-md text-lg font-bold text-charcoal-deep mb-4">
                     Ulaşım Bilgileri
                   </h3>
@@ -339,7 +394,7 @@ const ContactPage: React.FC = () => {
                   </ul>
                   <div className="mt-6 pt-6 border-t border-slate-100">
                     <a
-                      href="https://maps.google.com/?q=37.89833333333333,28.27847222222222"
+                      href={`https://maps.google.com/?q=${MAP_LAT},${MAP_LNG}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center text-baked-gold hover:text-hearth-bronze font-bold transition-colors duration-200"
@@ -366,7 +421,7 @@ const ContactPage: React.FC = () => {
 
         {/* CTA Section */}
         <section
-          className="relative py-24 bg-fixed bg-cover bg-center"
+          className="relative py-24 bg-scroll pointer-fine:bg-fixed bg-cover bg-center"
           style={{
             backgroundImage:
               'linear-gradient(rgba(26, 26, 26, 0.92), rgba(26, 26, 26, 0.85)), url("https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80")',
@@ -385,15 +440,15 @@ const ContactPage: React.FC = () => {
               <p className="font-body-lg text-white/90 leading-relaxed mb-8 max-w-2xl mx-auto">
                 {"Nazilli'nin kalbindeki sıcak atmosferimizde, lezzetli ürünlerimizi deneyimlemeye davetlisiniz."}
               </p>
-              <div className="font-label-lg text-baked-gold uppercase tracking-wider text-sm md:text-base flex flex-wrap justify-center gap-x-8 gap-y-3 font-semibold">
+              <div className="font-label-lg text-ember uppercase tracking-wider text-sm md:text-base flex flex-wrap justify-center gap-x-8 gap-y-3 font-semibold">
                 <span>📍 Bamboo AVM, Nazilli, Aydın</span>
-                <span>📞 +90 (531) 330 09 65</span>
+                <a href={PHONE_HREF} className="hover:text-white transition-colors">📞 {PHONE_DISPLAY}</a>
                 <span>🕒 Her Gün 10:00 - 22:00</span>
               </div>
             </motion.div>
           </div>
         </section>
-      </motion.div>
+      </div>
     </>
   );
 };

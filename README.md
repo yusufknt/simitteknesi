@@ -14,8 +14,8 @@ Bu proje, **Simit Teknesi** adlı geleneksel Türk kafesi için geliştirilmiş 
 
 ### 🎨 Tasarım
 
-- **Renk Paleti**: Kırmızı (#EF4444) ve Beyaz (#FFFFFF)
-- **Typography**: Inter font ailesi
+- **Renk Paleti**: Marka kırmızısı (#B21F24), koyu zeminler için açık kırmızı (#F05252) ve Beyaz (#FFFFFF)
+- **Typography**: Playfair Display (başlıklar), Montserrat (metin), Inter (varsayılan)
 - **Tailwind CSS** ile modern stil yaklaşımı
 - **Hover efektleri** ve **smooth transitions**
 
@@ -28,8 +28,8 @@ Bu proje, **Simit Teknesi** adlı geleneksel Türk kafesi için geliştirilmiş 
 
 ## 🛠️ Teknoloji Yığını
 
-- **Frontend Framework**: Next.js 14 with TypeScript
-- **Styling**: Tailwind CSS
+- **Frontend Framework**: Next.js 16 (Pages Router) with TypeScript
+- **Styling**: Tailwind CSS v4 (tema `src/styles/globals.css` içindeki `@theme` bloğunda)
 - **Animations**: Framer Motion
 - **Icons**: Heroicons
 - **Language**: TypeScript
@@ -84,7 +84,8 @@ npm run lint
 ```
 simittekne/
 ├── public/
-│   └── favicon.ico
+│   ├── favicon.ico
+│   └── images/             # Ürün ve site görselleri (Git LFS ile saklanır)
 ├── src/
 │   ├── components/
 │   │   ├── Layout.tsx      # Ana layout bileşeni
@@ -96,10 +97,12 @@ simittekne/
 │   │   ├── index.tsx       # Anasayfa
 │   │   ├── menu.tsx        # Menü sayfası
 │   │   ├── hakkimizda.tsx  # Hakkımızda sayfası
-│   │   └── iletisim.tsx    # İletişim sayfası
+│   │   ├── iletisim.tsx    # İletişim sayfası
+│   │   └── 404.tsx         # Sayfa bulunamadı
+│   ├── utils/
+│   │   └── imageUtils.ts   # Görsel yükleme hatası için yedek görseller
 │   └── styles/
-│       └── globals.css     # Global stiller
-├── tailwind.config.js      # Tailwind konfigürasyonu
+│       └── globals.css     # Global stiller ve Tailwind teması
 ├── tsconfig.json          # TypeScript konfigürasyonu
 ├── next.config.js         # Next.js konfigürasyonu
 ├── package.json           # Proje bağımlılıkları
@@ -121,38 +124,36 @@ simittekne/
 
 ### Hero.tsx
 
-- Animated landing section
+- Animated landing section (CSS animasyonları, JavaScript yüklenmeden de görünür)
 - Call-to-action butonları
-- Floating elements
 
 ## 🎨 Stil Rehberi
 
 ### Renk Paleti
 
 ```css
-/* Ana Kırmızı */
-primary-500: #ef4444
+/* Marka kırmızısı (açık zeminlerde) */
+--color-baked-gold: #b21f24;
 
-/* Destekleyici Renkler */
-primary-50: #fef2f2
-primary-100: #fee2e2
-primary-600: #dc2626
+/* Koyu zeminlerdeki kırmızı yazı/ikonlar (WCAG AA kontrastı) */
+--color-ember: #f05252;
+
+/* Koyu zemin */
+--color-charcoal-deep: #151010;
 ```
 
 ### Tipografi
 
-- **Font**: Inter (Google Fonts)
+- **Font**: Playfair Display, Montserrat, Inter (Google Fonts)
 - **Başlıklar**: 600-800 font weight
 - **Metin**: 400-500 font weight
 
 ### Custom CSS Classes
 
 ```css
-.btn-primary    /* Ana buton stili */
-/* Ana buton stili */
-.btn-secondary  /* İkincil buton stili */
-.card          /* Kart bileşeni */
-.text-gradient; /* Gradient metin */
+.hero-overlay   /* Hero görseli üzerindeki koyu degrade */
+.text-glow      /* Başlıklar için hafif kırmızı parıltı */
+.animate-fade-up, .animate-page-in, .animate-grow-x  /* Açılış animasyonları */
 ```
 
 ## 📱 Responsive Tasarım
@@ -173,26 +174,15 @@ npm install -g vercel
 vercel
 ```
 
-### Netlify
-
-```bash
-npm run build
-# dist/ klasörünü Netlify'a yükleyin
-```
-
-### GitHub Pages
-
-```bash
-npm run build
-npm run export
-# out/ klasörünü GitHub Pages'e yükleyin
-```
+> **Not:** Görseller Git LFS ile saklanır. Projeyi ZIP olarak indirmek yerine
+> `git clone` + `git lfs pull` kullanın; aksi halde `public/images` altında gerçek
+> görseller yerine küçük LFS işaretçi dosyaları gelir.
 
 ## 🔧 Özelleştirme
 
 ### Renkleri Değiştirme
 
-`tailwind.config.js` dosyasındaki `primary` color paletini düzenleyin.
+`src/styles/globals.css` içindeki `@theme` bloğunda renk değişkenlerini düzenleyin.
 
 ### İçerikleri Güncelleme
 
@@ -205,9 +195,8 @@ Her sayfa kendi içerik verilerini içerir. Menü öğeleri, şirket bilgileri v
 
 ## 🐛 Bilinen Sorunlar
 
-- Görsel yer tutucular (placeholder) kullanılmıştır
-- Google Maps entegrasyonu tamamlanmamıştır
-- Form submission backend entegrasyonu gereklidir
+- Bazı ürünlerin kendine ait fotoğrafı yoktur, benzer ürünün fotoğrafı kullanılmaktadır
+- İletişim formu EmailJS ile gönderilir (bkz. `.env.example`)
 
 ## 📞 Destek
 

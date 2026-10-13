@@ -20,18 +20,6 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-
-  // Handle image fallbacks for missing LFS files
-  async rewrites() {
-    return {
-      fallback: [
-        {
-          source: "/images/:path*",
-          destination: "/api/fallback-image?path=:path*",
-        },
-      ],
-    };
-  },
 };
 
 module.exports = nextConfig;

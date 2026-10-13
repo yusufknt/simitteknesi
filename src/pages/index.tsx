@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import Hero from "../components/Hero";
-import { handleImageError } from "../utils/imageUtils";
+import { handleImageError, imageFallbackRef } from "../utils/imageUtils";
 
 const HomePage: React.FC = () => {
   return (
@@ -18,8 +18,8 @@ const HomePage: React.FC = () => {
 
       <Hero />
 
-      {/* Main Section wrapper to push content down after fixed navbar */}
-      <main className="pt-0">
+      {/* Sayfa içeriği (Layout zaten <main> içinde render ediyor) */}
+      <div>
         {/* Section: Hamburger & Pizza Menü Showcase */}
         <section className="bg-primary-container text-white py-section-gap overflow-hidden relative">
           {/* Atmospheric Pattern */}
@@ -38,7 +38,7 @@ const HomePage: React.FC = () => {
               viewport={{ once: true }}
               className="flex flex-col items-center text-center mb-element-gap"
             >
-              <span className="inline-block bg-baked-gold/20 text-baked-gold px-4 py-1.5 rounded-full font-label-lg text-label-lg mb-6 tracking-widest">
+              <span className="inline-block bg-baked-gold/20 text-ember px-4 py-1.5 rounded-full font-label-lg text-label-lg mb-6 tracking-widest">
                 ÖNE ÇIKAN MENÜ
               </span>
               <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg mb-6 text-glow">
@@ -57,41 +57,42 @@ const HomePage: React.FC = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className="group bg-charcoal-deep/40 backdrop-blur-sm border border-hearth-bronze/10 rounded-xl p-6 md:p-8 hover:border-baked-gold/30 transition-all duration-500 transform hover:-translate-y-2"
+                className="group bg-charcoal-deep/40 backdrop-blur-xs border border-hearth-bronze/10 rounded-xl p-6 md:p-8 hover:border-baked-gold/30 transition-all duration-500 transform hover:-translate-y-2"
               >
                 <div className="flex justify-between items-start mb-8">
                   <h3 className="font-headline-md text-headline-md text-white">Hamburger Menü</h3>
-                  <span className="text-baked-gold font-display-lg text-headline-md">320₺</span>
+                  <span className="text-ember font-display-lg text-headline-md">320₺</span>
                 </div>
                 <div className="relative aspect-video overflow-hidden rounded-lg mb-8 border border-white/5 bg-gray-800">
                   <img
-                    alt="Premium Burger Set"
+                    alt="Hamburger Menü"
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                     src="/images/mutfaktan/hamburger-menu.jpg"
+                    ref={imageFallbackRef}
                     onError={handleImageError}
                   />
                 </div>
                 <ul className="space-y-4">
                   <li className="flex items-center gap-3 text-on-primary-container font-body-md group/item">
-                    <span className="material-symbols-outlined text-baked-gold">restaurant</span>
+                    <span className="material-symbols-outlined text-ember" aria-hidden="true">lunch_dining</span>
                     <span className="group-hover/item:text-white transition-colors">Lezzetli hamburger</span>
                   </li>
                   <li className="flex items-center gap-3 text-on-primary-container font-body-md group/item">
-                    <span className="material-symbols-outlined text-baked-gold">local_pizza</span>
+                    <span className="material-symbols-outlined text-ember" aria-hidden="true">fastfood</span>
                     <span className="group-hover/item:text-white transition-colors">Çıtır patates kızartması</span>
                   </li>
                   <li className="flex items-center gap-3 text-on-primary-container font-body-md group/item">
-                    <span className="material-symbols-outlined text-baked-gold">glass_cup</span>
+                    <span className="material-symbols-outlined text-ember" aria-hidden="true">glass_cup</span>
                     <span className="group-hover/item:text-white transition-colors">
                       Buz gibi soğuk içecek (Ayran veya Meşrubat)
                     </span>
                   </li>
                 </ul>
                 <Link
-                  href="/menu"
-                  className="w-full mt-10 border border-baked-gold/50 text-baked-gold py-4 rounded-lg font-label-lg text-label-lg hover:bg-baked-gold hover:text-white transition-all duration-300 inline-block text-center"
+                  href="/menu#hamburger-menu"
+                  className="w-full mt-10 border border-ember/60 text-ember py-4 rounded-lg font-label-lg text-label-lg hover:bg-baked-gold hover:border-baked-gold hover:text-white transition-all duration-300 inline-block text-center"
                 >
-                  Hemen Sipariş Ver
+                  Menüde İncele
                 </Link>
               </motion.div>
 
@@ -101,41 +102,42 @@ const HomePage: React.FC = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className="group bg-charcoal-deep/40 backdrop-blur-sm border border-hearth-bronze/10 rounded-xl p-6 md:p-8 hover:border-baked-gold/30 transition-all duration-500 transform hover:-translate-y-2"
+                className="group bg-charcoal-deep/40 backdrop-blur-xs border border-hearth-bronze/10 rounded-xl p-6 md:p-8 hover:border-baked-gold/30 transition-all duration-500 transform hover:-translate-y-2"
               >
                 <div className="flex justify-between items-start mb-8">
                   <h3 className="font-headline-md text-headline-md text-white">Pizza Menü</h3>
-                  <span className="text-baked-gold font-display-lg text-headline-md">270₺</span>
+                  <span className="text-ember font-display-lg text-headline-md">270₺</span>
                 </div>
                 <div className="relative aspect-video overflow-hidden rounded-lg mb-8 border border-white/5 bg-gray-800">
                   <img
-                    alt="Premium Pizza Set"
+                    alt="Pizza Menü"
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                     src="/images/mutfaktan/pizza-menu.jpg"
+                    ref={imageFallbackRef}
                     onError={handleImageError}
                   />
                 </div>
                 <ul className="space-y-4">
                   <li className="flex items-center gap-3 text-on-primary-container font-body-md group/item">
-                    <span className="material-symbols-outlined text-baked-gold">local_pizza</span>
+                    <span className="material-symbols-outlined text-ember" aria-hidden="true">local_pizza</span>
                     <span className="group-hover/item:text-white transition-colors">Sıcacık pizza</span>
                   </li>
                   <li className="flex items-center gap-3 text-on-primary-container font-body-md group/item">
-                    <span className="material-symbols-outlined text-baked-gold">local_pizza</span>
+                    <span className="material-symbols-outlined text-ember" aria-hidden="true">fastfood</span>
                     <span className="group-hover/item:text-white transition-colors">Çıtır patates kızartması</span>
                   </li>
                   <li className="flex items-center gap-3 text-on-primary-container font-body-md group/item">
-                    <span className="material-symbols-outlined text-baked-gold">glass_cup</span>
+                    <span className="material-symbols-outlined text-ember" aria-hidden="true">glass_cup</span>
                     <span className="group-hover/item:text-white transition-colors">
                       Buz gibi soğuk içecek (Ayran veya Meşrubat)
                     </span>
                   </li>
                 </ul>
                 <Link
-                  href="/menu"
-                  className="w-full mt-10 border border-baked-gold/50 text-baked-gold py-4 rounded-lg font-label-lg text-label-lg hover:bg-baked-gold hover:text-white transition-all duration-300 inline-block text-center"
+                  href="/menu#pizza-menu"
+                  className="w-full mt-10 border border-ember/60 text-ember py-4 rounded-lg font-label-lg text-label-lg hover:bg-baked-gold hover:border-baked-gold hover:text-white transition-all duration-300 inline-block text-center"
                 >
-                  Hemen Sipariş Ver
+                  Menüde İncele
                 </Link>
               </motion.div>
             </div>
@@ -173,13 +175,13 @@ const HomePage: React.FC = () => {
               <div className="flex flex-wrap gap-6">
                 <Link
                   href="/iletisim"
-                  className="bg-primary text-on-primary px-10 py-5 rounded-DEFAULT font-label-lg text-label-lg hover:shadow-xl transition-all hover:bg-charcoal-deep active:scale-95 duration-200"
+                  className="bg-primary text-on-primary px-10 py-5 rounded font-label-lg text-label-lg hover:shadow-xl transition-all hover:bg-charcoal-deep active:scale-95 duration-200"
                 >
                   Bize Ulaşın
                 </Link>
                 <Link
                   href="/hakkimizda"
-                  className="border border-charcoal-deep text-charcoal-deep px-10 py-5 rounded-DEFAULT font-label-lg text-label-lg hover:bg-charcoal-deep hover:text-white transition-all active:scale-95 duration-200"
+                  className="border border-charcoal-deep text-charcoal-deep px-10 py-5 rounded font-label-lg text-label-lg hover:bg-charcoal-deep hover:text-white transition-all active:scale-95 duration-200"
                 >
                   Hikayemizi Keşfedin
                 </Link>
@@ -201,7 +203,7 @@ const HomePage: React.FC = () => {
 
               <div className="space-y-8">
                 <div className="flex items-start gap-4">
-                  <span className="material-symbols-outlined text-baked-gold text-2xl mt-0.5">location_on</span>
+                  <span className="material-symbols-outlined text-baked-gold text-2xl mt-0.5" aria-hidden="true">location_on</span>
                   <div>
                     <h4 className="font-title-lg text-label-lg text-charcoal-deep uppercase tracking-wider mb-2 font-bold">
                       Konum
@@ -211,7 +213,7 @@ const HomePage: React.FC = () => {
                 </div>
                 
                 <div className="flex items-start gap-4">
-                  <span className="material-symbols-outlined text-baked-gold text-2xl mt-0.5">schedule</span>
+                  <span className="material-symbols-outlined text-baked-gold text-2xl mt-0.5" aria-hidden="true">schedule</span>
                   <div>
                     <h4 className="font-title-lg text-label-lg text-charcoal-deep uppercase tracking-wider mb-2 font-bold">
                       Çalışma Saatleri
@@ -223,7 +225,7 @@ const HomePage: React.FC = () => {
             </motion.div>
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 };

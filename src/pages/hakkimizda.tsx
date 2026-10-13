@@ -20,7 +20,7 @@ const AboutPage: React.FC = () => {
       icon: <ClockIcon className="h-8 w-8" />,
       title: "Her Gün Taze",
       description:
-        "Ürünlerimizi her gün taze olarak hazırlıyor, kaliteyi asla ödün vermiyoruz.",
+        "Ürünlerimizi her gün taze olarak hazırlıyor, kaliteden asla ödün vermiyoruz.",
     },
     {
       icon: <UsersIcon className="h-8 w-8" />,
@@ -31,9 +31,9 @@ const AboutPage: React.FC = () => {
   ];
 
   const achievements = [
-    "Yeni kurulmuş, taze ve dinamik bir işletme",
+    "Taze ve dinamik bir işletme ruhu",
     "Geleneksel tariflerle modern sunum tekniklerini birleştiren yaklaşım",
-    "100% doğal ve kaliteli malzemeler kullanımı",
+    "%100 doğal ve kaliteli malzemeler kullanımı",
     "Günlük taze üretim taahhüdü",
     "Deneyimli ve tutkulu ekip",
     "Müşteri memnuniyeti odaklı hizmet anlayışı",
@@ -49,12 +49,7 @@ const AboutPage: React.FC = () => {
         />
       </Head>
 
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="pt-24 bg-parchment-light min-h-screen"
-      >
+      <div className="pt-24 bg-parchment-light min-h-screen animate-page-in motion-reduce:animate-none">
         {/* Hero Section */}
         <section className="py-20 relative overflow-hidden bg-charcoal-deep text-white border-b border-baked-gold/20">
           {/* Background pattern */}
@@ -66,12 +61,8 @@ const AboutPage: React.FC = () => {
             }}
           />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <span className="font-label-lg text-label-lg text-baked-gold uppercase tracking-[0.3em] mb-4 inline-block">
+            <div>
+              <span className="font-label-lg text-label-lg text-ember uppercase tracking-[0.3em] mb-4 inline-block">
                 HİKAYEMİZ
               </span>
               <h1 className="font-display-lg text-display-lg-mobile md:text-headline-lg text-white mb-6">
@@ -81,7 +72,7 @@ const AboutPage: React.FC = () => {
               <p className="font-body-lg text-body-lg text-white/90 max-w-2xl mx-auto leading-relaxed italic">
                 {"Geleneksel Türk lezzetlerini modern tekniklerle buluşturan, kalite ve lezzetten ödün vermeyen bir kafe hikayesi"}
               </p>
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -129,8 +120,8 @@ const AboutPage: React.FC = () => {
                 <div className="absolute -top-6 -left-6 w-32 h-32 border-t-2 border-l-2 border-hearth-bronze/40 z-0" />
                 <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl bg-gray-200">
                   <img
-                    src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                    alt="Simit Teknesi İçi"
+                    src="/images/simitteknesi.webp"
+                    alt="Simit Teknesi Nazilli iç mekan"
                     className="w-full h-[350px] md:h-[450px] object-cover transition-transform duration-1000 group-hover:scale-103"
                   />
                 </div>
@@ -173,7 +164,7 @@ const AboutPage: React.FC = () => {
                   transition={{ duration: 1.0, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   whileHover={{ y: -6, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] } }}
                   viewport={{ once: true }}
-                  className="bg-white border border-slate-muted/40 p-8 text-center rounded-2xl shadow-sm hover:shadow-xl hover:border-baked-gold/30 transition-all duration-300"
+                  className="bg-white border border-slate-muted/40 p-8 text-center rounded-2xl shadow-xs hover:shadow-xl hover:border-baked-gold/30 transition-all duration-300"
                 >
                   <div className="text-baked-gold flex justify-center mb-6">
                     {value.icon}
@@ -205,7 +196,7 @@ const AboutPage: React.FC = () => {
                 <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl bg-gray-200">
                   <img
                     src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                    alt="Takım Çalışması"
+                    alt="Kafe atmosferi"
                     className="w-full h-[350px] md:h-[450px] object-cover transition-transform duration-1000 group-hover:scale-103"
                   />
                 </div>
@@ -219,10 +210,10 @@ const AboutPage: React.FC = () => {
                 className="order-1 lg:order-2"
               >
                 <h2 className="font-display-lg text-headline-lg-mobile md:text-headline-md text-charcoal-deep mb-6 font-bold">
-                  Başarılarımız
+                  Bizi Farklı Kılanlar
                 </h2>
                 <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed mb-8">
-                  Kısa sürede elde ettiğimiz deneyimler ve hedeflerimiz doğrultusunda 
+                  Her gün daha iyisi için benimsediğimiz ilkeler ve 
                   attığımız adımlar
                 </p>
 
@@ -236,7 +227,7 @@ const AboutPage: React.FC = () => {
                       viewport={{ once: true }}
                       className="flex items-start space-x-3.5"
                     >
-                      <CheckCircleIcon className="h-6 w-6 text-baked-gold flex-shrink-0 mt-0.5" />
+                      <CheckCircleIcon className="h-6 w-6 text-baked-gold shrink-0 mt-0.5" />
                       <span className="font-body-md text-charcoal-deep">{achievement}</span>
                     </motion.div>
                   ))}
@@ -248,7 +239,7 @@ const AboutPage: React.FC = () => {
 
         {/* Quote Section */}
         <section
-          className="relative py-24 bg-fixed bg-cover bg-center"
+          className="relative py-24 bg-scroll pointer-fine:bg-fixed bg-cover bg-center"
           style={{
             backgroundImage:
               'linear-gradient(rgba(26, 26, 26, 0.92), rgba(26, 26, 26, 0.85)), url("https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80")',
@@ -264,13 +255,13 @@ const AboutPage: React.FC = () => {
               <blockquote className="font-display-lg text-2xl md:text-3xl italic leading-relaxed text-white mb-6">
                 {"\"Her lokmada sevgi, her yudumda sıcaklık, her ziyarette aile sıcaklığı...\""}
               </blockquote>
-              <p className="font-label-lg text-baked-gold uppercase tracking-widest text-base font-bold">
+              <p className="font-label-lg text-ember uppercase tracking-widest text-base font-bold">
                 - Simit Teknesi Nazilli Felsefesi
               </p>
             </motion.div>
           </div>
         </section>
-      </motion.div>
+      </div>
     </>
   );
 };

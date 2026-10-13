@@ -37,7 +37,7 @@ const Header: React.FC = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         showDarkTheme
           ? "bg-black/25 backdrop-blur-md"
-          : "bg-parchment-light/90 backdrop-blur-md border-b border-slate-muted shadow-sm"
+          : "bg-parchment-light/90 backdrop-blur-md border-b border-slate-muted shadow-xs"
       }`}
     >
       <nav className="max-w-container-max mx-auto px-4 md:px-margin-desktop py-3 md:py-4 transition-all duration-300">
@@ -71,10 +71,10 @@ const Header: React.FC = () => {
                   className={`font-label-lg text-label-lg transition-all duration-200 pb-1 hover:scale-105 ${
                     isActive
                       ? showDarkTheme
-                        ? "text-baked-gold font-bold border-b-2 border-baked-gold"
+                        ? "text-ember font-bold border-b-2 border-ember"
                         : "text-secondary font-bold border-b-2 border-secondary"
                       : showDarkTheme
-                      ? "text-white/90 hover:text-baked-gold"
+                      ? "text-white/90 hover:text-ember"
                       : "text-on-surface-variant hover:text-secondary"
                   }`}
                 >
@@ -91,9 +91,11 @@ const Header: React.FC = () => {
             <button
               onClick={handleMobileMenuToggle}
               className={`p-2 rounded-md transition-colors duration-200 ${
-                showDarkTheme ? "text-white hover:text-baked-gold" : "text-charcoal-deep hover:text-secondary"
+                showDarkTheme ? "text-white hover:text-ember" : "text-charcoal-deep hover:text-secondary"
               }`}
-              aria-label="Menüyü aç/kapat"
+              aria-label={isMobileMenuOpen ? "Menüyü kapat" : "Menüyü aç"}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-navigation"
             >
               {isMobileMenuOpen ? (
                 <XMarkIcon className="h-6 w-6" />
@@ -108,6 +110,7 @@ const Header: React.FC = () => {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
+              id="mobile-navigation"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
@@ -122,7 +125,7 @@ const Header: React.FC = () => {
                       key={item.name}
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block px-4 py-2.5 rounded-DEFAULT text-base font-medium transition-colors duration-200 ${
+                      className={`block px-4 py-2.5 rounded text-base font-medium transition-colors duration-200 ${
                         isActive
                           ? "text-secondary bg-surface-container-high font-bold border-l-4 border-secondary"
                           : "text-on-surface-variant hover:text-secondary hover:bg-surface-container-low"
