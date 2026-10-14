@@ -1,3 +1,18 @@
+// Sayfada orijinal fotoğraf yerine scripts/optimize-images.mjs'nin ürettiği küçük WebP
+// kopyası kullanılır. "thumb": 240px kare; "640" ve "1280": en uzun kenar (en fazla).
+// Kopya yüklenemezse handleImageError, img'nin data-full-src'sindeki orijinale döner.
+export type ImageVariant = "thumb" | "640" | "1280";
+
+export const optimizedSrc = (src: string, variant: ImageVariant): string => {
+  if (!src.startsWith("/images/") || src.startsWith("/images/_opt/")) return src;
+  const withoutExt = src.slice("/images/".length).replace(/\.[a-z]+$/i, "");
+  return `/images/_opt/${withoutExt}-${variant}.webp`;
+};
+
+// 640/1280 genişlikli srcset; `sizes` ile tarayıcı ekrana uygun olanı seçer
+export const responsiveSrcSet = (src: string): string =>
+  `${optimizedSrc(src, "640")} 640w, ${optimizedSrc(src, "1280")} 1280w`;
+
 // Resim kategorisine göre fallback resim
 export const getFallbackImageByCategory = (imagePath: string): string => {
   const categoryMap: { [key: string]: string } = {
@@ -52,8 +67,20 @@ export const getFallbackImage = (): string => {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 };
 
-// Hatalı resme fallback uygula: önce kategori resmi, o da olmazsa genel placeholder
+// Hatalı resme fallback uygula: önce orijinal fotoğraf (küçük kopya üretilememişse),
+// sonra kategori resmi, o da olmazsa genel placeholder
 const applyImageFallback = (img: HTMLImageElement) => {
+  // srcset varken src değiştirmek görünen resmi değiştirmez
+  img.removeAttribute("srcset");
+  img.removeAttribute("sizes");
+
+  const fullSrc = img.dataset.fullSrc;
+  if (fullSrc && img.getAttribute("src") !== fullSrc) {
+    delete img.dataset.fullSrc;
+    img.src = fullSrc;
+    return;
+  }
+
   const originalSrc = img.src;
 
   // Genel placeholder da yüklenemediyse döngüye girme

@@ -1,11 +1,36 @@
-import { motion } from "framer-motion";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import Hero from "../components/Hero";
-import { handleImageError, imageFallbackRef } from "../utils/imageUtils";
+import {
+  ADDRESS,
+  DIRECTIONS_URL,
+  HOURS_LABEL,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+} from "../data/business";
+import { ANCHOR_BY_ITEM_ID, MenuItem, menuItems } from "../data/menu";
+import {
+  handleImageError,
+  imageFallbackRef,
+  optimizedSrc,
+  responsiveSrcSet,
+} from "../utils/imageUtils";
+
+// Anasayfadaki fiyat tahtasında gösterilen fırın ürünleri (sıra korunur)
+const BOARD_ITEM_IDS = [14, 15, 18, 19, 25, 251, 30, 74];
+// Öne çıkan doyurucu menüler
+const FEATURED_ITEM_IDS = [68, 681];
+
+const pickItems = (ids: number[]) =>
+  ids
+    .map((id) => menuItems.find((item) => item.id === id))
+    .filter((item): item is MenuItem => Boolean(item));
 
 const HomePage: React.FC = () => {
+  const boardItems = pickItems(BOARD_ITEM_IDS);
+  const featuredItems = pickItems(FEATURED_ITEM_IDS);
+
   return (
     <>
       <Head>
@@ -18,214 +43,159 @@ const HomePage: React.FC = () => {
 
       <Hero />
 
-      {/* Sayfa içeriği (Layout zaten <main> içinde render ediyor) */}
-      <div>
-        {/* Section: Hamburger & Pizza Menü Showcase */}
-        <section className="bg-primary-container text-white py-section-gap overflow-hidden relative">
-          {/* Atmospheric Pattern */}
-          <div
-            className="absolute inset-0 opacity-5 pointer-events-none"
-            style={{
-              backgroundImage: "radial-gradient(#B21F24 1px, transparent 1px)",
-              backgroundSize: "40px 40px",
-            }}
-          />
-          <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="flex flex-col items-center text-center mb-element-gap"
+      {/* Fiyat tahtası: en çok sorulan fırın ürünleri ve fiyatları */}
+      <section className="bg-parchment-light py-20 md:py-28">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop grid gap-12 lg:grid-cols-12 lg:gap-16 items-center">
+          <div className="lg:col-span-7">
+            <h2 className="font-display-lg text-headline-lg-mobile md:text-headline-lg text-charcoal-deep">
+              Bugün fırında
+            </h2>
+            <p className="font-body-md text-body-md text-on-surface-variant mt-4 max-w-lg">
+              Simit, poğaça ve açma her gün tezgâhta. Fiyatlar günceldir; gerisi menüde.
+            </p>
+
+            <ul className="mt-10 border-t-2 border-charcoal-deep">
+              {boardItems.map((item) => (
+                <li key={item.id} className="flex items-baseline py-4 border-b border-slate-muted">
+                  <span className="font-headline-md text-lg md:text-xl text-charcoal-deep">
+                    {item.name}
+                  </span>
+                  <span className="menu-leader" aria-hidden="true" />
+                  <span className="font-display-lg text-lg md:text-xl font-semibold text-baked-gold lining-nums tabular-nums">
+                    {item.price}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <Link
+              href="/menu"
+              className="inline-block mt-8 font-label-lg text-label-lg text-charcoal-deep underline underline-offset-[6px] decoration-baked-gold decoration-2 hover:text-baked-gold transition-colors"
             >
-              <span className="inline-block bg-baked-gold/20 text-ember px-4 py-1.5 rounded-full font-label-lg text-label-lg mb-6 tracking-widest">
-                ÖNE ÇIKAN MENÜ
-              </span>
-              <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg mb-6 text-glow">
-                Hamburger &amp; Pizza Menü
-              </h2>
-              <p className="font-body-lg text-body-lg text-on-primary-container max-w-2xl mx-auto italic">
-                Lezzet dolu bir deneyim için özel menümüz
-              </p>
-            </motion.div>
+              Tüm menüyü gör ({menuItems.length} ürün)
+            </Link>
+          </div>
 
-            {/* Menu Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-gutter mt-16">
-              {/* Hamburger Card */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="group bg-charcoal-deep/40 backdrop-blur-xs border border-hearth-bronze/10 rounded-xl p-6 md:p-8 hover:border-baked-gold/30 transition-all duration-500 transform hover:-translate-y-2"
+          <div className="lg:col-span-5">
+            <img
+              src={optimizedSrc("/images/simitler/sade-simit.jpg", "640")}
+              srcSet={responsiveSrcSet("/images/simitler/sade-simit.jpg")}
+              sizes="(min-width: 1024px) 460px, 92vw"
+              data-full-src="/images/simitler/sade-simit.jpg"
+              width={901}
+              height={1600}
+              alt="Tahta tepsi üzerinde susamlı sade simit"
+              className="w-full aspect-[4/5] object-cover rounded-md"
+              ref={imageFallbackRef}
+              onError={handleImageError}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Doyurucu menüler */}
+      <section className="bg-charcoal-deep text-white py-20 md:py-28">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
+          <div className="max-w-2xl">
+            <h2 className="font-display-lg text-headline-lg-mobile md:text-headline-lg text-balance">
+              Daha doyurucu bir şey mi?
+            </h2>
+            <p className="font-body-md text-body-md text-on-primary-container mt-4">
+              Mutfağımızdan hamburger ve pizza menüleri; patates kızartması ve içecekle birlikte.
+            </p>
+          </div>
+
+          <div className="grid gap-10 md:grid-cols-2 md:gap-8 mt-12">
+            {featuredItems.map((item) => (
+              <Link
+                key={item.id}
+                href={`/menu#${ANCHOR_BY_ITEM_ID[item.id]}`}
+                className="group block rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal-deep"
               >
-                <div className="flex justify-between items-start mb-8">
-                  <h3 className="font-headline-md text-headline-md text-white">Hamburger Menü</h3>
-                  <span className="text-ember font-display-lg text-headline-md">320₺</span>
-                </div>
-                <div className="relative aspect-video overflow-hidden rounded-lg mb-8 border border-white/5 bg-gray-800">
+                <div className="aspect-video overflow-hidden rounded-md bg-white/5">
                   <img
-                    alt="Hamburger Menü"
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    src="/images/mutfaktan/hamburger-menu.jpg"
+                    src={optimizedSrc(item.image, "640")}
+                    srcSet={responsiveSrcSet(item.image)}
+                    sizes="(min-width: 768px) 600px, 92vw"
+                    data-full-src={item.image}
+                    width={1600}
+                    height={900}
+                    alt={item.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     ref={imageFallbackRef}
                     onError={handleImageError}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
-                <ul className="space-y-4">
-                  <li className="flex items-center gap-3 text-on-primary-container font-body-md group/item">
-                    <span className="material-symbols-outlined text-ember" aria-hidden="true">lunch_dining</span>
-                    <span className="group-hover/item:text-white transition-colors">Lezzetli hamburger</span>
-                  </li>
-                  <li className="flex items-center gap-3 text-on-primary-container font-body-md group/item">
-                    <span className="material-symbols-outlined text-ember" aria-hidden="true">fastfood</span>
-                    <span className="group-hover/item:text-white transition-colors">Çıtır patates kızartması</span>
-                  </li>
-                  <li className="flex items-center gap-3 text-on-primary-container font-body-md group/item">
-                    <span className="material-symbols-outlined text-ember" aria-hidden="true">glass_cup</span>
-                    <span className="group-hover/item:text-white transition-colors">
-                      Buz gibi soğuk içecek (Ayran veya Meşrubat)
-                    </span>
-                  </li>
-                </ul>
-                <Link
-                  href="/menu#hamburger-menu"
-                  className="w-full mt-10 border border-ember/60 text-ember py-4 rounded-lg font-label-lg text-label-lg hover:bg-baked-gold hover:border-baked-gold hover:text-white transition-all duration-300 inline-block text-center"
-                >
-                  Menüde İncele
-                </Link>
-              </motion.div>
+                <div className="flex items-baseline mt-5">
+                  <h3 className="font-headline-md text-2xl text-white">{item.name}</h3>
+                  <span className="menu-leader opacity-40" aria-hidden="true" />
+                  <span className="font-display-lg text-2xl font-semibold text-ember lining-nums tabular-nums">
+                    {item.price}
+                  </span>
+                </div>
+                <p className="font-body-md text-sm text-on-primary-container mt-2">
+                  {item.description}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
-              {/* Pizza Card */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="group bg-charcoal-deep/40 backdrop-blur-xs border border-hearth-bronze/10 rounded-xl p-6 md:p-8 hover:border-baked-gold/30 transition-all duration-500 transform hover:-translate-y-2"
+      {/* Ziyaret bilgileri */}
+      <section className="bg-parchment-light py-20 md:py-28">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5">
+            <h2 className="font-display-lg text-headline-lg-mobile md:text-headline-lg text-charcoal-deep">
+              Bamboo AVM&apos;deyiz
+            </h2>
+            <p className="font-body-md text-body-md text-on-surface-variant mt-4 max-w-md">
+              Oturup çayınızı içebilir ya da simidinizi alıp yola devam edebilirsiniz.
+            </p>
+          </div>
+
+          <div className="lg:col-span-7 border-t-2 border-charcoal-deep pt-8">
+          <dl className="grid sm:grid-cols-3 gap-8">
+            <div>
+              <dt className="font-body-md text-sm text-outline">Adres</dt>
+              <dd className="font-headline-md text-lg text-charcoal-deep mt-2 lining-nums">{ADDRESS}</dd>
+            </div>
+            <div>
+              <dt className="font-body-md text-sm text-outline">Çalışma saatleri</dt>
+              <dd className="font-headline-md text-lg text-charcoal-deep mt-2 lining-nums">{HOURS_LABEL}</dd>
+            </div>
+            <div>
+              <dt className="font-body-md text-sm text-outline">Telefon</dt>
+              <dd className="font-headline-md text-lg text-charcoal-deep mt-2 lining-nums">
+                <a href={PHONE_HREF} className="hover:text-baked-gold transition-colors">
+                  {PHONE_DISPLAY}
+                </a>
+              </dd>
+            </div>
+          </dl>
+            <div className="flex flex-col sm:flex-row gap-3 mt-10">
+              <a
+                href={DIRECTIONS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-baked-gold text-white px-8 py-4 rounded font-label-lg text-label-lg text-center hover:bg-hearth-bronze transition-colors duration-200"
               >
-                <div className="flex justify-between items-start mb-8">
-                  <h3 className="font-headline-md text-headline-md text-white">Pizza Menü</h3>
-                  <span className="text-ember font-display-lg text-headline-md">270₺</span>
-                </div>
-                <div className="relative aspect-video overflow-hidden rounded-lg mb-8 border border-white/5 bg-gray-800">
-                  <img
-                    alt="Pizza Menü"
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    src="/images/mutfaktan/pizza-menu.jpg"
-                    ref={imageFallbackRef}
-                    onError={handleImageError}
-                  />
-                </div>
-                <ul className="space-y-4">
-                  <li className="flex items-center gap-3 text-on-primary-container font-body-md group/item">
-                    <span className="material-symbols-outlined text-ember" aria-hidden="true">local_pizza</span>
-                    <span className="group-hover/item:text-white transition-colors">Sıcacık pizza</span>
-                  </li>
-                  <li className="flex items-center gap-3 text-on-primary-container font-body-md group/item">
-                    <span className="material-symbols-outlined text-ember" aria-hidden="true">fastfood</span>
-                    <span className="group-hover/item:text-white transition-colors">Çıtır patates kızartması</span>
-                  </li>
-                  <li className="flex items-center gap-3 text-on-primary-container font-body-md group/item">
-                    <span className="material-symbols-outlined text-ember" aria-hidden="true">glass_cup</span>
-                    <span className="group-hover/item:text-white transition-colors">
-                      Buz gibi soğuk içecek (Ayran veya Meşrubat)
-                    </span>
-                  </li>
-                </ul>
-                <Link
-                  href="/menu#pizza-menu"
-                  className="w-full mt-10 border border-ember/60 text-ember py-4 rounded-lg font-label-lg text-label-lg hover:bg-baked-gold hover:border-baked-gold hover:text-white transition-all duration-300 inline-block text-center"
-                >
-                  Menüde İncele
-                </Link>
-              </motion.div>
+                Yol tarifi al
+              </a>
+              <Link
+                href="/iletisim"
+                className="border border-charcoal-deep text-charcoal-deep px-8 py-4 rounded font-label-lg text-label-lg text-center hover:bg-charcoal-deep hover:text-white transition-colors duration-200"
+              >
+                Bize yazın
+              </Link>
             </div>
           </div>
-        </section>
-
-        {/* Section: Bizi Ziyaret Edin (Updated without Photo) */}
-        <section className="py-section-gap bg-parchment-light relative overflow-hidden">
-          {/* Atmospheric Pattern */}
-          <div
-            className="absolute inset-0 opacity-5 pointer-events-none"
-            style={{
-              backgroundImage: "radial-gradient(#B21F24 1px, transparent 1px)",
-              backgroundSize: "40px 40px",
-            }}
-          />
-          <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-section-gap items-center relative z-10">
-            {/* Left Column: Welcome Text */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="flex flex-col items-start"
-            >
-              <span className="font-label-lg text-label-lg text-baked-gold uppercase tracking-[0.3em] mb-4">
-                GELENEKSEL MODERNİZM
-              </span>
-              <h2 className="font-display-lg text-headline-lg-mobile md:text-headline-lg text-charcoal-deep mb-8 leading-tight">
-                Bizi Ziyaret Edin
-              </h2>
-              <p className="font-body-lg text-body-lg text-on-surface-variant mb-10 leading-relaxed">
-                {"Nazilli'nin kalbinde, sıcak ve samimi atmosferimizde enfes lezzetlerimizi deneyimlemeye davetlisiniz. Her sabah gün ağarmadan başlayan mesaimiz, sizin için en taze simitleri ve poğaçaları hazırlamak içindir."}
-              </p>
-              <div className="flex flex-wrap gap-6">
-                <Link
-                  href="/iletisim"
-                  className="bg-primary text-on-primary px-10 py-5 rounded font-label-lg text-label-lg hover:shadow-xl transition-all hover:bg-charcoal-deep active:scale-95 duration-200"
-                >
-                  Bize Ulaşın
-                </Link>
-                <Link
-                  href="/hakkimizda"
-                  className="border border-charcoal-deep text-charcoal-deep px-10 py-5 rounded font-label-lg text-label-lg hover:bg-charcoal-deep hover:text-white transition-all active:scale-95 duration-200"
-                >
-                  Hikayemizi Keşfedin
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Right Column: Info Card & Quote */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="bg-white p-8 md:p-12 border border-slate-muted shadow-xl rounded-2xl relative overflow-hidden"
-            >
-              {/* Highlight bar at top */}
-              <div className="absolute top-0 left-0 right-0 h-2 bg-baked-gold" />
-              
-
-
-              <div className="space-y-8">
-                <div className="flex items-start gap-4">
-                  <span className="material-symbols-outlined text-baked-gold text-2xl mt-0.5" aria-hidden="true">location_on</span>
-                  <div>
-                    <h4 className="font-title-lg text-label-lg text-charcoal-deep uppercase tracking-wider mb-2 font-bold">
-                      Konum
-                    </h4>
-                    <p className="font-body-md text-body-md text-on-surface-variant">Bamboo Avm, Nazilli, Aydın</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <span className="material-symbols-outlined text-baked-gold text-2xl mt-0.5" aria-hidden="true">schedule</span>
-                  <div>
-                    <h4 className="font-title-lg text-label-lg text-charcoal-deep uppercase tracking-wider mb-2 font-bold">
-                      Çalışma Saatleri
-                    </h4>
-                    <p className="font-body-md text-body-md text-on-surface-variant">Her Gün: 10:00 — 22:00</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </>
   );
 };

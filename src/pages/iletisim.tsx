@@ -1,13 +1,16 @@
 import emailjs from "@emailjs/browser";
-import {
-  ClockIcon,
-  EnvelopeIcon,
-  MapPinIcon,
-  PhoneIcon,
-} from "@heroicons/react/24/outline";
-import { motion } from "framer-motion";
 import Head from "next/head";
 import React, { useRef, useState } from "react";
+import {
+  ADDRESS,
+  DIRECTIONS_URL,
+  HOURS_LABEL,
+  MAPS_URL,
+  MAP_LAT,
+  MAP_LNG,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+} from "../data/business";
 
 // EmailJS bilgileri ortam değişkenlerinden okunur (.env.example). Bunlar EmailJS'in
 // tarayıcıya açık "public" anahtarlarıdır; ortam değişkeni tanımlı değilse mevcut
@@ -19,11 +22,11 @@ const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "ECyqBL
 // Spam koruması: sayfa açıldıktan bu süre geçmeden gönderilen formlar bot kabul edilir
 const MIN_FILL_TIME_MS = 3000;
 
-const PHONE_DISPLAY = "+90 531 330 09 65";
-const PHONE_HREF = "tel:+905313300965";
 const EMAIL = "info@simitteknesinazilli.com";
-const MAP_LAT = 37.89833333333333;
-const MAP_LNG = 28.27847222222222;
+
+const INPUT_CLASS =
+  "w-full px-4 py-3 bg-white border border-outline-variant rounded-md font-body-md text-charcoal-deep placeholder:text-outline focus:border-baked-gold focus:ring-2 focus:ring-baked-gold/20 transition-colors duration-200 outline-hidden";
+const LABEL_CLASS = "block font-body-md text-sm font-semibold text-charcoal-deep mb-2";
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -94,33 +97,28 @@ const ContactPage: React.FC = () => {
   };
 
   const contactInfo: {
-    icon: React.ReactNode;
     title: string;
     content: string;
     href?: string;
   }[] = [
     {
-      icon: <MapPinIcon className="h-6 w-6" />,
       title: "Adres",
-      content: "Bamboo Avm \nNazilli, Aydın",
-      href: `https://maps.google.com/?q=${MAP_LAT},${MAP_LNG}`,
+      content: ADDRESS,
+      href: MAPS_URL,
     },
     {
-      icon: <PhoneIcon className="h-6 w-6" />,
       title: "Telefon",
       content: PHONE_DISPLAY,
       href: PHONE_HREF,
     },
     {
-      icon: <EnvelopeIcon className="h-6 w-6" />,
       title: "E-posta",
       content: EMAIL,
       href: `mailto:${EMAIL}`,
     },
     {
-      icon: <ClockIcon className="h-6 w-6" />,
-      title: "Çalışma Saatleri",
-      content: "Her Gün Açık: 10:00 - 22:00",
+      title: "Çalışma saatleri",
+      content: HOURS_LABEL,
     },
   ];
 
@@ -135,317 +133,190 @@ const ContactPage: React.FC = () => {
       </Head>
 
       <div className="pt-24 bg-parchment-light min-h-screen animate-page-in motion-reduce:animate-none">
-        {/* Header */}
-        <section className="py-20 relative overflow-hidden bg-charcoal-deep text-white border-b border-baked-gold/20">
-          <div
-            className="absolute inset-0 opacity-5 pointer-events-none"
-            style={{
-              backgroundImage: "radial-gradient(#B21F24 1px, transparent 1px)",
-              backgroundSize: "32px 32px",
-            }}
-          />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div>
-              <span className="font-label-lg text-label-lg text-ember uppercase tracking-[0.3em] mb-4 inline-block">
-                İLETİŞİM
-              </span>
-              <h1 className="font-display-lg text-display-lg-mobile md:text-headline-lg text-white mb-6">
-                Bize Ulaşın
-              </h1>
-              <div className="h-px w-24 bg-baked-gold mx-auto mb-8" />
-              <p className="font-body-lg text-body-lg text-white/90 max-w-2xl mx-auto leading-relaxed">
-                Sorularınız, önerileriniz veya rezervasyon talepleriniz için
-                bizimle iletişime geçin
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Contact Info Cards */}
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {contactInfo.map((info, index) => (
-                <div
-                  key={index}
-                  className="bg-white border border-slate-muted/40 p-8 text-center rounded-2xl shadow-xs hover:shadow-xl hover:border-baked-gold/30 hover:-translate-y-1.5 transition-all duration-300"
-                >
-                  <div className="text-baked-gold flex justify-center mb-6" aria-hidden="true">
-                    {info.icon}
-                  </div>
-                  <h3 className="font-headline-md text-title-lg text-charcoal-deep mb-4 font-bold">
-                    {info.title}
-                  </h3>
-                  <p className="font-body-md text-on-surface-variant leading-relaxed whitespace-pre-line text-sm">
-                    {info.href ? (
-                      <a
-                        href={info.href}
-                        className="hover:text-baked-gold underline-offset-4 hover:underline transition-colors break-words"
-                        {...(info.href.startsWith("http")
-                          ? { target: "_blank", rel: "noopener noreferrer" }
-                          : {})}
-                      >
-                        {info.content}
-                      </a>
-                    ) : (
-                      info.content
-                    )}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Contact Form & Map */}
-        <section className="py-20 bg-white/40 border-t border-b border-slate-muted/40">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-              {/* Contact Form */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-                viewport={{ once: true }}
-              >
-                <h2 className="font-display-lg text-headline-lg-mobile md:text-headline-md text-charcoal-deep mb-8 font-bold">
-                  Mesaj Gönderin
-                </h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Honeypot: ekranda ve ekran okuyucularda gizli, sadece botlar doldurur */}
-                  <div className="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
-                    <label htmlFor="website">Web siteniz</label>
-                    <input
-                      type="text"
-                      id="website"
-                      name="website"
-                      tabIndex={-1}
-                      autoComplete="off"
-                      value={honeypot}
-                      onChange={(e) => setHoneypot(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block font-label-lg text-sm text-charcoal-deep font-semibold mb-2"
+        {/* Başlık ve iletişim bilgileri */}
+        <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop pt-8 md:pt-12 pb-16 md:pb-20">
+          <h1 className="font-display-lg text-[44px] md:text-[64px] leading-none text-charcoal-deep">
+            İletişim
+          </h1>
+          <p className="font-body-lg text-body-lg text-on-surface-variant mt-6 max-w-2xl">
+            Sorularınız, önerileriniz veya rezervasyon talepleriniz için bize yazın ya da arayın.
+          </p>
+          <dl className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 border-t-2 border-charcoal-deep pt-8 mt-12">
+            {contactInfo.map((info) => (
+              <div key={info.title}>
+                <dt className="font-body-md text-sm text-outline">{info.title}</dt>
+                <dd className="font-headline-md text-lg text-charcoal-deep mt-2 whitespace-pre-line lining-nums break-words">
+                  {info.href ? (
+                    <a
+                      href={info.href}
+                      className="hover:text-baked-gold transition-colors"
+                      {...(info.href.startsWith("http")
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
                     >
-                      Adınız Soyadınız
+                      {info.content}
+                    </a>
+                  ) : (
+                    info.content
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        {/* Mesaj formu ve harita */}
+        <section className="py-16 md:py-24 bg-white border-y border-slate-muted">
+          <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div>
+              <h2 className="font-display-lg text-headline-lg-mobile md:text-[40px] md:leading-tight text-charcoal-deep">
+                Mesaj gönderin
+              </h2>
+              <p className="font-body-md text-body-md text-on-surface-variant mt-3 mb-8 max-w-md">
+                Yanıtımız e-posta adresinize gelir. Acil durumlar için bizi arayın.
+              </p>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Honeypot: ekranda ve ekran okuyucularda gizli, sadece botlar doldurur */}
+                <div className="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
+                  <label htmlFor="website">Web siteniz</label>
+                  <input
+                    type="text"
+                    id="website"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className={LABEL_CLASS}>
+                      Adınız
                     </label>
                     <input
                       type="text"
                       id="name"
                       name="name"
+                      autoComplete="name"
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-5 py-3 border border-slate-muted rounded-xl bg-white focus:ring-1 focus:ring-baked-gold focus:border-baked-gold font-body-md text-charcoal-deep transition-all duration-200 outline-hidden"
-                      placeholder="Adınız ve soyadınız"
+                      className={INPUT_CLASS}
                     />
                   </div>
-
                   <div>
-                    <label
-                      htmlFor="email"
-                      className="block font-label-lg text-sm text-charcoal-deep font-semibold mb-2"
-                    >
-                      E-posta Adresiniz
+                    <label htmlFor="email" className={LABEL_CLASS}>
+                      E-posta adresiniz
                     </label>
                     <input
                       type="email"
                       id="email"
                       name="email"
+                      autoComplete="email"
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-5 py-3 border border-slate-muted rounded-xl bg-white focus:ring-1 focus:ring-baked-gold focus:border-baked-gold font-body-md text-charcoal-deep transition-all duration-200 outline-hidden"
-                      placeholder="ornek@email.com"
+                      className={INPUT_CLASS}
+                      placeholder="ornek@eposta.com"
                     />
                   </div>
+                </div>
 
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block font-label-lg text-sm text-charcoal-deep font-semibold mb-2"
-                    >
-                      Mesajınız
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      required
-                      rows={6}
-                      className="w-full px-5 py-3 border border-slate-muted rounded-xl bg-white focus:ring-1 focus:ring-baked-gold focus:border-baked-gold font-body-md text-charcoal-deep transition-all duration-200 resize-none outline-hidden"
-                      placeholder="Mesajınızı buraya yazın..."
-                    />
-                  </div>
+                <div>
+                  <label htmlFor="message" className={LABEL_CLASS}>
+                    Mesajınız
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    required
+                    rows={6}
+                    className={`${INPUT_CLASS} resize-y min-h-32`}
+                  />
+                </div>
 
-                  {/* Status Mesajları */}
+                {/* Gönderim sonucu (ekran okuyucular da duyurur) */}
+                <div aria-live="polite">
                   {submitStatus === "success" && (
-                    <div className="p-4 bg-green-50 border border-green-200 rounded-xl">
-                      <div className="flex items-center">
-                        <svg
-                          className="w-5 h-5 text-green-500 mr-2"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        <p className="text-green-700 font-medium">
-                          Mesajınız başarıyla gönderildi! En kısa sürede size
-                          döneceğiz.
-                        </p>
-                      </div>
-                    </div>
+                    <p className="border-l-2 border-emerald-600 pl-4 py-1 font-body-md text-sm text-emerald-800">
+                      Mesajınız bize ulaştı. Yanıtımız e-posta adresinize gelecek.
+                    </p>
                   )}
-
                   {submitStatus === "error" && (
-                    <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
-                      <div className="flex items-center">
-                        <svg
-                          className="w-5 h-5 text-red-500 mr-2"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        <p className="text-red-700 font-medium">
-                          Mesaj gönderilirken bir hata oluştu. Lütfen tekrar
-                          deneyin.
-                        </p>
-                      </div>
-                    </div>
+                    <p className="border-l-2 border-error pl-4 py-1 font-body-md text-sm text-on-error-container">
+                      Mesaj gönderilemedi. Yarım dakika sonra tekrar deneyin ya da{" "}
+                      <a href={PHONE_HREF} className="underline underline-offset-2 lining-nums whitespace-nowrap">
+                        {PHONE_DISPLAY}
+                      </a>{" "}
+                      numarasından arayın.
+                    </p>
                   )}
-
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className={`w-full bg-baked-gold hover:bg-hearth-bronze text-white py-4 rounded-xl font-label-lg text-label-lg transition-all duration-300 shadow-md hover:shadow-lg active:scale-98 relative overflow-hidden ${
-                      isLoading ? "cursor-not-allowed text-white/50" : ""
-                    }`}
-                  >
-                    <span className={`flex items-center justify-center transition-all duration-300 ${isLoading ? "opacity-0" : "opacity-100"}`}>
-                      Mesajı Gönder
-                    </span>
-                    {isLoading && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-baked-gold">
-                        <span className="font-label-lg tracking-widest animate-pulse">
-                          Gönderiliyor...
-                        </span>
-                      </div>
-                    )}
-                  </button>
-                </form>
-              </motion.div>
-
-              {/* Map */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="font-display-lg text-headline-lg-mobile md:text-headline-md text-charcoal-deep mb-8 font-bold">
-                  Konumumuz
-                </h2>
-                <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-muted/50 relative bg-slate-50 h-96 w-full flex items-center justify-center">
-                  {!mapLoaded && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-linear-to-tr from-charcoal-deep/5 to-baked-gold/5 animate-pulse z-10">
-                      <MapPinIcon className="h-10 w-10 text-baked-gold mb-3 animate-bounce" style={{ animationDuration: '2s' }} />
-                      <span className="font-label-lg text-sm text-charcoal-deep/60 tracking-wider">
-                        Harita Yükleniyor...
-                      </span>
-                    </div>
-                  )}
-                  <iframe
-                    src={`https://maps.google.com/maps?q=${MAP_LAT},${MAP_LNG}&z=17&hl=tr&output=embed`}
-                    width="100%"
-                    height="400"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Simit Teknesi Nazilli Konumu"
-                    onLoad={() => setMapLoaded(true)}
-                    className={`w-full h-full transition-opacity duration-1000 ${
-                      mapLoaded ? "opacity-100" : "opacity-0"
-                    }`}
-                  ></iframe>
                 </div>
 
-                <div className="mt-8 p-8 bg-white border border-slate-muted/40 rounded-2xl shadow-xs">
-                  <h3 className="font-headline-md text-lg font-bold text-charcoal-deep mb-4">
-                    Ulaşım Bilgileri
-                  </h3>
-                  <ul className="space-y-3 text-on-surface-variant font-body-md text-sm">
-                    <li>• Otobüs: Şehir içi 1, 2, 3 numaralı hatlar</li>
-                    <li>• Dolmuş: Merkez-Cumhuriyet hattı</li>
-                    <li>• Ücretsiz otopark imkanı mevcut</li>
-                  </ul>
-                  <div className="mt-6 pt-6 border-t border-slate-100">
-                    <a
-                      href={`https://maps.google.com/?q=${MAP_LAT},${MAP_LNG}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-baked-gold hover:text-hearth-bronze font-bold transition-colors duration-200"
-                    >
-                      <svg
-                        className="w-5 h-5 mr-2"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      {"Google Maps'te Aç"}
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  aria-busy={isLoading}
+                  className="w-full sm:w-auto bg-baked-gold text-white px-10 py-4 rounded font-label-lg text-label-lg hover:bg-hearth-bronze disabled:bg-hearth-bronze disabled:cursor-wait transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-baked-gold focus-visible:ring-offset-2"
+                >
+                  {isLoading ? "Gönderiliyor…" : "Mesajı gönder"}
+                </button>
+              </form>
             </div>
-          </div>
-        </section>
 
-        {/* CTA Section */}
-        <section
-          className="relative py-24 bg-scroll pointer-fine:bg-fixed bg-cover bg-center"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(26, 26, 26, 0.92), rgba(26, 26, 26, 0.85)), url("https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80")',
-          }}
-        >
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              viewport={{ once: true }}
-            >
-              <h2 className="font-display-lg text-2xl md:text-3xl text-white mb-6">
-                Sizi Kafemizde Ağırlamaktan Mutluluk Duyarız
+            <div>
+              <h2 className="font-display-lg text-headline-lg-mobile md:text-[40px] md:leading-tight text-charcoal-deep mb-8">
+                Konum
               </h2>
-              <p className="font-body-lg text-white/90 leading-relaxed mb-8 max-w-2xl mx-auto">
-                {"Nazilli'nin kalbindeki sıcak atmosferimizde, lezzetli ürünlerimizi deneyimlemeye davetlisiniz."}
-              </p>
-              <div className="font-label-lg text-ember uppercase tracking-wider text-sm md:text-base flex flex-wrap justify-center gap-x-8 gap-y-3 font-semibold">
-                <span>📍 Bamboo AVM, Nazilli, Aydın</span>
-                <a href={PHONE_HREF} className="hover:text-white transition-colors">📞 {PHONE_DISPLAY}</a>
-                <span>🕒 Her Gün 10:00 - 22:00</span>
+              <div className="relative h-96 w-full overflow-hidden rounded-md border border-slate-muted bg-surface-container">
+                {!mapLoaded && (
+                  <p className="absolute inset-0 flex items-center justify-center font-body-md text-sm text-outline">
+                    Harita yükleniyor…
+                  </p>
+                )}
+                <iframe
+                  src={`https://maps.google.com/maps?q=${MAP_LAT},${MAP_LNG}&z=17&hl=tr&output=embed`}
+                  width="100%"
+                  height="400"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Simit Teknesi Nazilli konumu"
+                  onLoad={() => setMapLoaded(true)}
+                  className={`relative w-full h-full transition-opacity duration-500 ${
+                    mapLoaded ? "opacity-100" : "opacity-0"
+                  }`}
+                ></iframe>
               </div>
-            </motion.div>
+
+              <h3 className="font-headline-md text-xl text-charcoal-deep mt-10 pb-3 border-b-2 border-charcoal-deep">
+                Nasıl gelinir
+              </h3>
+              <ul className="font-body-md text-body-md text-on-surface-variant">
+                <li className="py-3 border-b border-slate-muted">
+                  <span className="font-semibold text-charcoal-deep">Otobüs:</span> şehir içi 1, 2 ve 3 numaralı hatlar
+                </li>
+                <li className="py-3 border-b border-slate-muted">
+                  <span className="font-semibold text-charcoal-deep">Dolmuş:</span> Merkez–Cumhuriyet hattı
+                </li>
+                <li className="py-3 border-b border-slate-muted">
+                  <span className="font-semibold text-charcoal-deep">Otopark:</span> ücretsiz
+                </li>
+              </ul>
+              <a
+                href={DIRECTIONS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-8 font-label-lg text-label-lg text-charcoal-deep underline underline-offset-[6px] decoration-baked-gold decoration-2 hover:text-baked-gold transition-colors"
+              >
+                Yol tarifi al
+              </a>
+            </div>
           </div>
         </section>
       </div>

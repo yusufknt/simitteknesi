@@ -1,68 +1,65 @@
 import Link from "next/link";
 import React from "react";
+import { DIRECTIONS_URL, HOURS_LABEL } from "../data/business";
+import { handleImageError, optimizedSrc, responsiveSrcSet } from "../utils/imageUtils";
+import OpenStatus from "./OpenStatus";
 
-// Açılış animasyonları CSS ile (globals.css → animate-fade-up / animate-grow-x):
+// Açılış animasyonları CSS ile (globals.css → animate-fade-up):
 // sunucudan gelen HTML JavaScript beklemeden görünür, LCP ve SEO etkilenmez.
 const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Image Container */}
-      <div className="absolute inset-0 z-0">
-        <img
-          alt="Simit Teknesi Nazilli iç mekan"
-          className="w-full h-full object-cover"
-          src="/images/simitteknesi.webp"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 hero-overlay" />
-      </div>
+    <section className="relative min-h-[92svh] flex items-end overflow-hidden bg-charcoal-deep">
+      {/* Dükkânın kendi fotoğrafı */}
+      <img
+        alt="Bamboo AVM'deki Simit Teknesi Nazilli dükkânı"
+        className="absolute inset-0 w-full h-full object-cover object-[70%_center]"
+        src={optimizedSrc("/images/simitteknesi.webp", "1280")}
+        srcSet={`${responsiveSrcSet("/images/simitteknesi.webp")}, /images/simitteknesi.webp 1524w`}
+        sizes="100vw"
+        data-full-src="/images/simitteknesi.webp"
+        width={1524}
+        height={952}
+        fetchPriority="high"
+        onError={handleImageError}
+      />
+      {/* Yazının okunması için soldan ve alttan koyulaşan örtü */}
+      <div
+        className="absolute inset-0 bg-[linear-gradient(to_top,rgba(21,16,16,0.95)_0%,rgba(21,16,16,0.55)_45%,rgba(21,16,16,0.15)_100%)] md:bg-[linear-gradient(to_right,rgba(21,16,16,0.92)_0%,rgba(21,16,16,0.6)_45%,rgba(21,16,16,0)_75%)]"
+        aria-hidden="true"
+      />
 
-      {/* Content Container */}
-      <div className="relative z-10 w-full px-4 md:px-margin-desktop max-w-container-max mx-auto text-center flex flex-col items-center">
-        {/* Logo Container */}
-        <div className="mb-8 animate-fade-up [animation-delay:0.1s] motion-reduce:animate-none">
-          <img
-            alt="Simit Teknesi Logo"
-            className="w-24 h-24 md:w-32 md:h-32 object-contain scale-130"
-            src="/images/logo.png"
-          />
+      <div className="relative z-10 w-full max-w-container-max mx-auto px-4 md:px-margin-desktop pt-32 pb-14 md:pb-24">
+        <div className="max-w-xl">
+          <div className="animate-fade-up [animation-delay:0.1s] motion-reduce:animate-none">
+            <OpenStatus className="text-white/85 mb-6" />
+          </div>
+
+          <h1 className="font-display-lg text-[44px] leading-[1.05] md:text-[76px] md:leading-[1.02] text-white tracking-tight animate-fade-up [animation-delay:0.2s] motion-reduce:animate-none">
+            Simit Teknesi Nazilli
+          </h1>
+
+          <p className="font-body-lg text-body-lg text-white/85 mt-6 max-w-md animate-fade-up [animation-delay:0.35s] motion-reduce:animate-none">
+            Fırından yeni çıkmış simit, poğaça ve börek; yanında demli çay ya da kahve.
+            Bamboo AVM&apos;de, {HOURS_LABEL.toLocaleLowerCase("tr")}.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-3 mt-10 animate-fade-up [animation-delay:0.5s] motion-reduce:animate-none">
+            <Link
+              href="/menu"
+              className="bg-baked-gold text-white px-8 py-4 rounded font-label-lg text-label-lg text-center hover:bg-hearth-bronze transition-colors duration-200"
+            >
+              Menüyü gör
+            </Link>
+            <a
+              href={DIRECTIONS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-white/40 text-white px-8 py-4 rounded font-label-lg text-label-lg text-center hover:bg-white hover:text-charcoal-deep transition-colors duration-200"
+            >
+              Yol tarifi al
+            </a>
+          </div>
         </div>
-
-        {/* Title */}
-        <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-6 tracking-tight leading-tight animate-fade-up [animation-delay:0.25s] motion-reduce:animate-none">
-          Simit Teknesi <span className="text-ember">Nazilli</span>
-        </h1>
-
-        {/* Divider */}
-        <div className="h-px w-24 bg-baked-gold mb-8 origin-center animate-grow-x [animation-delay:0.4s] motion-reduce:animate-none" />
-
-        {/* Subtitle */}
-        <p className="font-body-lg text-body-lg text-white/90 max-w-2xl mb-12 animate-fade-up [animation-delay:0.5s] motion-reduce:animate-none">
-          {"Taze & Lezzetli — Günlük taze üretim simit, poğaça ve böreklerimiz ile özel kahve çeşitlerimizi keşfedin. Nazilli'nin kalbinde bir sanat eseri lezzetler."}
-        </p>
-
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-6 animate-fade-up [animation-delay:0.65s] motion-reduce:animate-none">
-          <Link
-            href="/menu"
-            className="bg-baked-gold text-white px-10 py-5 rounded font-label-lg text-label-lg flex items-center justify-center gap-3 hover:bg-hearth-bronze transition-all hover:-translate-y-1 shadow-lg shadow-black/20 active:scale-95 duration-200"
-          >
-            Menüyü Keşfet
-            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
-          </Link>
-          <Link
-            href="/iletisim"
-            className="border border-white/30 text-white backdrop-blur-xs px-10 py-5 rounded font-label-lg text-label-lg hover:bg-white/10 transition-all active:scale-95 duration-200"
-          >
-            İletişim
-          </Link>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60" aria-hidden="true">
-        <span className="font-label-sm text-label-sm text-white uppercase tracking-widest">Keşfet</span>
-        <div className="w-px h-12 bg-linear-to-b from-baked-gold to-transparent" />
       </div>
     </section>
   );

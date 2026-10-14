@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { handleImageError, optimizedSrc } from "../utils/imageUtils";
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -43,12 +44,16 @@ const Header: React.FC = () => {
       <nav className="max-w-container-max mx-auto px-4 md:px-margin-desktop py-3 md:py-4 transition-all duration-300">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center">
               <img
-                src="/images/logo.png"
+                src={optimizedSrc("/images/logo.png", "640")}
+                data-full-src="/images/logo.png"
                 alt="Simit Teknesi Nazilli Logo"
+                width={540}
+                height={456}
                 className="w-full h-full object-contain"
+                onError={handleImageError}
               />
             </div>
             <span
@@ -68,14 +73,14 @@ const Header: React.FC = () => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`font-label-lg text-label-lg transition-all duration-200 pb-1 hover:scale-105 ${
+                  className={`font-label-lg text-label-lg transition-colors duration-200 pb-1 border-b-2 ${
                     isActive
                       ? showDarkTheme
-                        ? "text-ember font-bold border-b-2 border-ember"
-                        : "text-secondary font-bold border-b-2 border-secondary"
+                        ? "text-ember border-ember"
+                        : "text-secondary border-secondary"
                       : showDarkTheme
-                      ? "text-white/90 hover:text-ember"
-                      : "text-on-surface-variant hover:text-secondary"
+                      ? "text-white/90 border-transparent hover:text-ember"
+                      : "text-on-surface-variant border-transparent hover:text-secondary"
                   }`}
                 >
                   {item.name}
@@ -125,9 +130,9 @@ const Header: React.FC = () => {
                       key={item.name}
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block px-4 py-2.5 rounded text-base font-medium transition-colors duration-200 ${
+                      className={`block px-4 py-3 rounded font-body-md text-base transition-colors duration-200 ${
                         isActive
-                          ? "text-secondary bg-surface-container-high font-bold border-l-4 border-secondary"
+                          ? "text-secondary bg-surface-container-high font-semibold"
                           : "text-on-surface-variant hover:text-secondary hover:bg-surface-container-low"
                       }`}
                     >

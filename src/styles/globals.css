@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap')
-layer(base);
 @import 'tailwindcss';
 
 @theme {
@@ -81,17 +79,18 @@ layer(base);
   --color-error: #ba1a1a;
   --color-hearth-bronze: #8b1619;
 
-  --font-sans: Inter, system-ui, sans-serif;
-  --font-display-lg: Playfair Display;
-  --font-body-md: Montserrat;
-  --font-title-lg: Montserrat;
-  --font-headline-md: Playfair Display;
-  --font-label-lg: Montserrat;
-  --font-headline-lg-mobile: Playfair Display;
-  --font-label-sm: Montserrat;
-  --font-headline-lg: Playfair Display;
-  --font-body-lg: Montserrat;
-  --font-display-lg-mobile: Playfair Display;
+  /* --font-montserrat / --font-playfair / --font-inter: next/font ile _app.tsx'te tanımlanır */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display-lg: var(--font-playfair);
+  --font-body-md: var(--font-montserrat);
+  --font-title-lg: var(--font-montserrat);
+  --font-headline-md: var(--font-playfair);
+  --font-label-lg: var(--font-montserrat);
+  --font-headline-lg-mobile: var(--font-playfair);
+  --font-label-sm: var(--font-montserrat);
+  --font-headline-lg: var(--font-playfair);
+  --font-body-lg: var(--font-montserrat);
+  --font-display-lg-mobile: var(--font-playfair);
 
   --text-display-lg: 64px;
   --text-display-lg--line-height: 1.1;
@@ -191,22 +190,20 @@ layer(base);
   }
 }
 
-@utility material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
-  display: inline-block;
-  vertical-align: middle;
-}
-
 @utility hero-overlay {
   background: linear-gradient(
     to bottom,
     rgba(21, 16, 16, 0.45) 0%,
     rgba(21, 16, 16, 0.85) 100%
   );
+}
+
+/* Fiyat tahtası: ürün adı ile fiyat arasındaki noktalı çizgi */
+@utility menu-leader {
+  flex: 1 1 1rem;
+  min-width: 1rem;
+  margin: 0 0.5rem;
+  border-bottom: 2px dotted var(--color-outline-variant);
 }
 
 @utility text-glow {

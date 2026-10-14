@@ -133,3 +133,6 @@ main.html
 .vscode/
 **/.DS_Store
 
+
+# Build sırasında üretilen küçük görseller (scripts/optimize-images.mjs)
+public/images/_opt/

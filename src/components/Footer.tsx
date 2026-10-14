@@ -1,30 +1,37 @@
+import { ClockIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import React from "react";
+import { ADDRESS, HOURS_LABEL, PHONE_DISPLAY, PHONE_HREF } from "../data/business";
+import { handleImageError, optimizedSrc } from "../utils/imageUtils";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-primary-container py-section-gap border-t border-hearth-bronze/20 text-on-primary-container">
+    <footer className="bg-primary-container py-16 md:py-24 border-t border-hearth-bronze/20 text-on-primary-container">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter px-4 md:px-margin-desktop max-w-container-max mx-auto">
         <div className="space-y-8">
           <div className="flex items-center space-x-2">
             <div className="w-14 h-14 flex items-center justify-center">
               <img
-                src="/images/logo.png"
+                src={optimizedSrc("/images/logo.png", "640")}
+                data-full-src="/images/logo.png"
                 alt="Simit Teknesi Nazilli Logo"
+                width={540}
+                height={456}
                 className="w-full h-full object-contain"
+                onError={handleImageError}
               />
             </div>
-            <h3 className="font-headline-md text-headline-md text-parchment-light">Simit Teknesi Nazilli</h3>
+            <h3 className="font-headline-md text-2xl text-parchment-light">Simit Teknesi Nazilli</h3>
           </div>
           <p className="font-body-md text-body-md text-on-primary-container/80 max-w-xs leading-relaxed">
-            {"Nazilli'nin en taze ve lezzetli simit, açma, poğaça çeşitleri ile özel kahve karışımları ve doğal limonatalarımızı keşfedin."}
+            Her gün fırından simit, poğaça ve börek; yanında demli çay ya da kahve.
           </p>
           <div className="flex gap-4">
             <a
               href="https://instagram.com/simitteknesinazilli"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 text-white hover:bg-baked-gold transition-colors hover:scale-110 duration-200"
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 text-white hover:bg-baked-gold transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ember"
               aria-label="Instagram'da bizi takip edin"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -35,7 +42,7 @@ const Footer: React.FC = () => {
               href="https://wa.me/905313300965"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 text-white hover:bg-baked-gold transition-colors hover:scale-110 duration-200"
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 text-white hover:bg-baked-gold transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ember"
               aria-label="WhatsApp üzerinden bize ulaşın"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -46,29 +53,29 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="space-y-8">
-          <h4 className="font-title-lg text-label-lg text-ember uppercase tracking-widest">Hızlı Bağlantılar</h4>
+          <h4 className="font-body-md text-sm font-semibold text-ember">Sayfalar</h4>
           <nav className="flex flex-col space-y-4" aria-label="Alt bilgi bağlantıları">
             <Link
               href="/"
-              className="font-label-sm text-label-sm text-on-primary-container/80 hover:text-white transition-colors"
+              className="font-body-md text-body-md text-on-primary-container/80 hover:text-white transition-colors"
             >
               Anasayfa
             </Link>
             <Link
               href="/menu"
-              className="font-label-sm text-label-sm text-on-primary-container/80 hover:text-white transition-colors"
+              className="font-body-md text-body-md text-on-primary-container/80 hover:text-white transition-colors"
             >
               Menü
             </Link>
             <Link
               href="/hakkimizda"
-              className="font-label-sm text-label-sm text-on-primary-container/80 hover:text-white transition-colors"
+              className="font-body-md text-body-md text-on-primary-container/80 hover:text-white transition-colors"
             >
               Hakkımızda
             </Link>
             <Link
               href="/iletisim"
-              className="font-label-sm text-label-sm text-on-primary-container/80 hover:text-white transition-colors"
+              className="font-body-md text-body-md text-on-primary-container/80 hover:text-white transition-colors"
             >
               İletişim
             </Link>
@@ -76,28 +83,28 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="space-y-8">
-          <h4 className="font-title-lg text-label-lg text-ember uppercase tracking-widest">İletişim Bilgileri</h4>
+          <h4 className="font-body-md text-sm font-semibold text-ember">İletişim</h4>
           <div className="space-y-6">
             <div className="flex items-center gap-4 text-on-primary-container/80">
-              <span className="material-symbols-outlined text-ember" aria-hidden="true">location_on</span>
-              <p className="font-body-md text-body-md">Bamboo Avm, Nazilli, Aydın</p>
+              <MapPinIcon className="w-6 h-6 shrink-0 text-ember" aria-hidden="true" />
+              <p className="font-body-md text-body-md">{ADDRESS}</p>
             </div>
             <div className="flex items-center gap-4 text-on-primary-container/80">
-              <span className="material-symbols-outlined text-ember" aria-hidden="true">phone</span>
-              <a href="tel:+905313300965" className="font-body-md text-body-md hover:text-white transition-colors">
-                +90 531 330 09 65
+              <PhoneIcon className="w-6 h-6 shrink-0 text-ember" aria-hidden="true" />
+              <a href={PHONE_HREF} className="font-body-md text-body-md lining-nums hover:text-white transition-colors">
+                {PHONE_DISPLAY}
               </a>
             </div>
             <div className="flex items-center gap-4 text-on-primary-container/80">
-              <span className="material-symbols-outlined text-ember" aria-hidden="true">schedule</span>
-              <p className="font-body-md text-body-md">Her Gün 10:00 - 22:00</p>
+              <ClockIcon className="w-6 h-6 shrink-0 text-ember" aria-hidden="true" />
+              <p className="font-body-md text-body-md lining-nums">{HOURS_LABEL}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="font-label-sm text-label-sm text-on-primary-container/60" suppressHydrationWarning>
+      <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="font-body-md text-sm text-on-primary-container/60" suppressHydrationWarning>
           © {new Date().getFullYear()} Simit Teknesi Nazilli. Tüm hakları saklıdır.
         </p>
       </div>
