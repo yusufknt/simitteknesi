@@ -1,0 +1,234 @@
+/* Yalnızca ana sayfa kullanır. Renkler logodan: damga kırmızısı, mürekkep siyahı, kâğıt beyazı.
+   Logonun kırmızısı #F70303; küçük yazıda beyaz zeminde AA kontrastı (4.5:1) için aynı tonun
+   bir tık koyusu (#E00000, 5:1) kullanılır. */
+.home {
+  --damga: #e00000;
+  --damga-koyu: #b80000;
+  --murekkep: #000000;
+  --kagit: #ffffff;
+  --kagit-2: #f5f5f5;
+  --cizgi: #e5e5e5;
+  --soluk: #525252;
+  background-color: var(--kagit);
+  color: var(--murekkep);
+}
+
+/* ---------- Hero: eğik, akan fotoğraf duvarı ----------
+   Üç katman: kaydırmaya bağlı uzaklaşma (wallScroll) > açılış yakınlaşması (wallIntro) >
+   sabit eğim (wallTilt). Her biri ayrı transform taşır, birbirini ezmez. */
+.wallScroll,
+.wallIntro {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.wallIntro {
+  animation: wallIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes wallIn {
+  from {
+    transform: scale(1.14);
+  }
+}
+
+.wallTilt {
+  position: absolute;
+  top: -18%;
+  bottom: -18%;
+  left: -22%;
+  right: -22%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  transform: rotate(-10deg);
+}
+
+/* Sütunlar fotoğraflar istenene kadar (sayfa yüklenince) görünmez, sonra sırayla açılır */
+.wallColumn {
+  opacity: 0;
+}
+
+.wallTilt[data-ready] .wallColumn {
+  opacity: 1;
+  animation: columnIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes columnIn {
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+}
+
+/* Liste üç kez çizilir; iz bir kopya boyu (üçte bir) kayınca başa sarar, dikiş görünmez */
+.wallTrack {
+  animation-name: drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes drift {
+  to {
+    transform: translateY(calc(-100% / 3));
+  }
+}
+
+.wallTile {
+  aspect-ratio: 1;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #141414;
+}
+
+/* Fotoğraflar geniş stüdyo çekimi: kare kırpım ürüne yaklaştırılır, set eşyaları dışarıda kalır */
+.wallTile img {
+  transform: scale(1.45);
+  transform-origin: 50% 62%;
+}
+
+@media (min-width: 1024px) {
+  .wallTilt {
+    left: -4%;
+    right: -4%;
+    gap: 18px;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .wallTile {
+    margin-bottom: 18px;
+    border-radius: 16px;
+  }
+}
+
+/* Duvarın üstüne inen karanlık: mobilde yazı altta, geniş ekranda solda. Başlığın arkasında
+   logonun kırmızısından çok hafif bir ışık. */
+.veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 90% 45% at 15% 85%, rgba(224, 0, 0, 0.22), transparent 70%),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.3) 28%,
+      rgba(0, 0, 0, 0.82) 58%,
+      #000 86%
+    );
+}
+
+@media (min-width: 1024px) {
+  .veil {
+    background:
+      radial-gradient(ellipse 45% 60% at 18% 55%, rgba(224, 0, 0, 0.2), transparent 70%),
+      linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.9) 30%, rgba(0, 0, 0, 0.35) 62%, rgba(0, 0, 0, 0.55) 100%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, transparent 22%, transparent 72%, #000 100%);
+  }
+}
+
+/* Hafif film grenı: fotoğraflara baskı dokusu verir (logodaki yıpranmış mürekkep gibi) */
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.14;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Aşağı kaydırdıkça duvar geri çekilir, yazı yukarı süzülür (destekleyen tarayıcılarda; diğerlerinde
+   sahne sabit kalır). Başlangıç karesi normal hâl olduğu için ilk boyamayı etkilemez. */
+@supports (animation-timeline: scroll()) {
+  .wallScroll {
+    animation: wallAway linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 100vh;
+  }
+
+  @keyframes wallAway {
+    to {
+      transform: translateY(16%) scale(1.06);
+      opacity: 0.3;
+    }
+  }
+
+  .heroCopy {
+    animation: copyAway linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 90vh;
+  }
+
+  @keyframes copyAway {
+    to {
+      transform: translateY(-10vh);
+      opacity: 0;
+    }
+  }
+}
+
+/* ---------- Tezgâh: fotoğraf baskıları ve damga ---------- */
+.print {
+  border: 5px solid var(--kagit);
+  box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Logo, ekrana girerken fotoğrafın üstüne damga gibi basılır */
+.stamp {
+  transform: rotate(-14deg);
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.18));
+}
+
+@supports (animation-timeline: view()) {
+  .stamp {
+    animation: stampIn linear both;
+    animation-timeline: view();
+    animation-range: entry 30% cover 45%;
+  }
+
+  @keyframes stampIn {
+    0% {
+      transform: rotate(-2deg) scale(1.7);
+      opacity: 0;
+    }
+    70% {
+      transform: rotate(-15deg) scale(0.94);
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(-14deg) scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+/* Mobilde kategori kartları yana kaydırılır */
+.rail {
+  scroll-snap-type: x mandatory;
+  /* Kart, sayfa kenar boşluğunda dursun (yoksa snap ilk kartı ekran kenarına yapıştırır) */
+  scroll-padding-inline: 1rem;
+  scrollbar-width: none;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.rail > * {
+  scroll-snap-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wallIntro,
+  .wallTilt[data-ready] .wallColumn,
+  .wallTrack,
+  .wallScroll,
+  .heroCopy,
+  .stamp {
+    animation: none;
+  }
+}
