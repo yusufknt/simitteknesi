@@ -1,7 +1,14 @@
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
-import { handleImageError, optimizedSrc, responsiveSrcSet } from "../utils/imageUtils";
+import {
+  handleImageError,
+  LOGO_PATH,
+  LOGO_SRC,
+  LOGO_SRCSET,
+  optimizedSrc,
+  responsiveSrcSet,
+} from "../utils/imageUtils";
 
 const values = [
   {
@@ -56,17 +63,23 @@ const AboutPage: React.FC = () => {
             <img
               src={optimizedSrc("/images/simitteknesi.webp", "640")}
               srcSet={responsiveSrcSet("/images/simitteknesi.webp")}
-              sizes="(min-width: 1024px) 600px, 92vw"
+              // ≥2.7x ekranlarda 960px'lik kopya yeter (2.67x yoğunluk, gözle fark edilmez): 3x
+              // telefonlar 94 KB'lık 1280 yerine 62 KB indirir. 1x–2x ekranlar etkilenmez.
+              sizes="(min-width: 1024px) 600px, (min-resolution: 2.7dppx) 75vw, 92vw"
               data-full-src="/images/simitteknesi.webp"
               width={1524}
               height={952}
+              // Sayfanın LCP öğesi: yüksek öncelikle, keşfedildiği anda istensin
+              fetchPriority="high"
               onError={handleImageError}
               alt="Simit Teknesi Nazilli iç mekan"
               className="w-full aspect-[4/3] object-cover rounded-md"
             />
             <img
-              src={optimizedSrc("/images/logo.png", "640")}
-              data-full-src="/images/logo.png"
+              src={LOGO_SRC}
+              srcSet={LOGO_SRCSET}
+              sizes="(min-width: 768px) 112px, 96px"
+              data-full-src={LOGO_PATH}
               width={540}
               height={456}
               onError={handleImageError}

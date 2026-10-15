@@ -2,7 +2,7 @@ import { ClockIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import React from "react";
 import { ADDRESS, HOURS_LABEL, PHONE_DISPLAY, PHONE_HREF } from "../data/business";
-import { handleImageError, optimizedSrc } from "../utils/imageUtils";
+import { handleImageError, LOGO_PATH, LOGO_SRC, LOGO_SRCSET } from "../utils/imageUtils";
 
 const Footer: React.FC = () => {
   return (
@@ -12,8 +12,10 @@ const Footer: React.FC = () => {
           <div className="flex items-center space-x-2">
             <div className="w-14 h-14 flex items-center justify-center">
               <img
-                src={optimizedSrc("/images/logo.png", "640")}
-                data-full-src="/images/logo.png"
+                src={LOGO_SRC}
+                srcSet={LOGO_SRCSET}
+                sizes="56px"
+                data-full-src={LOGO_PATH}
                 alt="Simit Teknesi Nazilli Logo"
                 width={540}
                 height={456}

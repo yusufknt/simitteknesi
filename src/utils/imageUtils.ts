@@ -1,7 +1,7 @@
 // Sayfada orijinal fotoğraf yerine scripts/optimize-images.mjs'nin ürettiği küçük WebP
-// kopyası kullanılır. "thumb": 240px kare; "640" ve "1280": en uzun kenar (en fazla).
+// kopyası kullanılır. "thumb": 240px kare; "640", "960" ve "1280": en uzun kenar (en fazla).
 // Kopya yüklenemezse handleImageError, img'nin data-full-src'sindeki orijinale döner.
-export type ImageVariant = "thumb" | "640" | "1280";
+export type ImageVariant = "thumb" | "640" | "960" | "1280";
 
 export const optimizedSrc = (src: string, variant: ImageVariant): string => {
   if (!src.startsWith("/images/") || src.startsWith("/images/_opt/")) return src;
@@ -9,9 +9,15 @@ export const optimizedSrc = (src: string, variant: ImageVariant): string => {
   return `/images/_opt/${withoutExt}-${variant}.webp`;
 };
 
-// 640/1280 genişlikli srcset; `sizes` ile tarayıcı ekrana uygun olanı seçer
+// 640/960/1280 genişlikli srcset; `sizes` ile tarayıcı ekrana uygun olanı seçer
 export const responsiveSrcSet = (src: string): string =>
-  `${optimizedSrc(src, "640")} 640w, ${optimizedSrc(src, "1280")} 1280w`;
+  `${optimizedSrc(src, "640")} 640w, ${optimizedSrc(src, "960")} 960w, ${optimizedSrc(src, "1280")} 1280w`;
+
+// Logo ekranda en fazla ~112px; 540px'lik orijinal yerine 192/384px paletli PNG kopyalar yeter
+// (scripts/optimize-images.mjs yalnızca logo için üretir)
+export const LOGO_PATH = "/images/logo.png";
+export const LOGO_SRC = "/images/_opt/logo-192.png";
+export const LOGO_SRCSET = `${LOGO_SRC} 192w, /images/_opt/logo-384.png 384w`;
 
 // Resim kategorisine göre fallback resim
 export const getFallbackImageByCategory = (imagePath: string): string => {

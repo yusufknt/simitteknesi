@@ -79,8 +79,10 @@
   --color-error: #ba1a1a;
   --color-hearth-bronze: #8b1619;
 
-  /* --font-montserrat / --font-playfair / --font-inter: next/font ile _app.tsx'te tanımlanır */
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  /* --font-montserrat / --font-playfair: next/font ile _app.tsx'te tanımlanır.
+     Varsayılan gövde fontu Montserrat: görünür metinlerin hepsi zaten font-body-md vb. ile
+     Montserrat ya da Playfair kullanıyor; ayrı bir Inter dosyası (48 KB) indirmeye gerek yok. */
+  --font-sans: var(--font-montserrat), system-ui, sans-serif;
   --font-display-lg: var(--font-playfair);
   --font-body-md: var(--font-montserrat);
   --font-title-lg: var(--font-montserrat);

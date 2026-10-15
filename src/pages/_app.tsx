@@ -1,14 +1,16 @@
 import type { AppProps } from "next/app";
-import { Inter, Montserrat, Playfair_Display } from "next/font/google";
+import { Montserrat, Playfair_Display } from "next/font/google";
 import Head from "next/head";
 import Layout from "../components/Layout";
 import "../styles/globals.css";
 
 // Fontlar build sırasında indirilip sitenin kendi adresinden sunulur (Google'a istek gitmez,
 // sayfa çizimi font CSS'ini beklemez). Türkçe harfler (ş, ğ, İ) latin-ext alt kümesinde.
-const montserrat = Montserrat({ subsets: ["latin", "latin-ext"], display: "swap" });
+// Sadece başlık fontu (Playfair) önden yüklenir: dört font birden önden yüklenince yavaş
+// mobil bağlantıda sayfanın CSS'iyle bant genişliği için yarışıp ilk çizimi geciktiriyordu.
+// Montserrat CSS'ten hemen sonra iner; o arada boyutu ayarlanmış yedek fontla görünür.
+const montserrat = Montserrat({ subsets: ["latin", "latin-ext"], display: "swap", preload: false });
 const playfair = Playfair_Display({ subsets: ["latin", "latin-ext"], display: "swap" });
-const inter = Inter({ subsets: ["latin", "latin-ext"], display: "swap", preload: false });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -18,7 +20,6 @@ export default function App({ Component, pageProps }: AppProps) {
         :root {
           --font-montserrat: ${montserrat.style.fontFamily};
           --font-playfair: ${playfair.style.fontFamily};
-          --font-inter: ${inter.style.fontFamily};
         }
       `}</style>
       <Head>
